@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Catalyst Japan">
+  <rect width="32" height="32" rx="7" fill="#1a1715"/>
+  <path d="M19.32 8.9 A8.2 8.2 0 1 0 19.32 23.1"
+        fill="none" stroke="#f5f1e8" stroke-width="4.3" stroke-linecap="round"/>
+  <circle cx="24.1" cy="16" r="2.95" fill="#6BA6FF"/>
+</svg>

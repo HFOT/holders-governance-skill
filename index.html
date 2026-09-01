@@ -201,6 +201,71 @@ html[data-lang="en"] .jt{font-family:"Archivo",sans-serif; letter-spacing:-.012e
 .typed .cur{display:inline-block; width:2px; height:1em; background:var(--c1);
             vertical-align:-.12em; margin-left:.3em}
 
+/* ---------- the dock: one tile per page, the selected one centred ----------
+   The rail is a fixed viewport and the track slides, so this holds any
+   number of pages. Tiles never change their layout box, only their
+   transform, which keeps the centring arithmetic stable. */
+.dock{display:none}
+.dock-on .dock{display:block}
+.dock-on .idx{display:none}
+
+.rail{
+  position:relative; overflow:hidden;
+  width:min(100%, 520px); height:104px;
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
+          mask-image:linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
+}
+.track{
+  position:absolute; top:50%; left:0; display:flex; align-items:center;
+  gap:22px; padding-inline:0;
+  transform:translate(0,-50%);
+  transition:transform calc(var(--beat)*1.5) var(--ease);
+  will-change:transform;
+}
+.tile{
+  appearance:none; cursor:pointer; padding:0; flex:none;
+  width:64px; height:64px; border-radius:15px;
+  border:1px solid var(--line); background:rgba(255,255,255,.022);
+  display:grid; place-items:center;
+  transform:scale(.86); opacity:.42;
+  transition:transform calc(var(--beat)*1.5) var(--ease),
+             opacity calc(var(--beat)*1.5) var(--ease),
+             border-color var(--half) var(--ease),
+             background var(--half) var(--ease);
+}
+.tile img{width:44px; height:44px; display:block; border-radius:10px; pointer-events:none}
+.tile:hover{opacity:.78; border-color:var(--line-2)}
+.tile[aria-selected="true"]{
+  transform:scale(1.3); opacity:1;
+  border-color:rgba(61,123,255,.5); background:rgba(61,123,255,.10);
+}
+.tile:focus-visible{outline:2px solid var(--c1); outline-offset:3px}
+
+.panel{
+  max-width:34rem; margin-top:clamp(14px,2vh,22px);
+  transition:opacity var(--half) var(--ease);
+}
+.panel.swap{opacity:0}
+.panel .lbl{display:block; margin-bottom:.9em}
+.panel h2{
+  font-size:clamp(1.05rem,1.5vw,1.34rem); font-weight:700; line-height:1.55;
+  letter-spacing:-.014em; margin:0 0 .55em;
+}
+.panel p{
+  color:var(--dim); font-size:.86rem; line-height:1.95;
+  margin:0 0 1.3em; min-height:3.7em;
+}
+html[data-lang="en"] .panel p{min-height:3.4em}
+.panel .pill{padding:8px 16px; font-size:12px}
+
+@media (max-width:560px){
+  .rail{height:88px}
+  .tile{width:54px; height:54px; border-radius:13px}
+  .tile img{width:37px; height:37px}
+  .track{gap:16px}
+  .panel p{min-height:5.2em}
+}
+
 /* ---------- the pages, as rules that cross the whole width ---------- */
 .idx{display:grid; grid-template-columns:repeat(2,1fr); column-gap:clamp(20px,3vw,56px); border-top:1px solid var(--line)}
 .idx a{
@@ -378,6 +443,7 @@ footer a:hover{color:var(--ink)}
   .typed .cur{animation:caret var(--beat) steps(1,end) infinite}
 }
 @media (prefers-reduced-motion: reduce){
+  .track,.tile,.panel{transition:none}
   .rn{opacity:.5; stroke-dasharray:none; stroke-dashoffset:0}
   .js .rv{opacity:1; transform:none}
   .fig .bar i{width:var(--w,60%)}
@@ -668,6 +734,20 @@ footer a:hover{color:var(--ink)}
         <span class="ja">公開されているものを、読める形にして置いています。結論は書きません。</span>
         <span class="en">Public material, made readable. No conclusions.</span>
         <p class="typed" id="typed"><span class="cur"></span></p>
+      </div>
+
+      <div class="dock" id="dock">
+        <div class="rail">
+          <div class="track" id="track" role="tablist" aria-label="Pages"></div>
+        </div>
+        <div class="panel" id="panel" role="tabpanel">
+          <span class="lbl on" id="pKind"></span>
+          <h2 id="pTitle"></h2>
+          <p id="pDesc"></p>
+          <a class="pill" id="pLink" target="_blank" rel="noopener">
+            <span id="pOpen"></span> <span class="arw lat">&nearr;</span>
+          </a>
+        </div>
       </div>
 
       <nav class="idx">
@@ -1107,6 +1187,7 @@ footer a:hover{color:var(--ink)}
       var next = en ? img.dataset.shotEn : img.dataset.shotJa;
       if (next && img.getAttribute('src') !== next) img.setAttribute('src', next);
     });
+    if (typeof paint === 'function' && document.getElementById('pKind')) paint();
     resetTyped();
   }
   try { if (localStorage.getItem('hgs-lang') === 'en') setLang(true); } catch (e) {}
@@ -1115,6 +1196,136 @@ footer a:hover{color:var(--ink)}
 
   /* ---------- reveal ---------- */
   if (!reduce && hasIO) root.classList.add('js');
+
+  /* ---------- dock ----------
+     Built from data rather than markup so the panel can follow the
+     language without duplicating every string. The list version in the
+     markup stays as the no-script path. */
+  var PAGES = [
+    { id:'drep', icon:'icons/drep.svg', kind:'DRep Governance Terminal',
+      href:'https://hfot.github.io/drep-terminal-v6/',
+      ja:['DRep の力の偏りを、数字で読む。',
+          '投票力、委任者構成、資金流入出、集中度を一つの端末に集約。公開オンチェーンデータから毎日追う。'],
+      en:['Read the balance of DRep power in numbers.',
+          'Voting power, delegator mix, flows and concentration in one terminal, followed daily from public on-chain data.'] },
+    { id:'catalyst', icon:'icons/catalyst.svg', kind:'Catalyst Japan',
+      href:'https://hfot.github.io/Catalyst-Japan/',
+      ja:['Catalyst の提案を、一望する。',
+          '130件を金額・分野・進捗で並べ替える。完了報告と動画まで一枚に載せた、F2 から F14 の全記録。'],
+      en:['See every proposal at once.',
+          '130 proposals sorted by amount, sector and status. Completion reports and videos on one page, F2 through F14.'] },
+    { id:'relay', icon:'icons/relay.svg', kind:'Relay Health Ranking',
+      href:'https://hfot.github.io/cardano-relay-health/',
+      ja:['応答したものだけを、採点する。',
+          '1,282プールのリレーを6軸で測って並べる。届かないことは停止の証明ではない、と書き添えたうえで。'],
+      en:['Score only what answered.',
+          '1,282 pools scored on six axes, with the note that unreachable is no proof of offline.'] },
+    { id:'deleg', icon:'icons/deleg.svg', kind:'One Wallet, Two Delegations',
+      href:'https://hfot.github.io/cardano-two-delegations/',
+      ja:['読むのをやめて、動かしてみる。',
+          'ステーキング委任と DRep 委任。同じウォレットが持つ2つの力の差を、シミュレーションで確かめる。'],
+      en:['Stop reading. Move it and see.',
+          'Staking delegation and DRep delegation. Feel the difference between the two powers one wallet holds.'] },
+    { id:'translate', icon:'icons/translate.svg', kind:'Space Translate',
+      href:'https://hfot.github.io/space-translate/app.html',
+      ja:['聞こえた声を、読める言葉に。',
+          '分からない言語の音声を、その場で文字にして翻訳する。文字起こしはブラウザの中で完結し、APIキーもインストールも要らない。'],
+      en:['Turn what you hear into words you can read.',
+          'Speech in a language you do not know, captioned and translated on the spot. Transcription runs inside the browser.'] },
+    { id:'signal', icon:'icons/signal.svg', kind:'CIGNAL Signal',
+      href:'https://hfot.github.io/cignal-radar/cignal-signal-v2.html',
+      ja:['貼るだけで、議論の伸びしろを見る。',
+          '𝕏 や Discord の投稿を貼ると、議論の種・広がる先・トーンをAIが分解する。投稿する前に届き方が見える。'],
+      en:['Paste it, and see where a post can go.',
+          'Paste a post from X or Discord and AI breaks down its discussion seeds, reach and tone, before you post it.'] },
+    { id:'spiral', icon:'icons/spiral.svg', kind:'The Decentralization Spiral',
+      href:'https://hfot.github.io/cardano-spiral/',
+      ja:['あえて厳しく、現状を書かせた。',
+          '現状のモデルをAIに生成させた一枚もの。実測ではなく解釈であり、意図的に辛口に振ってある。'],
+      en:['A deliberately severe read of where things stand.',
+          'A model of the present state generated by AI. Interpretation, not measurement, and deliberately severe.'] }
+  ];
+
+  var dock = document.getElementById('dock');
+  var track = document.getElementById('track');
+  var panel = document.getElementById('panel');
+  var active = 0, touched = false, autoT = null, swapT = null;
+
+  function paint(){
+    var p = PAGES[active], t = isEN() ? p.en : p.ja;
+    document.getElementById('pKind').textContent = p.kind;
+    document.getElementById('pTitle').textContent = t[0];
+    document.getElementById('pDesc').textContent = t[1];
+    document.getElementById('pOpen').textContent = isEN() ? 'Open' : '開く';
+    document.getElementById('pLink').href = p.href;
+    panel.setAttribute('aria-labelledby', 'tile-' + p.id);
+  }
+
+  function centre(){
+    var el = track.children[active];
+    if (!el) return;
+    var mid = track.parentNode.clientWidth / 2;
+    track.style.transform = 'translate(' + (mid - (el.offsetLeft + el.offsetWidth / 2)) + 'px,-50%)';
+  }
+
+  function select(i, focus){
+    active = (i + PAGES.length) % PAGES.length;
+    [].forEach.call(track.children, function(b, n){
+      var on = n === active;
+      b.setAttribute('aria-selected', String(on));
+      b.tabIndex = on ? 0 : -1;
+      if (on && focus) b.focus();
+    });
+    centre();
+    clearTimeout(swapT);
+    panel.classList.add('swap');
+    swapT = setTimeout(function(){ paint(); panel.classList.remove('swap'); }, 150);
+  }
+
+  function stopAuto(){ touched = true; clearInterval(autoT); }
+
+  if (dock && track){
+    PAGES.forEach(function(p, i){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'tile';
+      b.id = 'tile-' + p.id;
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', 'false');
+      b.tabIndex = -1;
+      b.setAttribute('aria-label', p.kind);
+      b.innerHTML = '<img src="' + p.icon + '" alt="" width="44" height="44" decoding="async">';
+      b.addEventListener('click', function(){ stopAuto(); select(i); });
+      track.appendChild(b);
+    });
+
+    track.addEventListener('keydown', function(e){
+      var k = e.key, n = null;
+      if (k === 'ArrowRight') n = active + 1;
+      else if (k === 'ArrowLeft') n = active - 1;
+      else if (k === 'Home') n = 0;
+      else if (k === 'End') n = PAGES.length - 1;
+      if (n === null) return;
+      e.preventDefault(); stopAuto(); select(n, true);
+    });
+
+    document.documentElement.classList.add('dock-on');
+    paint();
+    select(0);
+    /* the layout settles once the icons have decoded */
+    window.addEventListener('load', centre);
+    window.addEventListener('resize', centre);
+    /* one unattended pass so the dock shows what it does, then it rests.
+       Any interaction stops it immediately. */
+    if (!reduce){
+      var steps = PAGES.length - 1;
+      autoT = setInterval(function(){
+        if (touched || steps-- <= 0){ clearInterval(autoT); return; }
+        select(active + 1);
+      }, 4200);
+    }
+  }
+
   if (hasIO){
     var io = new IntersectionObserver(function(es){
       es.forEach(function(e){
