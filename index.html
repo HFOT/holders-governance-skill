@@ -279,7 +279,7 @@ html[data-lang="en"] .manifesto p{line-height:1.95}
   transform:translateY(-.1em);
 }
 
-.figs{display:grid; gap:1px; background:var(--line); grid-template-columns:repeat(3,1fr);
+.figs{display:grid; gap:1px; background:var(--line); grid-template-columns:repeat(4,1fr);
       border:1px solid var(--line); border-radius:var(--r); overflow:hidden}
 .fig{background:var(--bg); padding:clamp(18px,2vw,30px)}
 .fig .lbl{display:block; margin-bottom:1.4em}
@@ -401,6 +401,8 @@ footer a:hover{color:var(--ink)}
 /* ===================== responsive ===================== */
 @media (max-width:1100px){
   .workgrid{grid-template-columns:repeat(2,1fr)}
+  .nav .links{display:none}
+  .brand .rom{display:none}
 }
 @media (max-width:999px){
   .art::after{
@@ -410,8 +412,6 @@ footer a:hover{color:var(--ink)}
 }
 @media (max-width:900px){
   .figs{grid-template-columns:1fr}
-  .nav .links{display:none}
-  .brand .rom{display:none}
 }
 @media (max-width:700px){
   .workgrid,.workgrid.two{grid-template-columns:1fr}
@@ -622,6 +622,7 @@ footer a:hover{color:var(--ink)}
       <span class="rom ja">Holders&#39; Governance Skill</span>
     </span>
     <span class="links">
+      <a href="#drep">DRep</a>
       <a href="#catalyst">Catalyst</a>
       <a href="#relay">Relay</a>
       <a href="#deleg">Delegation</a>
@@ -631,7 +632,7 @@ footer a:hover{color:var(--ink)}
     <button class="lang" id="lang" type="button">
       <span class="ja">EN</span><span class="en">日本語</span>
     </button>
-    <a class="pill" href="#catalyst">
+    <a class="pill" href="#drep">
       <span class="ja">はじめる</span><span class="en">Start</span>
       <span class="arw lat">&rarr;</span>
     </a>
@@ -659,6 +660,14 @@ footer a:hover{color:var(--ink)}
       </div>
 
       <nav class="idx">
+        <a href="#drep">
+          <span class="kind">DRep</span>
+          <span class="ttl">
+            <span class="ja">DRep の力の偏りを、数字で読む。</span>
+            <span class="en">Read the balance of DRep power in numbers.</span>
+          </span>
+          <span class="arw lat">&rarr;</span>
+        </a>
         <a href="#catalyst">
           <span class="kind">Catalyst</span>
           <span class="ttl">
@@ -703,6 +712,7 @@ footer a:hover{color:var(--ink)}
 
       <p class="meas">
         <span class="lbl">Measured</span>
+        <span><b data-count="370">0</b>DReps</span>
         <span><b data-count="130">0</b>proposals</span>
         <span><b data-count="1282">0</b>pools</span>
         <span><b>21.6M &#8371;</b>funded</span>
@@ -794,6 +804,15 @@ footer a:hover{color:var(--ink)}
           <span class="en">Delegations one wallet holds at once. Voting proceeds with them confused.</span>
         </span>
       </div>
+      <div class="fig" style="--w:70%">
+        <span class="lbl">DRep</span>
+        <span class="n lat">370</span>
+        <span class="bar"><i></i></span>
+        <span class="l">
+          <span class="ja">公開データから追えるアクティブ DRep。投票力・集中度・委任者構成を毎日更新する。</span>
+          <span class="en">Active DReps traceable through public data. Voting power, concentration and delegator mix, updated daily.</span>
+        </span>
+      </div>
     </div>
   </div>
 </section>
@@ -811,9 +830,35 @@ footer a:hover{color:var(--ink)}
       <span class="ja">実測 &mdash; 公開データを測った結果</span>
       <span class="en">Measured &mdash; results of measuring public data</span>
     </span>
-    <div class="workgrid">
+    <div class="workgrid two">
 
-      <article class="card rv" id="catalyst">
+      <article class="card rv" id="drep">
+        <a class="shot" href="https://hfot.github.io/drep-terminal-v6/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="shots/drep.png" data-shot-ja="shots/drep.png" data-shot-en="shots/drep-en.png"
+               width="1440" height="900" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="lbl on">DRep Governance Terminal</span>
+          <h3>
+            <span class="ja">DRep の力の偏りを、数字で読む。</span>
+            <span class="en">Read the balance of DRep power in numbers.</span>
+          </h3>
+          <p>
+            <span class="ja">投票力、委任者構成、資金流入出、集中度を一つの端末に集約。公開オンチェーンデータから、DRep 全体と個別の動きを毎日追う。</span>
+            <span class="en">Voting power, delegator mix, flows and concentration in one terminal. Follow the DRep landscape and individual movements daily from public on-chain data.</span>
+          </p>
+          <div class="spec">
+            <div><span class="k">Active DReps</span><span class="v">370</span></div>
+            <div><span class="k">Voting power</span><span class="v">4.96B &#8371;</span></div>
+            <div><span class="k">Nakamoto</span><span class="v">10</span></div>
+          </div>
+          <a class="pill" href="https://hfot.github.io/drep-terminal-v6/" target="_blank" rel="noopener">
+            <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="card rv" id="catalyst" style="--i:1">
         <a class="shot" href="https://hfot.github.io/Catalyst-Japan/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
           <img src="shots/catalyst.png" data-shot-ja="shots/catalyst.png" data-shot-en="shots/catalyst-en.png"
                width="1440" height="900" loading="lazy" decoding="async" alt="">
@@ -839,7 +884,7 @@ footer a:hover{color:var(--ink)}
         </div>
       </article>
 
-      <article class="card rv" id="relay" style="--i:1">
+      <article class="card rv" id="relay" style="--i:2">
         <a class="shot" href="https://hfot.github.io/cardano-relay-health/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
           <img src="shots/relay.png" data-shot-ja="shots/relay.png" data-shot-en="shots/relay-en.png"
                width="1440" height="900" loading="lazy" decoding="async" alt="">
@@ -865,7 +910,7 @@ footer a:hover{color:var(--ink)}
         </div>
       </article>
 
-      <article class="card rv" id="deleg" style="--i:2">
+      <article class="card rv" id="deleg" style="--i:3">
         <a class="shot" href="https://hfot.github.io/cardano-two-delegations/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
           <img src="shots/delegations.png" data-shot-ja="shots/delegations.png" data-shot-en="shots/delegations-en.png"
                width="1440" height="900" loading="lazy" decoding="async" alt="">
