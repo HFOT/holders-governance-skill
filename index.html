@@ -202,7 +202,7 @@ html[data-lang="en"] .jt{font-family:"Archivo",sans-serif; letter-spacing:-.012e
             vertical-align:-.12em; margin-left:.3em}
 
 /* ---------- the pages, as rules that cross the whole width ---------- */
-.idx{display:grid; border-top:1px solid var(--line)}
+.idx{display:grid; grid-template-columns:repeat(2,1fr); column-gap:clamp(20px,3vw,56px); border-top:1px solid var(--line)}
 .idx a{
   position:relative;
   display:grid; grid-template-columns:7.4em 1fr auto; align-items:center;
@@ -210,6 +210,7 @@ html[data-lang="en"] .jt{font-family:"Archivo",sans-serif; letter-spacing:-.012e
   padding:clamp(15px,2vh,20px) clamp(2px,1vw,12px);
   border-bottom:1px solid var(--line);
 }
+.idx a:nth-child(2n){border-left:1px solid var(--line); padding-left:clamp(20px,3vw,56px)}
 .idx a::after{
   content:""; position:absolute; left:0; right:0; bottom:-1px; height:1px;
   background:var(--grad); transform:scaleX(0); transform-origin:0 50%;
@@ -421,6 +422,10 @@ footer a:hover{color:var(--ink)}
 }
 @media (max-width:640px){
   .workgrid,.workgrid.two{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .idx{grid-template-columns:1fr}
+  .idx a:nth-child(2n){border-left:none; padding-left:clamp(2px,1vw,12px)}
 }
 @media (max-width:560px){
   .idx a{grid-template-columns:1fr auto; gap:4px 12px}
@@ -711,6 +716,14 @@ footer a:hover{color:var(--ink)}
           <span class="ttl">
             <span class="ja">あえて厳しく、現状を書かせた。</span>
             <span class="en">A deliberately severe read of where things stand.</span>
+          </span>
+          <span class="arw lat">&rarr;</span>
+        </a>
+        <a href="#signal">
+          <span class="kind">Signal</span>
+          <span class="ttl">
+            <span class="ja">貼るだけで、議論の伸びしろを見る。</span>
+            <span class="en">Paste it, and see where a post can go.</span>
           </span>
           <span class="arw lat">&rarr;</span>
         </a>
