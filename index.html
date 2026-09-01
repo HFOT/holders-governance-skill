@@ -1,0 +1,1086 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Holders&#39; Governance Skill / 研ぎ澄ませるための情報</title>
+<meta name="description" content="本物を見極めるには、それに見合った情報がいる。公開されているのに読めない、在り処も分からない。その情報を探して、読める形にして置いています。Catalyst の提案、リレーの健全性、二種類の委任、音声の字幕翻訳、分散型スパイラル。">
+<meta property="og:title" content="Holders&#39; Governance Skill / 研ぎ澄ませるための情報">
+<meta property="og:description" content="本物を見極めるには、それに見合った情報がいる。">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ===========================================================
+   Holders' Governance Skill / 研ぎ澄ませるための情報
+
+   A realtime particle field runs the full width of the opening
+   screen. Stability comes from a fixed scrim that caps how
+   bright the ground under the type can get, never from fencing
+   the art into a column.
+
+   Bilingual: both languages sit in the markup and the root
+   [data-lang] attribute decides which one shows. With no
+   script, Japanese is what you get.
+   =========================================================== */
+:root{
+  --beat: 469ms;
+  --half: 234ms;
+  --ease: cubic-bezier(.16,1,.3,1);
+
+  --bg:      #06070a;
+  --surface: rgba(255,255,255,.028);
+  --ink:     #f2f4f8;
+  --dim:     #8a92a6;
+  --faint:   #565f73;
+  --line:    rgba(255,255,255,.085);
+  --line-2:  rgba(255,255,255,.16);
+
+  --c1: #3d7bff;
+  --c2: #21d4c2;
+  --c3: #8b6cff;
+  --grad: linear-gradient(96deg, var(--c1), var(--c3) 86%);
+
+  --r:  14px;
+  --rp: 999px;
+  --pad: clamp(18px, 3.4vw, 56px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Noto Sans JP",system-ui,sans-serif;
+  font-weight:400; line-height:1.9; letter-spacing:.01em;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+a{color:inherit; text-decoration:none}
+img{max-width:100%; display:block}
+::selection{background:rgba(61,123,255,.35)}
+.lat{font-family:"Archivo",sans-serif}
+.wrap{max-width:1400px; margin-inline:auto; padding-inline:var(--pad)}
+
+/* language: japanese unless the root says otherwise */
+html[data-lang="en"] .ja{display:none}
+html:not([data-lang="en"]) .en{display:none}
+html[data-lang="en"] body{line-height:1.75}
+
+.lbl{
+  font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 100,"wght" 600;
+  font-size:10.5px; letter-spacing:.19em; text-transform:uppercase; color:var(--faint);
+}
+.lbl.on{color:var(--c1)}
+
+/* ===================== FIELD ===================== */
+.field{
+  position:relative; min-height:100dvh; overflow:hidden;
+  display:grid; grid-template-rows:auto 1fr;
+}
+.art{position:absolute; inset:0; z-index:0; overflow:hidden}
+.art::after{
+  content:""; position:absolute; inset:0; z-index:3; pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(6,7,10,.95) 0%, rgba(6,7,10,.82) 30%,
+                           rgba(6,7,10,.46) 62%, rgba(6,7,10,.12) 100%),
+    linear-gradient(0deg,  rgba(6,7,10,.5), transparent 28%);
+}
+.flow{position:absolute; inset:0; z-index:0; display:block; pointer-events:none}
+.field.has-flow .fil{opacity:0; transition:opacity calc(var(--beat)*4) linear}
+.fil{
+  position:absolute; inset:-12% -14%; width:128%; height:124%;
+  z-index:1; pointer-events:none;
+  -webkit-mask-image:linear-gradient(90deg, transparent 0%, #000 34%);
+          mask-image:linear-gradient(90deg, transparent 0%, #000 34%);
+}
+.fil svg{width:100%; height:100%; fill:none; display:block}
+.rn{stroke-width:1.25; opacity:0; stroke-dasharray:132 1000; stroke-dashoffset:1132; stroke-linecap:round}
+
+/* background presets */
+.fx{
+  position:absolute; right:var(--pad); bottom:clamp(18px,3.4vh,34px); z-index:6;
+  display:none; gap:6px; align-items:center;
+}
+.field.has-flow .fx{display:flex}
+.fx button{
+  appearance:none; cursor:pointer; font:inherit;
+  font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 100,"wght" 600;
+  font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+  padding:7px 13px; border-radius:var(--rp);
+  border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--faint);
+  backdrop-filter:blur(8px);
+  transition:color var(--half) var(--ease), border-color var(--half) var(--ease),
+             background var(--half) var(--ease);
+}
+.fx button:hover{color:var(--ink); border-color:var(--line-2)}
+.fx button[aria-pressed="true"]{
+  color:var(--ink); border-color:rgba(61,123,255,.55); background:rgba(61,123,255,.12);
+}
+
+/* ---------- nav ---------- */
+.nav{
+  position:relative; z-index:6;
+  display:flex; align-items:center; gap:clamp(12px,1.8vw,30px);
+  padding:20px var(--pad);
+}
+.brand{display:flex; align-items:baseline; gap:.7em; font-weight:700; font-size:13px;
+       letter-spacing:.02em; white-space:nowrap}
+.brand .rom{
+  font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 100,"wght" 600;
+  font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--faint);
+}
+.nav .links{display:flex; gap:clamp(12px,1.8vw,26px); margin-left:auto}
+.nav .links a{
+  font-size:12.5px; color:var(--dim); padding:6px 2px;
+  transition:color var(--half) var(--ease);
+}
+.nav .links a:hover{color:var(--ink)}
+.lang{
+  appearance:none; cursor:pointer; font:inherit;
+  font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 100,"wght" 600;
+  font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+  padding:7px 12px; border-radius:var(--rp);
+  border:1px solid var(--line); background:transparent; color:var(--dim);
+  transition:color var(--half) var(--ease), border-color var(--half) var(--ease);
+}
+.lang:hover{color:var(--ink); border-color:var(--line-2)}
+.pill{
+  display:inline-flex; align-items:center; gap:.6em;
+  padding:9px 18px; border-radius:var(--rp);
+  border:1px solid var(--line-2); background:var(--surface);
+  font-size:12.5px; font-weight:500; color:var(--ink);
+  backdrop-filter:blur(8px);
+  transition:border-color var(--half) var(--ease),
+             background var(--half) var(--ease),
+             transform var(--half) var(--ease);
+}
+.pill:hover{border-color:rgba(61,123,255,.6); background:rgba(61,123,255,.12)}
+.pill:active{transform:translateY(1px)}
+.pill .arw{font-size:11px; opacity:.7; transition:transform var(--half) var(--ease)}
+.pill:hover .arw{transform:translateX(3px)}
+
+/* ---------- hero ---------- */
+.hero{position:relative; z-index:5; grid-row:2;
+      display:grid; align-content:center;
+      padding:clamp(24px,5vh,72px) var(--pad) clamp(40px,7vh,86px)}
+.hero-in{max-width:1400px; margin-inline:auto; width:100%}
+.eyeline{display:block; margin:0 0 clamp(14px,2vh,22px)}
+.wm{
+  position:relative; margin:0 0 clamp(18px,2.4vh,30px);
+  font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 118,"wght" 800;
+  font-size:clamp(2.1rem, 5.4vw, 4.85rem);
+  line-height:.98; letter-spacing:-.035em; color:var(--ink);
+}
+.wm .l2{color:var(--dim)}
+.jt{
+  margin:0 0 clamp(10px,1.4vh,16px);
+  font-family:"Noto Sans JP",system-ui,sans-serif; font-weight:700;
+  font-size:clamp(1.15rem,2vw,1.72rem); line-height:1.5;
+  letter-spacing:-.022em; color:var(--ink);
+}
+html[data-lang="en"] .jt{font-family:"Archivo",sans-serif; letter-spacing:-.012em}
+.jt em{font-style:normal;
+  background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent}
+.why{
+  margin:0 0 clamp(22px,3.2vh,38px); max-width:34em;
+  font-size:clamp(.95rem,1.4vw,1.18rem); font-weight:400;
+  line-height:1.9; letter-spacing:-.004em; color:var(--dim);
+}
+.lede{
+  display:flex; flex-wrap:wrap; align-items:baseline; gap:.5em 1.6em;
+  margin:0 0 clamp(28px,4.4vh,52px);
+  font-size:clamp(1rem,1.5vw,1.22rem); font-weight:500;
+  letter-spacing:-.003em; line-height:1.75;
+}
+.lede em{font-style:normal;
+  background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent}
+.lede .typed{
+  flex:1 1 20rem; min-width:0; min-height:1.9em; margin:0;
+  font-size:12.5px; font-weight:400; color:var(--dim); line-height:1.9;
+}
+.typed .cur{display:inline-block; width:2px; height:1em; background:var(--c1);
+            vertical-align:-.12em; margin-left:.3em}
+
+/* ---------- the pages, as rules that cross the whole width ---------- */
+.idx{display:grid; border-top:1px solid var(--line)}
+.idx a{
+  position:relative;
+  display:grid; grid-template-columns:7.4em 1fr auto; align-items:center;
+  gap:clamp(14px,2vw,26px);
+  padding:clamp(15px,2vh,20px) clamp(2px,1vw,12px);
+  border-bottom:1px solid var(--line);
+}
+.idx a::after{
+  content:""; position:absolute; left:0; right:0; bottom:-1px; height:1px;
+  background:var(--grad); transform:scaleX(0); transform-origin:0 50%;
+  transition:transform calc(var(--beat)*.9) var(--ease);
+}
+.idx a:hover::after{transform:scaleX(1)}
+.idx .kind{
+  font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 100,"wght" 600;
+  font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--faint);
+  transition:color var(--half) var(--ease);
+}
+.idx a:hover .kind{color:var(--c1)}
+.idx .ttl{
+  font-size:clamp(.98rem,1.25vw,1.12rem); font-weight:700;
+  letter-spacing:-.008em; line-height:1.5;
+}
+.idx .arw{font-size:13px; color:var(--dim);
+          transition:transform var(--half) var(--ease), color var(--half) var(--ease)}
+.idx a:hover .arw{color:var(--ink); transform:translateX(5px)}
+
+.meas{
+  display:flex; flex-wrap:wrap; align-items:baseline;
+  gap:8px clamp(22px,3.4vw,48px); margin-top:clamp(22px,3vh,34px);
+  font-size:11.5px; color:var(--faint);
+}
+.meas b{
+  font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 100,"wght" 600;
+  font-variant-numeric:tabular-nums; font-weight:400;
+  color:var(--ink); font-size:14px; margin-right:.55em;
+}
+
+/* ===================== SECTIONS ===================== */
+.sec{border-top:1px solid var(--line); padding-block:clamp(42px,5vw,78px); position:relative}
+.head{margin:0 0 clamp(22px,3vw,38px)}
+.head .lbl{display:block; margin-bottom:1.2em}
+.h2{
+  font-size:clamp(1.25rem,2.1vw,1.75rem); font-weight:700; line-height:1.62;
+  letter-spacing:-.018em; margin:0; max-width:34rem;
+}
+.h2 em{font-style:normal;
+  background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent}
+
+.manifesto{display:grid; gap:clamp(18px,2.2vw,30px); max-width:44em; margin-top:clamp(20px,2.4vw,32px)}
+.manifesto p{
+  position:relative; margin:0; padding-left:clamp(20px,2.4vw,34px);
+  font-size:clamp(1rem,1.55vw,1.24rem); font-weight:400; line-height:2.15;
+  letter-spacing:-.004em; color:var(--dim);
+}
+html[data-lang="en"] .manifesto p{line-height:1.95}
+.manifesto p::before{
+  content:""; position:absolute; left:0; top:1.05em; width:clamp(10px,1.4vw,18px); height:1px;
+  background:var(--grad);
+}
+.manifesto b{color:var(--ink); font-weight:700}
+.exlabel{display:block; margin:clamp(30px,3.6vw,52px) 0 clamp(14px,1.8vw,22px)}
+
+.creed{display:grid; gap:clamp(10px,1.4vw,18px); max-width:60rem}
+.creed p{
+  display:grid; grid-template-columns:auto 1fr; gap:clamp(12px,1.6vw,22px);
+  align-items:baseline; margin:0;
+  font-size:clamp(.98rem,1.4vw,1.15rem); font-weight:500;
+  letter-spacing:-.006em; line-height:1.9; color:var(--dim);
+}
+.creed p b{color:var(--ink); font-weight:700}
+.creed .tick{
+  width:26px; height:1px; background:var(--grad); align-self:center;
+  transform:translateY(-.1em);
+}
+
+.figs{display:grid; gap:1px; background:var(--line); grid-template-columns:repeat(3,1fr);
+      border:1px solid var(--line); border-radius:var(--r); overflow:hidden}
+.fig{background:var(--bg); padding:clamp(18px,2vw,30px)}
+.fig .lbl{display:block; margin-bottom:1.4em}
+.fig .n{
+  display:block; font-family:"Archivo",sans-serif;
+  font-variation-settings:"wdth" 110,"wght" 700; font-variant-numeric:tabular-nums;
+  font-size:clamp(2.1rem,3.6vw,3.2rem); line-height:1.05; letter-spacing:-.035em;
+  background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.fig .bar{display:block; height:2px; margin:16px 0 14px;
+          background:rgba(255,255,255,.07); border-radius:2px; position:relative; overflow:hidden}
+.fig .bar i{position:absolute; inset:0 auto 0 0; width:0; border-radius:2px;
+            background:var(--grad); transition:width calc(var(--beat)*6) var(--ease)}
+.fig.in .bar i{width:var(--w,60%)}
+.fig .l{display:block; color:var(--dim); font-size:.88rem; line-height:1.95}
+
+/* three pages side by side, so the page stays short */
+.workgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(16px,2vw,30px)}
+.card{
+  display:flex; flex-direction:column; overflow:hidden;
+  border:1px solid var(--line); border-radius:var(--r);
+  background:rgba(255,255,255,.016);
+  transition:border-color var(--half) var(--ease), transform var(--half) var(--ease),
+             background var(--half) var(--ease);
+}
+.card:hover{border-color:var(--line-2); background:rgba(255,255,255,.03); transform:translateY(-3px)}
+.card .shot{
+  display:block; aspect-ratio:16 / 10; overflow:hidden;
+  background:rgba(255,255,255,.02); border-bottom:1px solid var(--line);
+}
+.card .shot img{
+  width:100%; height:100%; object-fit:cover; object-position:left top;
+  transform:scale(1.025); transform-origin:left top;
+  transition:transform calc(var(--beat)*2.4) var(--ease);
+}
+.card:hover .shot img{transform:scale(1.06)}
+.card .body{display:flex; flex-direction:column; flex:1; padding:clamp(17px,1.6vw,24px)}
+.card h3{
+  font-size:clamp(1rem,1.35vw,1.22rem); font-weight:700; line-height:1.55;
+  letter-spacing:-.012em; margin:.9em 0 .6em;
+}
+.card p{color:var(--dim); font-size:.84rem; line-height:1.9; margin:0 0 1.4em}
+.card p b{color:var(--ink); font-weight:700}
+.card .spec{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:8px;
+  margin:auto 0 1.3em; padding-top:1.1em; border-top:1px solid var(--line);
+}
+.card .spec div{display:grid; gap:3px; min-width:0}
+.card .spec .k{font-size:8.5px; letter-spacing:.13em; text-transform:uppercase;
+               color:var(--faint); white-space:nowrap}
+.card .spec .v{font-size:12px; color:var(--ink); font-variant-numeric:tabular-nums;
+               white-space:nowrap}
+.card .pill{align-self:flex-start; padding:8px 15px; font-size:11.5px}
+.workgrid.two{grid-template-columns:repeat(2,1fr); margin-top:clamp(16px,2vw,30px)}
+.card .top{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+/* anything that is not a measurement says so on its face */
+.badge{
+  font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 100,"wght" 600;
+  font-size:9px; letter-spacing:.16em; text-transform:uppercase;
+  padding:3px 8px; border-radius:var(--rp);
+  border:1px solid rgba(139,108,255,.5); color:var(--c3);
+}
+.badge.tool{border-color:rgba(33,212,194,.45); color:var(--c2)}
+.card .note{
+  margin:0 0 1.3em; font-size:11px; line-height:1.8; color:var(--faint);
+}
+.subhead{margin:clamp(30px,4vw,54px) 0 clamp(14px,1.8vw,22px)}
+
+.end .h2{max-width:26rem}
+.end p{color:var(--dim); max-width:36rem; margin:1.2em 0 0; font-size:.9rem; line-height:1.95}
+footer{border-top:1px solid var(--line); padding-block:26px}
+footer .wrap{display:flex; flex-wrap:wrap; gap:12px 30px; justify-content:space-between;
+             align-items:center; font-size:11.5px; color:var(--faint)}
+footer a{transition:color var(--half) var(--ease)}
+footer a:hover{color:var(--ink)}
+
+.js .rv{opacity:0; transform:translateY(16px)}
+.js .rv.in{opacity:1; transform:none;
+  transition:opacity calc(var(--beat)*1.6) var(--ease),
+             transform calc(var(--beat)*1.6) var(--ease);
+  transition-delay:calc(var(--i,0) * var(--half) / 1.6)}
+
+/* ===================== motion ===================== */
+@keyframes run{
+  0%  {stroke-dashoffset:1132; opacity:0}
+  10% {opacity:.8}
+  82% {opacity:.8}
+  100%{stroke-dashoffset:0; opacity:0}
+}
+@keyframes caret{0%,48%{opacity:1} 49%,100%{opacity:0}}
+
+@media (prefers-reduced-motion: no-preference){
+  .rn{animation:run var(--dur,7s) linear infinite; animation-delay:var(--dl,0s)}
+  .typed .cur{animation:caret var(--beat) steps(1,end) infinite}
+}
+@media (prefers-reduced-motion: reduce){
+  .rn{opacity:.5; stroke-dasharray:none; stroke-dashoffset:0}
+  .js .rv{opacity:1; transform:none}
+  .fig .bar i{width:var(--w,60%)}
+  html{scroll-behavior:auto}
+}
+
+/* ===================== responsive ===================== */
+@media (max-width:1100px){
+  .workgrid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:999px){
+  .art::after{
+    background:linear-gradient(90deg, rgba(6,7,10,.92) 0%, rgba(6,7,10,.7) 52%, rgba(6,7,10,.34) 100%),
+               linear-gradient(0deg, rgba(6,7,10,.6), transparent 30%);
+  }
+}
+@media (max-width:900px){
+  .figs{grid-template-columns:1fr}
+  .nav .links{display:none}
+  .brand .rom{display:none}
+}
+@media (max-width:700px){
+  .workgrid,.workgrid.two{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .idx a{grid-template-columns:1fr auto; gap:4px 12px}
+  .idx .kind{grid-column:1 / -1}
+}
+</style>
+</head>
+<body>
+
+<header class="field">
+
+  <div class="art">
+    <div class="fil" aria-hidden="true">
+      <svg viewBox="0 0 900 1000" preserveAspectRatio="xMidYMid slice">
+        <g class="fan">
+          <path d="M878 500 C 648 558, 378 1246, 878 1666" stroke="var(--c3)" stroke-width="0.4" opacity="0.082"/>
+        <path d="M878 500 C 645 561, 378 1250, 852 1665" stroke="var(--c3)" stroke-width="0.42" opacity="0.086"/>
+        <path d="M878 500 C 641 564, 378 1253, 826 1665" stroke="var(--c1)" stroke-width="0.44" opacity="0.09"/>
+        <path d="M878 500 C 638 566, 377 1256, 800 1663" stroke="var(--c3)" stroke-width="0.46" opacity="0.094"/>
+        <path d="M878 500 C 634 569, 377 1259, 774 1661" stroke="var(--c3)" stroke-width="0.48" opacity="0.097"/>
+        <path d="M878 500 C 631 571, 376 1261, 748 1659" stroke="var(--c1)" stroke-width="0.5" opacity="0.101"/>
+        <path d="M878 500 C 628 574, 375 1263, 722 1656" stroke="var(--c3)" stroke-width="0.52" opacity="0.105"/>
+        <path d="M878 500 C 624 576, 373 1264, 696 1653" stroke="var(--c1)" stroke-width="0.54" opacity="0.109"/>
+        <path d="M878 500 C 621 578, 372 1265, 670 1649" stroke="var(--c2)" stroke-width="0.56" opacity="0.112"/>
+        <path d="M878 500 C 618 579, 370 1266, 644 1645" stroke="var(--c3)" stroke-width="0.58" opacity="0.116"/>
+        <path d="M878 500 C 615 581, 369 1266, 618 1640" stroke="var(--c1)" stroke-width="0.6" opacity="0.12"/>
+        <path d="M878 500 C 612 582, 367 1266, 593 1634" stroke="var(--c3)" stroke-width="0.62" opacity="0.123"/>
+        <path d="M878 500 C 609 583, 365 1265, 568 1628" stroke="var(--c3)" stroke-width="0.64" opacity="0.127"/>
+        <path d="M878 500 C 606 583, 362 1263, 542 1622" stroke="var(--c1)" stroke-width="0.66" opacity="0.131"/>
+        <path d="M878 500 C 604 583, 360 1262, 517 1615" stroke="var(--c3)" stroke-width="0.68" opacity="0.135"/>
+        <path d="M878 500 C 601 583, 357 1259, 492 1608" stroke="var(--c3)" stroke-width="0.7" opacity="0.138"/>
+        <path d="M878 500 C 599 583, 355 1256, 468 1600" stroke="var(--c2)" stroke-width="0.72" opacity="0.142"/>
+        <path d="M878 500 C 596 582, 352 1253, 443 1592" stroke="var(--c3)" stroke-width="0.74" opacity="0.146"/>
+        <path d="M878 500 C 594 581, 349 1249, 419 1583" stroke="var(--c1)" stroke-width="0.76" opacity="0.15"/>
+        <path d="M878 500 C 592 580, 345 1245, 394 1573" stroke="var(--c3)" stroke-width="0.78" opacity="0.153"/>
+        <path d="M878 500 C 590 578, 342 1240, 370 1563" stroke="var(--c3)" stroke-width="0.8" opacity="0.157"/>
+        <path d="M878 500 C 588 577, 338 1234, 347 1553" stroke="var(--c1)" stroke-width="0.81" opacity="0.161"/>
+        <path d="M878 500 C 586 575, 335 1228, 323 1542" stroke="var(--c3)" stroke-width="0.83" opacity="0.164"/>
+        <path d="M878 500 C 585 572, 331 1222, 300 1531" stroke="var(--c3)" stroke-width="0.85" opacity="0.168"/>
+        <path d="M878 500 C 583 570, 327 1214, 277 1520" stroke="var(--c2)" stroke-width="0.87" opacity="0.172"/>
+        <path d="M878 500 C 582 567, 323 1207, 254 1507" stroke="var(--c3)" stroke-width="0.89" opacity="0.176"/>
+        <path d="M878 500 C 581 564, 319 1199, 232 1495" stroke="var(--c1)" stroke-width="0.9" opacity="0.179"/>
+        <path d="M878 500 C 580 561, 314 1190, 210 1482" stroke="var(--c2)" stroke-width="0.92" opacity="0.183"/>
+        <path d="M878 500 C 579 557, 310 1181, 188 1468" stroke="var(--c3)" stroke-width="0.94" opacity="0.187"/>
+        <path d="M878 500 C 579 554, 305 1171, 166 1454" stroke="var(--c1)" stroke-width="0.95" opacity="0.191"/>
+        <path d="M878 500 C 578 550, 301 1160, 145 1440" stroke="var(--c3)" stroke-width="0.97" opacity="0.194"/>
+        <path d="M878 500 C 578 547, 296 1150, 124 1425" stroke="var(--c3)" stroke-width="0.98" opacity="0.198"/>
+        <path d="M878 500 C 578 543, 291 1138, 103 1410" stroke="var(--c1)" stroke-width="1.0" opacity="0.202"/>
+        <path d="M878 500 C 578 540, 286 1127, 83 1395" stroke="var(--c3)" stroke-width="1.02" opacity="0.205"/>
+        <path d="M878 500 C 578 536, 281 1114, 63 1379" stroke="var(--c1)" stroke-width="1.03" opacity="0.209"/>
+        <path d="M878 500 C 579 533, 276 1102, 44 1362" stroke="var(--c2)" stroke-width="1.04" opacity="0.213"/>
+        <path d="M878 500 C 579 529, 271 1089, 25 1346" stroke="var(--c3)" stroke-width="1.06" opacity="0.217"/>
+        <path d="M878 500 C 580 526, 266 1075, 6 1329" stroke="var(--c1)" stroke-width="1.07" opacity="0.22"/>
+        <path d="M878 500 C 581 523, 261 1061, -13 1311" stroke="var(--c3)" stroke-width="1.09" opacity="0.224"/>
+        <path d="M878 500 C 582 520, 255 1047, -31 1293" stroke="var(--c3)" stroke-width="1.1" opacity="0.228"/>
+        <path d="M878 500 C 583 517, 250 1032, -48 1275" stroke="var(--c1)" stroke-width="1.11" opacity="0.231"/>
+        <path d="M878 500 C 585 514, 245 1017, -65 1257" stroke="var(--c3)" stroke-width="1.12" opacity="0.235"/>
+        <path d="M878 500 C 586 512, 239 1001, -82 1238" stroke="var(--c3)" stroke-width="1.14" opacity="0.239"/>
+        <path d="M878 500 C 588 510, 234 986, -98 1218" stroke="var(--c2)" stroke-width="1.15" opacity="0.243"/>
+        <path d="M878 500 C 590 508, 228 970, -114 1199" stroke="var(--c3)" stroke-width="1.16" opacity="0.246"/>
+        <path d="M878 500 C 592 506, 223 953, -130 1179" stroke="var(--c1)" stroke-width="1.17" opacity="0.25"/>
+        <path d="M878 500 C 594 505, 217 936, -145 1159" stroke="var(--c3)" stroke-width="1.18" opacity="0.254"/>
+        <path d="M878 500 C 596 504, 212 920, -159 1139" stroke="var(--c3)" stroke-width="1.19" opacity="0.258"/>
+        <path d="M878 500 C 598 503, 206 902, -173 1118" stroke="var(--c1)" stroke-width="1.2" opacity="0.261"/>
+        <path d="M878 500 C 601 503, 201 885, -187 1097" stroke="var(--c3)" stroke-width="1.21" opacity="0.265"/>
+        <path d="M878 500 C 603 502, 196 868, -200 1076" stroke="var(--c3)" stroke-width="1.22" opacity="0.269"/>
+        <path d="M878 500 C 606 502, 190 850, -213 1054" stroke="var(--c2)" stroke-width="1.23" opacity="0.272"/>
+        <path d="M878 500 C 609 502, 185 832, -225 1032" stroke="var(--c3)" stroke-width="1.23" opacity="0.276"/>
+        <path d="M878 500 C 612 503, 179 814, -237 1010" stroke="var(--c1)" stroke-width="1.24" opacity="0.28"/>
+        <path d="M878 500 C 615 503, 174 796, -248 988" stroke="var(--c2)" stroke-width="1.25" opacity="0.284"/>
+        <path d="M878 500 C 618 504, 169 778, -259 966" stroke="var(--c3)" stroke-width="1.26" opacity="0.287"/>
+        <path d="M878 500 C 621 505, 164 760, -269 943" stroke="var(--c1)" stroke-width="1.26" opacity="0.291"/>
+        <path d="M878 500 C 624 507, 159 742, -279 920" stroke="var(--c3)" stroke-width="1.27" opacity="0.295"/>
+        <path d="M878 500 C 627 508, 154 724, -288 897" stroke="var(--c3)" stroke-width="1.27" opacity="0.299"/>
+        <path d="M878 500 C 631 509, 149 705, -296 874" stroke="var(--c1)" stroke-width="1.28" opacity="0.302"/>
+        <path d="M878 500 C 634 511, 144 687, -304 851" stroke="var(--c3)" stroke-width="1.28" opacity="0.306"/>
+        <path d="M878 500 C 637 512, 139 669, -312 827" stroke="var(--c3)" stroke-width="1.29" opacity="0.31"/>
+        <path d="M878 500 C 641 514, 134 651, -319 804" stroke="var(--c2)" stroke-width="1.29" opacity="0.313"/>
+        <path d="M878 500 C 644 516, 130 633, -326 780" stroke="var(--c3)" stroke-width="1.29" opacity="0.317"/>
+        <path d="M878 500 C 648 517, 125 615, -332 756" stroke="var(--c1)" stroke-width="1.29" opacity="0.321"/>
+        <path d="M878 500 C 651 519, 121 598, -337 732" stroke="var(--c3)" stroke-width="1.3" opacity="0.325"/>
+        <path d="M878 500 C 654 520, 116 580, -342 708" stroke="var(--c3)" stroke-width="1.3" opacity="0.328"/>
+        <path d="M878 500 C 658 522, 112 563, -347 684" stroke="var(--c1)" stroke-width="1.3" opacity="0.332"/>
+        <path d="M878 500 C 661 523, 108 545, -350 659" stroke="var(--c3)" stroke-width="1.3" opacity="0.336"/>
+        <path d="M878 500 C 665 524, 104 528, -354 635" stroke="var(--c3)" stroke-width="1.3" opacity="0.34"/>
+        <path d="M878 500 C 668 525, 100 511, -356 610" stroke="var(--c2)" stroke-width="1.3" opacity="0.343"/>
+        <path d="M878 500 C 671 526, 97 495, -359 586" stroke="var(--c3)" stroke-width="1.3" opacity="0.347"/>
+        <path d="M878 500 C 674 526, 93 478, -360 561" stroke="var(--c1)" stroke-width="1.3" opacity="0.351"/>
+        <path d="M878 500 C 677 526, 90 462, -361 537" stroke="var(--c3)" stroke-width="1.3" opacity="0.354"/>
+        <path d="M878 500 C 681 526, 87 446, -362 512" stroke="var(--c3)" stroke-width="1.29" opacity="0.358"/>
+        <path d="M878 500 C 684 526, 84 430, -362 488" stroke="var(--c1)" stroke-width="1.29" opacity="0.358"/>
+        <path d="M878 500 C 686 526, 81 415, -361 463" stroke="var(--c3)" stroke-width="1.29" opacity="0.354"/>
+        <path d="M878 500 C 689 525, 78 399, -360 439" stroke="var(--c3)" stroke-width="1.28" opacity="0.351"/>
+        <path d="M878 500 C 692 524, 75 384, -359 414" stroke="var(--c1)" stroke-width="1.28" opacity="0.347"/>
+        <path d="M878 500 C 695 522, 73 370, -356 390" stroke="var(--c3)" stroke-width="1.28" opacity="0.343"/>
+        <path d="M878 500 C 697 521, 71 355, -354 365" stroke="var(--c1)" stroke-width="1.27" opacity="0.34"/>
+        <path d="M878 500 C 700 519, 69 341, -350 341" stroke="var(--c2)" stroke-width="1.27" opacity="0.336"/>
+        <path d="M878 500 C 702 517, 67 327, -347 316" stroke="var(--c3)" stroke-width="1.26" opacity="0.332"/>
+        <path d="M878 500 C 704 514, 65 313, -342 292" stroke="var(--c1)" stroke-width="1.25" opacity="0.328"/>
+        <path d="M878 500 C 706 511, 64 300, -337 268" stroke="var(--c3)" stroke-width="1.25" opacity="0.325"/>
+        <path d="M878 500 C 708 509, 62 287, -332 244" stroke="var(--c3)" stroke-width="1.24" opacity="0.321"/>
+        <path d="M878 500 C 709 505, 61 274, -326 220" stroke="var(--c1)" stroke-width="1.23" opacity="0.317"/>
+        <path d="M878 500 C 711 502, 60 261, -319 196" stroke="var(--c3)" stroke-width="1.22" opacity="0.313"/>
+        <path d="M878 500 C 712 499, 59 249, -312 173" stroke="var(--c3)" stroke-width="1.22" opacity="0.31"/>
+        <path d="M878 500 C 714 495, 59 237, -304 149" stroke="var(--c2)" stroke-width="1.21" opacity="0.306"/>
+        <path d="M878 500 C 715 491, 58 225, -296 126" stroke="var(--c3)" stroke-width="1.2" opacity="0.302"/>
+        <path d="M878 500 C 716 487, 58 214, -288 103" stroke="var(--c1)" stroke-width="1.19" opacity="0.299"/>
+        <path d="M878 500 C 717 484, 58 202, -279 80" stroke="var(--c3)" stroke-width="1.18" opacity="0.295"/>
+        <path d="M878 500 C 717 480, 58 191, -269 57" stroke="var(--c3)" stroke-width="1.17" opacity="0.291"/>
+        <path d="M878 500 C 718 476, 58 180, -259 34" stroke="var(--c1)" stroke-width="1.16" opacity="0.287"/>
+        <path d="M878 500 C 718 472, 59 170, -248 12" stroke="var(--c3)" stroke-width="1.14" opacity="0.284"/>
+        <path d="M878 500 C 718 468, 60 159, -237 -10" stroke="var(--c3)" stroke-width="1.13" opacity="0.28"/>
+        <path d="M878 500 C 718 464, 61 149, -225 -32" stroke="var(--c2)" stroke-width="1.12" opacity="0.276"/>
+        <path d="M878 500 C 718 460, 62 139, -213 -54" stroke="var(--c3)" stroke-width="1.11" opacity="0.272"/>
+        <path d="M878 500 C 717 457, 63 129, -200 -76" stroke="var(--c1)" stroke-width="1.1" opacity="0.269"/>
+        <path d="M878 500 C 717 453, 64 120, -187 -97" stroke="var(--c3)" stroke-width="1.08" opacity="0.265"/>
+        <path d="M878 500 C 716 450, 66 110, -173 -118" stroke="var(--c3)" stroke-width="1.07" opacity="0.261"/>
+        <path d="M878 500 C 715 447, 68 101, -159 -139" stroke="var(--c1)" stroke-width="1.05" opacity="0.258"/>
+        <path d="M878 500 C 714 444, 70 91, -145 -159" stroke="var(--c3)" stroke-width="1.04" opacity="0.254"/>
+        <path d="M878 500 C 713 442, 72 82, -130 -179" stroke="var(--c3)" stroke-width="1.03" opacity="0.25"/>
+        <path d="M878 500 C 712 440, 74 73, -114 -199" stroke="var(--c1)" stroke-width="1.01" opacity="0.246"/>
+        <path d="M878 500 C 710 438, 77 65, -98 -218" stroke="var(--c3)" stroke-width="1.0" opacity="0.243"/>
+        <path d="M878 500 C 708 436, 79 56, -82 -238" stroke="var(--c1)" stroke-width="0.98" opacity="0.239"/>
+        <path d="M878 500 C 707 434, 82 47, -65 -257" stroke="var(--c2)" stroke-width="0.96" opacity="0.235"/>
+        <path d="M878 500 C 705 433, 85 39, -48 -275" stroke="var(--c3)" stroke-width="0.95" opacity="0.231"/>
+        <path d="M878 500 C 703 432, 88 30, -31 -293" stroke="var(--c1)" stroke-width="0.93" opacity="0.228"/>
+        <path d="M878 500 C 700 432, 91 22, -13 -311" stroke="var(--c3)" stroke-width="0.91" opacity="0.224"/>
+        <path d="M878 500 C 698 432, 95 13, 6 -329" stroke="var(--c3)" stroke-width="0.9" opacity="0.22"/>
+        <path d="M878 500 C 696 432, 98 5, 25 -346" stroke="var(--c1)" stroke-width="0.88" opacity="0.217"/>
+        <path d="M878 500 C 693 432, 102 -3, 44 -362" stroke="var(--c3)" stroke-width="0.86" opacity="0.213"/>
+        <path d="M878 500 C 690 433, 106 -11, 63 -379" stroke="var(--c3)" stroke-width="0.85" opacity="0.209"/>
+        <path d="M878 500 C 688 434, 110 -19, 83 -395" stroke="var(--c2)" stroke-width="0.83" opacity="0.205"/>
+        <path d="M878 500 C 685 435, 114 -27, 103 -410" stroke="var(--c3)" stroke-width="0.81" opacity="0.202"/>
+        <path d="M878 500 C 682 436, 118 -35, 124 -425" stroke="var(--c1)" stroke-width="0.79" opacity="0.198"/>
+        <path d="M878 500 C 679 437, 123 -43, 145 -440" stroke="var(--c3)" stroke-width="0.77" opacity="0.194"/>
+        <path d="M878 500 C 676 439, 127 -51, 166 -454" stroke="var(--c3)" stroke-width="0.75" opacity="0.191"/>
+        <path d="M878 500 C 672 441, 132 -59, 188 -468" stroke="var(--c1)" stroke-width="0.73" opacity="0.187"/>
+        <path d="M878 500 C 669 443, 136 -67, 210 -482" stroke="var(--c3)" stroke-width="0.72" opacity="0.183"/>
+        <path d="M878 500 C 666 445, 141 -75, 232 -495" stroke="var(--c3)" stroke-width="0.7" opacity="0.179"/>
+        <path d="M878 500 C 662 447, 146 -83, 254 -507" stroke="var(--c2)" stroke-width="0.68" opacity="0.176"/>
+        <path d="M878 500 C 659 450, 151 -91, 277 -520" stroke="var(--c3)" stroke-width="0.66" opacity="0.172"/>
+        <path d="M878 500 C 656 452, 156 -98, 300 -531" stroke="var(--c1)" stroke-width="0.64" opacity="0.168"/>
+        <path d="M878 500 C 652 454, 161 -106, 323 -542" stroke="var(--c2)" stroke-width="0.62" opacity="0.164"/>
+        <path d="M878 500 C 649 456, 166 -114, 347 -553" stroke="var(--c3)" stroke-width="0.6" opacity="0.161"/>
+        <path d="M878 500 C 645 458, 171 -121, 370 -563" stroke="var(--c1)" stroke-width="0.58" opacity="0.157"/>
+        <path d="M878 500 C 642 460, 176 -129, 394 -573" stroke="var(--c3)" stroke-width="0.56" opacity="0.153"/>
+        <path d="M878 500 C 639 462, 182 -136, 419 -583" stroke="var(--c3)" stroke-width="0.54" opacity="0.15"/>
+        <path d="M878 500 C 635 464, 187 -143, 443 -592" stroke="var(--c1)" stroke-width="0.52" opacity="0.146"/>
+        <path d="M878 500 C 632 466, 193 -151, 468 -600" stroke="var(--c3)" stroke-width="0.5" opacity="0.142"/>
+        <path d="M878 500 C 629 467, 198 -158, 492 -608" stroke="var(--c1)" stroke-width="0.48" opacity="0.138"/>
+        <path d="M878 500 C 625 468, 203 -165, 517 -615" stroke="var(--c2)" stroke-width="0.45" opacity="0.135"/>
+        <path d="M878 500 C 622 469, 209 -172, 542 -622" stroke="var(--c3)" stroke-width="0.43" opacity="0.131"/>
+        <path d="M878 500 C 619 470, 214 -179, 568 -628" stroke="var(--c1)" stroke-width="0.41" opacity="0.127"/>
+        <path d="M878 500 C 616 470, 220 -185, 593 -634" stroke="var(--c3)" stroke-width="0.41" opacity="0.123"/>
+        <path d="M878 500 C 613 471, 225 -192, 618 -640" stroke="var(--c3)" stroke-width="0.43" opacity="0.12"/>
+        <path d="M878 500 C 610 471, 231 -198, 644 -645" stroke="var(--c1)" stroke-width="0.45" opacity="0.116"/>
+        <path d="M878 500 C 607 471, 236 -204, 670 -649" stroke="var(--c3)" stroke-width="0.47" opacity="0.112"/>
+        <path d="M878 500 C 604 470, 242 -210, 696 -653" stroke="var(--c3)" stroke-width="0.49" opacity="0.109"/>
+        <path d="M878 500 C 602 469, 247 -216, 722 -656" stroke="var(--c2)" stroke-width="0.51" opacity="0.105"/>
+        <path d="M878 500 C 599 468, 252 -221, 748 -659" stroke="var(--c3)" stroke-width="0.53" opacity="0.101"/>
+        <path d="M878 500 C 597 467, 258 -226, 774 -661" stroke="var(--c1)" stroke-width="0.55" opacity="0.097"/>
+        <path d="M878 500 C 595 466, 263 -231, 800 -663" stroke="var(--c3)" stroke-width="0.57" opacity="0.094"/>
+        <path d="M878 500 C 592 464, 268 -236, 826 -665" stroke="var(--c3)" stroke-width="0.59" opacity="0.09"/>
+        <path d="M878 500 C 590 462, 273 -240, 852 -665" stroke="var(--c1)" stroke-width="0.61" opacity="0.086"/>
+        <path d="M878 500 C 588 460, 278 -244, 878 -666" stroke="var(--c3)" stroke-width="0.63" opacity="0.082"/>
+        <path class="rn" d="M878 500 C 641 564, 378 1253, 826 1665" stroke="var(--c1)" pathLength="1000" style="--dur:5.4s;--dl:0.0s"/>
+        <path class="rn" d="M878 500 C 624 576, 373 1264, 696 1653" stroke="var(--c1)" pathLength="1000" style="--dur:6.75s;--dl:8.37s"/>
+        <path class="rn" d="M878 500 C 609 583, 365 1265, 568 1628" stroke="var(--c3)" pathLength="1000" style="--dur:8.1s;--dl:7.74s"/>
+        <path class="rn" d="M878 500 C 596 582, 352 1253, 443 1592" stroke="var(--c3)" pathLength="1000" style="--dur:9.45s;--dl:7.11s"/>
+        <path class="rn" d="M878 500 C 586 575, 335 1228, 323 1542" stroke="var(--c3)" pathLength="1000" style="--dur:10.8s;--dl:6.48s"/>
+        <path class="rn" d="M878 500 C 580 561, 314 1190, 210 1482" stroke="var(--c2)" pathLength="1000" style="--dur:12.15s;--dl:5.85s"/>
+        <path class="rn" d="M878 500 C 578 543, 291 1138, 103 1410" stroke="var(--c1)" pathLength="1000" style="--dur:13.5s;--dl:5.22s"/>
+        <path class="rn" d="M878 500 C 580 526, 266 1075, 6 1329" stroke="var(--c1)" pathLength="1000" style="--dur:5.4s;--dl:4.59s"/>
+        <path class="rn" d="M878 500 C 586 512, 239 1001, -82 1238" stroke="var(--c3)" pathLength="1000" style="--dur:6.75s;--dl:3.96s"/>
+        <path class="rn" d="M878 500 C 596 504, 212 920, -159 1139" stroke="var(--c3)" pathLength="1000" style="--dur:8.1s;--dl:3.33s"/>
+        <path class="rn" d="M878 500 C 609 502, 185 832, -225 1032" stroke="var(--c3)" pathLength="1000" style="--dur:9.45s;--dl:2.7s"/>
+        <path class="rn" d="M878 500 C 624 507, 159 742, -279 920" stroke="var(--c3)" pathLength="1000" style="--dur:10.8s;--dl:2.07s"/>
+        <path class="rn" d="M878 500 C 641 514, 134 651, -319 804" stroke="var(--c2)" pathLength="1000" style="--dur:12.15s;--dl:1.44s"/>
+        <path class="rn" d="M878 500 C 658 522, 112 563, -347 684" stroke="var(--c1)" pathLength="1000" style="--dur:13.5s;--dl:0.81s"/>
+        <path class="rn" d="M878 500 C 674 526, 93 478, -360 561" stroke="var(--c1)" pathLength="1000" style="--dur:5.4s;--dl:0.18s"/>
+        <path class="rn" d="M878 500 C 689 525, 78 399, -360 439" stroke="var(--c3)" pathLength="1000" style="--dur:6.75s;--dl:8.55s"/>
+        <path class="rn" d="M878 500 C 702 517, 67 327, -347 316" stroke="var(--c3)" pathLength="1000" style="--dur:8.1s;--dl:7.92s"/>
+        <path class="rn" d="M878 500 C 711 502, 60 261, -319 196" stroke="var(--c3)" pathLength="1000" style="--dur:9.45s;--dl:7.29s"/>
+        <path class="rn" d="M878 500 C 717 484, 58 202, -279 80" stroke="var(--c3)" pathLength="1000" style="--dur:10.8s;--dl:6.66s"/>
+        <path class="rn" d="M878 500 C 718 464, 61 149, -225 -32" stroke="var(--c2)" pathLength="1000" style="--dur:12.15s;--dl:6.03s"/>
+        <path class="rn" d="M878 500 C 715 447, 68 101, -159 -139" stroke="var(--c1)" pathLength="1000" style="--dur:13.5s;--dl:5.4s"/>
+        <path class="rn" d="M878 500 C 708 436, 79 56, -82 -238" stroke="var(--c1)" pathLength="1000" style="--dur:5.4s;--dl:4.77s"/>
+        <path class="rn" d="M878 500 C 698 432, 95 13, 6 -329" stroke="var(--c3)" pathLength="1000" style="--dur:6.75s;--dl:4.14s"/>
+        <path class="rn" d="M878 500 C 685 435, 114 -27, 103 -410" stroke="var(--c3)" pathLength="1000" style="--dur:8.1s;--dl:3.51s"/>
+        <path class="rn" d="M878 500 C 669 443, 136 -67, 210 -482" stroke="var(--c3)" pathLength="1000" style="--dur:9.45s;--dl:2.88s"/>
+        <path class="rn" d="M878 500 C 652 454, 161 -106, 323 -542" stroke="var(--c2)" pathLength="1000" style="--dur:10.8s;--dl:2.25s"/>
+        <path class="rn" d="M878 500 C 635 464, 187 -143, 443 -592" stroke="var(--c1)" pathLength="1000" style="--dur:12.15s;--dl:1.62s"/>
+        <path class="rn" d="M878 500 C 619 470, 214 -179, 568 -628" stroke="var(--c1)" pathLength="1000" style="--dur:13.5s;--dl:0.99s"/>
+        <path class="rn" d="M878 500 C 604 470, 242 -210, 696 -653" stroke="var(--c3)" pathLength="1000" style="--dur:5.4s;--dl:0.36s"/>
+        <path class="rn" d="M878 500 C 592 464, 268 -236, 826 -665" stroke="var(--c3)" pathLength="1000" style="--dur:6.75s;--dl:8.73s"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <span class="brand">
+      <span class="ja">研ぎ澄ませるための情報</span>
+      <span class="en lat" style="font-size:12.5px">Holders&#39; Governance Skill</span>
+      <span class="rom ja">Holders&#39; Governance Skill</span>
+    </span>
+    <span class="links">
+      <a href="#catalyst">Catalyst</a>
+      <a href="#relay">Relay</a>
+      <a href="#deleg">Delegation</a>
+      <a href="#translate">Translate</a>
+      <a href="#spiral">Spiral</a>
+    </span>
+    <button class="lang" id="lang" type="button">
+      <span class="ja">EN</span><span class="en">日本語</span>
+    </button>
+    <a class="pill" href="#catalyst">
+      <span class="ja">はじめる</span><span class="en">Start</span>
+      <span class="arw lat">&rarr;</span>
+    </a>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-in">
+      <span class="lbl eyeline">Cardano / public data only</span>
+
+      <h1 class="wm lat">Holders&#39;<br>Governance<br><span class="l2">Skill</span></h1>
+
+      <p class="jt">
+        <span class="ja"><em>研ぎ澄ませる</em>ための情報</span>
+        <span class="en">Information to <em>sharpen</em> your judgement</span>
+      </p>
+      <p class="why">
+        <span class="ja">本物を見極めるには、それに見合った情報がいる。</span>
+        <span class="en">To tell what is genuine, you need information equal to the task.</span>
+      </p>
+
+      <div class="lede">
+        <span class="ja">公開されているものを、読める形にして置いています。結論は書きません。</span>
+        <span class="en">Public material, made readable. No conclusions.</span>
+        <p class="typed" id="typed"><span class="cur"></span></p>
+      </div>
+
+      <nav class="idx">
+        <a href="#catalyst">
+          <span class="kind">Catalyst</span>
+          <span class="ttl">
+            <span class="ja">Catalyst の提案を、一望する。</span>
+            <span class="en">See every proposal at once.</span>
+          </span>
+          <span class="arw lat">&rarr;</span>
+        </a>
+        <a href="#relay">
+          <span class="kind">Relay</span>
+          <span class="ttl">
+            <span class="ja">応答したものだけを、採点する。</span>
+            <span class="en">Score only what answered.</span>
+          </span>
+          <span class="arw lat">&rarr;</span>
+        </a>
+        <a href="#deleg">
+          <span class="kind">Delegation</span>
+          <span class="ttl">
+            <span class="ja">読むのをやめて、動かしてみる。</span>
+            <span class="en">Stop reading. Move it and see.</span>
+          </span>
+          <span class="arw lat">&rarr;</span>
+        </a>
+        <a href="#translate">
+          <span class="kind">Translate</span>
+          <span class="ttl">
+            <span class="ja">聞こえた声を、読める言葉に。</span>
+            <span class="en">Turn what you hear into words you can read.</span>
+          </span>
+          <span class="arw lat">&rarr;</span>
+        </a>
+        <a href="#spiral">
+          <span class="kind">Spiral</span>
+          <span class="ttl">
+            <span class="ja">あえて厳しく、現状を書かせた。</span>
+            <span class="en">A deliberately severe read of where things stand.</span>
+          </span>
+          <span class="arw lat">&rarr;</span>
+        </a>
+      </nav>
+
+      <p class="meas">
+        <span class="lbl">Measured</span>
+        <span><b data-count="130">0</b>proposals</span>
+        <span><b data-count="1282">0</b>pools</span>
+        <span><b>21.6M &#8371;</b>funded</span>
+        <span><b data-count="6">0</b>axes</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="fx" id="fx" role="group" aria-label="background"></div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="lbl on">Stance</span>
+      <h2 class="h2">
+        <span class="ja"><em>思考の流動性</em>と、<br><em>真贋の持続可能性</em>。</span>
+        <span class="en"><em>Fluid thinking</em>, and<br><em>durable discernment</em>.</span>
+      </h2>
+    </div>
+
+    <div class="manifesto">
+      <p class="rv">
+        <span class="ja">最終的に判断するのは、<b>あなた自身の思考</b>だ。構造を理解すれば、なぜそうなっているのかが見えてくる。</span>
+        <span class="en">In the end you judge with <b>your own thinking</b>. Understand the structure and the reasons come into view.</span>
+      </p>
+      <p class="rv" style="--i:1">
+        <span class="ja"><b>誰かを非難するためではない。</b>情報は公開されている。ただ、<b>読めない。どこにあるのかも分からない。</b>そういう情報で溢れている。</span>
+        <span class="en"><b>This is not to blame anyone.</b> The information is public. It just <b>cannot be read, and there is no telling where it is.</b> The world is full of information like that.</span>
+      </p>
+      <p class="rv" style="--i:2">
+        <span class="ja">可視化され、多くの人が確認し、行動できる。<b>そのフローが、将来の価値を左右する。</b></span>
+        <span class="en">Made visible, checked by many, acted on. <b>That flow decides future value.</b></span>
+      </p>
+    </div>
+
+    <span class="lbl exlabel rv"><span class="ja">たとえば</span><span class="en">For example</span></span>
+    <div class="creed">
+      <p class="rv"><span class="tick"></span><span>
+        <span class="ja">登録されていることと、<b>持っていること</b>は別だ。</span>
+        <span class="en">Being registered and <b>owning</b> are not the same thing.</span>
+      </span></p>
+      <p class="rv" style="--i:1"><span class="tick"></span><span>
+        <span class="ja">届かないことは、<b>止まっている証明</b>ではない。</span>
+        <span class="en">Not answering is <b>no proof of being down</b>.</span>
+      </span></p>
+      <p class="rv" style="--i:2"><span class="tick"></span><span>
+        <span class="ja">混同されたまま、<b>投票は進んでいる</b>。</span>
+        <span class="en">The confusion stands, and <b>the voting goes on</b>.</span>
+      </span></p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="lbl on">Measured</span>
+      <h2 class="h2">
+        <span class="ja">どれも、公開データだけで組み立てた。</span>
+        <span class="en">Every one of them built from public data alone.</span>
+      </h2>
+    </div>
+    <div class="figs rv" style="--i:1">
+      <div class="fig" style="--w:78%">
+        <span class="lbl">Catalyst</span>
+        <span class="n lat">130</span>
+        <span class="bar"><i></i></span>
+        <span class="l">
+          <span class="ja">Catalyst に出た日本の提案。F2 から F14 まで、採択額 21.6M &#8371; 分。</span>
+          <span class="en">Japanese proposals in Catalyst. F2 through F14, 21.6M &#8371; funded.</span>
+        </span>
+      </div>
+      <div class="fig" style="--w:62%">
+        <span class="lbl">Relay</span>
+        <span class="n lat">1,282</span>
+        <span class="bar"><i></i></span>
+        <span class="l">
+          <span class="ja">直近30エポックでブロックを作り、実際に応答したステークプール。</span>
+          <span class="en">Stake pools that minted in the last 30 epochs and actually answered.</span>
+        </span>
+      </div>
+      <div class="fig" style="--w:44%">
+        <span class="lbl">Delegation</span>
+        <span class="n lat">2</span>
+        <span class="bar"><i></i></span>
+        <span class="l">
+          <span class="ja">1つのウォレットが同時に持つ委任。混同されたまま投票が進んでいる。</span>
+          <span class="en">Delegations one wallet holds at once. Voting proceeds with them confused.</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec works">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="lbl on">Pages</span>
+      <h2 class="h2">
+        <span class="ja">読める形にして、置いてある。</span>
+        <span class="en">Made readable, and left here.</span>
+      </h2>
+    </div>
+    <span class="lbl subhead" style="margin-top:0">
+      <span class="ja">実測 &mdash; 公開データを測った結果</span>
+      <span class="en">Measured &mdash; results of measuring public data</span>
+    </span>
+    <div class="workgrid">
+
+      <article class="card rv" id="catalyst">
+        <a class="shot" href="https://hfot.github.io/Catalyst-Japan/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="shots/catalyst.png" data-shot-ja="shots/catalyst.png" data-shot-en="shots/catalyst-en.png"
+               width="1440" height="900" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="lbl on">Catalyst Japan</span>
+          <h3>
+            <span class="ja">日本の提案を、一望する。</span>
+            <span class="en">See every proposal at once.</span>
+          </h3>
+          <p>
+            <span class="ja">130件を金額・分野・進捗で並べ替える。完了報告と動画まで一枚に載せた、F2 から F14 の全記録。</span>
+            <span class="en">130 proposals sorted by amount, sector and status. Completion reports and videos on one page, F2 through F14.</span>
+          </p>
+          <div class="spec">
+            <div><span class="k">Proposals</span><span class="v">130</span></div>
+            <div><span class="k">Funded</span><span class="v">21.6M &#8371;</span></div>
+            <div><span class="k">Rounds</span><span class="v">F2 &ndash; F14</span></div>
+          </div>
+          <a class="pill" href="https://hfot.github.io/Catalyst-Japan/" target="_blank" rel="noopener">
+            <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="card rv" id="relay" style="--i:1">
+        <a class="shot" href="https://hfot.github.io/cardano-relay-health/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="shots/relay.png" data-shot-ja="shots/relay.png" data-shot-en="shots/relay-en.png"
+               width="1440" height="900" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="lbl on">Relay Health Ranking</span>
+          <h3>
+            <span class="ja">応答したものだけを、採点する。</span>
+            <span class="en">Score only what answered.</span>
+          </h3>
+          <p>
+            <span class="ja">1,282プールのリレーを6軸で測って並べる。届かないことは停止の証明ではない、と書き添えたうえで。</span>
+            <span class="en">1,282 pools scored on six axes, with the note that unreachable is no proof of offline.</span>
+          </p>
+          <div class="spec">
+            <div><span class="k">Pools</span><span class="v">1,282</span></div>
+            <div><span class="k">Axes</span><span class="v">6</span></div>
+            <div><span class="k">Grades</span><span class="v">S &ndash; D</span></div>
+          </div>
+          <a class="pill" href="https://hfot.github.io/cardano-relay-health/" target="_blank" rel="noopener">
+            <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="card rv" id="deleg" style="--i:2">
+        <a class="shot" href="https://hfot.github.io/cardano-two-delegations/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="shots/delegations.png" data-shot-ja="shots/delegations.png" data-shot-en="shots/delegations-en.png"
+               width="1440" height="900" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="lbl on">One Wallet, Two Delegations</span>
+          <h3>
+            <span class="ja">読むのをやめて、動かしてみる。</span>
+            <span class="en">Stop reading. Move it and see.</span>
+          </h3>
+          <p>
+            <span class="ja">ステーキング委任と DRep 委任。同じウォレットが持つ2つの力の差を、シミュレーションで確かめる。</span>
+            <span class="en">Staking delegation and DRep delegation. Feel the difference between the two powers one wallet holds.</span>
+          </p>
+          <div class="spec">
+            <div><span class="k">Simulations</span><span class="v">5</span></div>
+            <div><span class="k">Logic tree</span><span class="v">16</span></div>
+            <div><span class="k">Basis</span><span class="v">CIP-1694</span></div>
+          </div>
+          <a class="pill" href="https://hfot.github.io/cardano-two-delegations/" target="_blank" rel="noopener">
+            <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
+          </a>
+        </div>
+      </article>
+
+    </div>
+
+    <span class="lbl subhead">
+      <span class="ja">道具とモデル &mdash; 実測ではないもの</span>
+      <span class="en">Tool and model &mdash; not measurements</span>
+    </span>
+    <div class="workgrid two">
+
+      <article class="card rv" id="translate">
+        <a class="shot" href="https://hfot.github.io/space-translate/app.html" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="shots/translate.png" data-shot-ja="shots/translate.png" data-shot-en="shots/translate-en.png"
+               width="1440" height="900" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="top">
+            <span class="lbl on">Space Translate</span>
+            <span class="badge tool"><span class="ja">道具</span><span class="en">Tool</span></span>
+          </span>
+          <h3>
+            <span class="ja">聞こえた声を、読める言葉に。</span>
+            <span class="en">Turn what you hear into words you can read.</span>
+          </h3>
+          <p>
+            <span class="ja">分からない言語の音声を、その場で文字にして翻訳する。文字起こしはブラウザの中で完結し、APIキーもインストールも要らない。</span>
+            <span class="en">Speech in a language you do not know, captioned and translated on the spot. Transcription runs inside the browser. No API key, no install.</span>
+          </p>
+          <p class="note">
+            <span class="ja">タブの音声を共有して使う。Chrome / Edge のPC専用。</span>
+            <span class="en">Works by sharing a tab&#39;s audio. Chrome or Edge on desktop only.</span>
+          </p>
+          <div class="spec">
+            <div><span class="k">Engine</span><span class="v">Whisper</span></div>
+            <div><span class="k">Runs</span><span class="v">In browser</span></div>
+            <div><span class="k">Cost</span><span class="v">Free</span></div>
+          </div>
+          <a class="pill" href="https://hfot.github.io/space-translate/app.html" target="_blank" rel="noopener">
+            <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="card rv" id="spiral" style="--i:1">
+        <a class="shot" href="https://hfot.github.io/cardano-spiral/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="shots/spiral.png" data-shot-ja="shots/spiral.png" data-shot-en="shots/spiral-en.png"
+               width="1440" height="900" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="top">
+            <span class="lbl on">The Decentralization Spiral</span>
+            <span class="badge"><span class="ja">AI生成モデル</span><span class="en">AI-generated model</span></span>
+          </span>
+          <h3>
+            <span class="ja">あえて厳しく、現状を書かせた。</span>
+            <span class="en">A deliberately severe read of where things stand.</span>
+          </h3>
+          <p>
+            <span class="ja">研ぎ澄ませるための材料として、現状のモデルをAIに生成させた一枚もの。<b>実測ではなく解釈</b>であり、意図的に辛口に振ってある。批判はすべて公開された数字か、数字が公表されていないという事実に紐づけてある。</span>
+            <span class="en">A single page where a model of the present state was generated by AI, as material for sharpening. <b>Interpretation, not measurement</b>, and deliberately severe. Every criticism is tied to a public figure, or to the fact that no figure was published.</span>
+          </p>
+          <p class="note">
+            <span class="ja">読み方は三つ。順に読む / 立場から読む / 自分をシミュレートする。</span>
+            <span class="en">Three ways to read it: in order, by position, or by simulating yourself.</span>
+          </p>
+          <div class="spec">
+            <div><span class="k">Chapters</span><span class="v">19</span></div>
+            <div><span class="k">Positions</span><span class="v">9</span></div>
+            <div><span class="k">Readings</span><span class="v">3</span></div>
+          </div>
+          <a class="pill" href="https://hfot.github.io/cardano-spiral/" target="_blank" rel="noopener">
+            <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="sec end">
+  <div class="wrap">
+    <div class="head rv" style="margin-bottom:0">
+      <span class="lbl on">Status</span>
+      <h2 class="h2">
+        <span class="ja">完成はしない。数字が動く限り、書き足す。</span>
+        <span class="en">Never finished. As long as the figures move, this keeps being written.</span>
+      </h2>
+      <p>
+        <span class="ja">数字は取得した時点のもので、エポックごとに動く。訂正はいつでも歓迎します。</span>
+        <span class="en">Figures are from the moment they were taken and move each epoch. Corrections are always welcome.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Holders&#39; Governance Skill &nbsp;/&nbsp; HFOT&reg; &nbsp;/&nbsp; 2026</span>
+    <span>Built from public data</span>
+    <a href="https://github.com/HFOT" target="_blank" rel="noopener">github.com/HFOT &nearr;</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root   = document.documentElement;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasIO  = 'IntersectionObserver' in window;
+  var BEAT   = 469;
+
+  /* ---------- language ---------- */
+  function isEN(){ return root.getAttribute('data-lang') === 'en'; }
+  function setLang(en){
+    if (en){ root.setAttribute('data-lang','en'); root.lang = 'en'; }
+    else   { root.removeAttribute('data-lang');   root.lang = 'ja'; }
+    try { localStorage.setItem('hgs-lang', en ? 'en' : 'ja'); } catch (e) {}
+    document.querySelectorAll('[data-shot-en]').forEach(function(img){
+      var next = en ? img.dataset.shotEn : img.dataset.shotJa;
+      if (next && img.getAttribute('src') !== next) img.setAttribute('src', next);
+    });
+    resetTyped();
+  }
+  try { if (localStorage.getItem('hgs-lang') === 'en') setLang(true); } catch (e) {}
+  var langBtn = document.getElementById('lang');
+  if (langBtn) langBtn.addEventListener('click', function(){ setLang(!isEN()); });
+
+  /* ---------- reveal ---------- */
+  if (!reduce && hasIO) root.classList.add('js');
+  if (hasIO){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:.2, rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.rv, .fig').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.rv, .fig').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var to = parseInt(el.dataset.count,10);
+    if (reduce){ el.textContent = to.toLocaleString('en-US'); return; }
+    var dur = BEAT*8, t0 = null;
+    requestAnimationFrame(function step(t){
+      if (t0===null) t0 = t;
+      var p = Math.min((t-t0)/dur,1), e = 1-Math.pow(1-p,3);
+      el.textContent = Math.round(to*e).toLocaleString('en-US');
+      if (p<1) requestAnimationFrame(step);
+    });
+  });
+
+  /* ---------- typed line, per language ---------- */
+  var LINES = {
+    ja: ['提案は金額で。リレーは実測で。委任は動かして。',
+         '検証できる数字だけを、そのまま並べている。',
+         '数字は取得時点のもの。エポックごとに動く。'],
+    en: ['Proposals by amount. Relays by measurement. Delegation by doing.',
+         'Only figures you can check, laid out as they are.',
+         'Figures are from the moment they were taken. They move each epoch.']
+  };
+  var tp = document.getElementById('typed'), node = null, cur = null;
+  var li = 0, ci = 0, hold = 0, back = false;
+  function resetTyped(){ li = 0; ci = 0; hold = 0; back = false; if (node) node.nodeValue = ''; }
+
+  if (tp && !reduce){
+    cur = tp.querySelector('.cur');
+    node = document.createTextNode('');
+    tp.insertBefore(node, cur);
+    setInterval(function(){
+      if (hold > 0){ hold--; return; }
+      var set = LINES[isEN() ? 'en' : 'ja'];
+      var line = set[li % set.length];
+      if (!back){
+        node.nodeValue = line.slice(0, ci++);
+        if (ci > line.length){ back = true; hold = 32; }
+      } else {
+        ci -= 2;
+        if (ci <= 0){ ci = 0; back = false; li = (li + 1) % set.length; hold = 2; }
+        node.nodeValue = line.slice(0, ci);
+      }
+    }, BEAT/4);
+  }
+})();
+</script>
+<script src="flow.js" defer></script>
+<script>
+/* background preset switcher, only rendered when the field runs */
+window.addEventListener('load', function(){
+  var api = window.CardanoFlow, host = document.getElementById('fx');
+  if (!api || !host) return;
+  var saved = 0;
+  try { saved = parseInt(localStorage.getItem('cardano-flow') || '0', 10) || 0; } catch (e) {}
+  if (saved > 0) api.set(saved);
+  api.presets.forEach(function(p, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = p.label;
+    b.setAttribute('aria-pressed', String(i === api.current()));
+    b.addEventListener('click', function(){
+      api.set(i);
+      try { localStorage.setItem('cardano-flow', String(i)); } catch (e) {}
+      host.querySelectorAll('button').forEach(function(x, j){
+        x.setAttribute('aria-pressed', String(j === i));
+      });
+    });
+    host.appendChild(b);
+  });
+});
+</script>
+</body>
+</html>
