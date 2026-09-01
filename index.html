@@ -297,7 +297,8 @@ html[data-lang="en"] .manifesto p{line-height:1.95}
 .fig .l{display:block; color:var(--dim); font-size:.88rem; line-height:1.95}
 
 /* three pages side by side, so the page stays short */
-.workgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(16px,2vw,30px)}
+/* one grid for every group, so a new page is just another cell */
+.workgrid{display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(14px,1.5vw,24px)}
 .card{
   display:flex; flex-direction:column; overflow:hidden;
   border:1px solid var(--line); border-radius:var(--r);
@@ -316,25 +317,25 @@ html[data-lang="en"] .manifesto p{line-height:1.95}
   transition:transform calc(var(--beat)*2.4) var(--ease);
 }
 .card:hover .shot img{transform:scale(1.06)}
-.card .body{display:flex; flex-direction:column; flex:1; padding:clamp(17px,1.6vw,24px)}
+.card .body{display:flex; flex-direction:column; flex:1; padding:clamp(15px,1.35vw,20px)}
 .card h3{
-  font-size:clamp(1rem,1.35vw,1.22rem); font-weight:700; line-height:1.55;
-  letter-spacing:-.012em; margin:.9em 0 .6em;
+  font-size:clamp(.95rem,1.05vw,1.08rem); font-weight:700; line-height:1.6;
+  letter-spacing:-.012em; margin:.9em 0 .55em;
 }
-.card p{color:var(--dim); font-size:.84rem; line-height:1.9; margin:0 0 1.4em}
+.card p{color:var(--dim); font-size:.79rem; line-height:1.85; margin:0 0 1.3em}
 .card p b{color:var(--ink); font-weight:700}
 .card .spec{
-  display:grid; grid-template-columns:repeat(3,1fr); gap:8px;
-  margin:auto 0 1.3em; padding-top:1.1em; border-top:1px solid var(--line);
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(68px, 1fr)); gap:9px 8px;
+  margin:auto 0 1.2em; padding-top:1em; border-top:1px solid var(--line);
 }
 .card .spec div{display:grid; gap:3px; min-width:0}
-.card .spec .k{font-size:8.5px; letter-spacing:.13em; text-transform:uppercase;
-               color:var(--faint); white-space:nowrap}
-.card .spec .v{font-size:12px; color:var(--ink); font-variant-numeric:tabular-nums;
+.card .spec .k{font-size:8px; letter-spacing:.1em; text-transform:uppercase;
+               color:var(--faint); line-height:1.5}
+.card .spec .v{font-size:11.5px; color:var(--ink); font-variant-numeric:tabular-nums;
                white-space:nowrap}
-.card .pill{align-self:flex-start; padding:8px 15px; font-size:11.5px}
-.workgrid.two{grid-template-columns:repeat(2,1fr); margin-top:clamp(16px,2vw,30px)}
-.card .top{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+.card .pill{align-self:flex-start; padding:7px 13px; font-size:11px}
+.workgrid.two{margin-top:clamp(14px,1.5vw,24px)}
+.card .top{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
 /* anything that is not a measurement says so on its face */
 .badge{
   font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 100,"wght" 600;
@@ -344,7 +345,7 @@ html[data-lang="en"] .manifesto p{line-height:1.95}
 }
 .badge.tool{border-color:rgba(33,212,194,.45); color:var(--c2)}
 .card .note{
-  margin:0 0 1.3em; font-size:11px; line-height:1.8; color:var(--faint);
+  margin:0 0 1.2em; font-size:10.5px; line-height:1.75; color:var(--faint);
 }
 .subhead{margin:clamp(30px,4vw,54px) 0 clamp(14px,1.8vw,22px)}
 
@@ -399,10 +400,15 @@ footer a:hover{color:var(--ink)}
 }
 
 /* ===================== responsive ===================== */
+@media (max-width:1280px){
+  .workgrid,.workgrid.two{grid-template-columns:repeat(3,1fr)}
+}
 @media (max-width:1100px){
-  .workgrid{grid-template-columns:repeat(2,1fr)}
   .nav .links{display:none}
   .brand .rom{display:none}
+}
+@media (max-width:980px){
+  .workgrid,.workgrid.two{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:999px){
   .art::after{
@@ -413,7 +419,7 @@ footer a:hover{color:var(--ink)}
 @media (max-width:900px){
   .figs{grid-template-columns:1fr}
 }
-@media (max-width:700px){
+@media (max-width:640px){
   .workgrid,.workgrid.two{grid-template-columns:1fr}
 }
 @media (max-width:560px){
