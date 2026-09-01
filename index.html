@@ -73,7 +73,7 @@ html[data-lang="en"] body{line-height:1.75}
 
 /* ===================== FIELD ===================== */
 .field{
-  position:relative; min-height:100dvh; overflow:hidden;
+  position:relative; min-height:100dvh;
   display:grid; grid-template-rows:auto 1fr;
 }
 .art{position:absolute; inset:0; z-index:0; overflow:hidden}
@@ -160,7 +160,7 @@ html[data-lang="en"] body{line-height:1.75}
 
 /* ---------- hero ---------- */
 .hero{position:relative; z-index:5; grid-row:2;
-      display:grid; align-content:center;
+      display:grid; align-content:safe center;
       padding:clamp(24px,5vh,72px) var(--pad) clamp(40px,7vh,86px)}
 .hero-in{max-width:1400px; margin-inline:auto; width:100%}
 .eyeline{display:block; margin:0 0 clamp(14px,2vh,22px)}
@@ -379,6 +379,22 @@ footer a:hover{color:var(--ink)}
   .js .rv{opacity:1; transform:none}
   .fig .bar i{width:var(--w,60%)}
   html{scroll-behavior:auto}
+}
+
+/* a short window tightens the opening screen rather than spilling */
+@media (max-height:1020px) and (min-width:1000px){
+  .hero{padding-block:clamp(14px,2.4vh,34px) clamp(16px,3vh,40px)}
+  .wm{font-size:clamp(1.9rem,4.2vw,3.6rem); margin-bottom:clamp(12px,1.8vh,20px)}
+  .jt{font-size:clamp(1.05rem,1.7vw,1.42rem); margin-bottom:8px}
+  .why{margin-bottom:clamp(14px,2.2vh,24px)}
+  .lede{margin-bottom:clamp(16px,2.6vh,30px)}
+  .idx a{padding-block:clamp(8px,1.15vh,14px)}
+  .meas{margin-top:clamp(14px,2vh,22px)}
+  .eyeline{margin-bottom:clamp(8px,1.2vh,14px)}
+}
+@media (max-height:700px) and (min-width:1000px){
+  .wm{font-size:clamp(1.7rem,3.4vw,2.9rem)}
+  .lede .typed{display:none}
 }
 
 /* ===================== responsive ===================== */
