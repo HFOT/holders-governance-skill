@@ -17,6 +17,9 @@
               source at the node. Ping pong, half resolution.
      lattice  Line primitives. A grid of segments is displaced
               in 3D by noise and drawn with GL_LINES.
+     rays     Curves leaving one node. Each ray is a cubic sampled
+              into segments, and a bright head runs outward along
+              it, so the light travels rather than the geometry.
 
    Falls back silently on narrow viewports, without WebGL2,
    without float render targets, or under reduced motion; the
@@ -344,7 +347,63 @@ var FIELD = document.querySelector('.field') || HOST;
     'void main(){ frag = vec4(vCol, 1.0); }'
   ].join('\n'));
 
-  if (!pSim || !pSeed || !pPoint || !pContour || !pInkStep || !pInkDraw || !pLine) return;
+  /* ============================================================
+     RAYS — curves out of one node, with light running along them
+     ============================================================ */
+  var RRAY = 240;          /* rays */
+  var RSEG = 30;           /* samples along each ray */
+  var RVERT = RRAY * (RSEG - 1) * 2;
+  var pRay = program([
+    '#version 300 es', 'precision highp float;',
+    'uniform float uTime, uAspect, uScroll; uniform int uN, uS;',
+    'out vec3 vCol;', PALETTE,
+    'vec2 bez(vec2 a, vec2 b, vec2 c, vec2 d, float s){',
+    '  float u = 1.0 - s;',
+    '  return u*u*u*a + 3.0*u*u*s*b + 3.0*u*s*s*c + s*s*s*d;',
+    '}',
+    'void main(){',
+    '  int id = gl_VertexID;',
+    '  int per = (uS - 1) * 2;',
+    '  int ray = id / per;',
+    '  int rest = id - ray * per;',
+    '  int seg = rest / 2;',
+    '  int end = rest - seg * 2;',
+    '  float s = float(seg + end) / float(uS - 1);',
+    '  float t = float(ray) / float(uN - 1);',
+    /* the same fan the svg fallback draws, ported to the shader */
+    '  vec2 N = vec2(878.0, 500.0);',
+    '  float ang = 1.5708 + t * 3.14159;',
+    '  vec2 E = N + vec2(cos(ang) * 1240.0, sin(ang) * 1240.0 * 0.94);',
+    '  vec2 C1 = vec2(N.x - 230.0 - sin(t * 7.3) * 70.0,',
+    '                 N.y + (E.y - N.y) * 0.05 + sin(t * 15.0) * 28.0);',
+    '  vec2 C2 = vec2(N.x - 660.0 + cos(t * 5.1) * 160.0,',
+    '                 N.y + (E.y - N.y) * 0.64 + sin(t * 9.4) * 62.0);',
+    '  vec2 P = bez(N, C1, C2, E, s);',
+    '  vec2 uv = vec2(P.x / 900.0, P.y / 1000.0);',
+    '  vec2 ndc = vec2((uv.x * 2.0 - 1.0), (1.0 - uv.y * 2.0));',
+    '  float push = uScroll * 0.55;',
+    '  ndc.x = ndc.x * (0.73 - push * 0.20) + 0.02 + push * 0.42;',
+    '  ndc.y = ndc.y * (0.60 - push * 0.16);',
+    '  gl_Position = vec4(ndc, 0.0, 1.0);',
+    /* a head of light runs from the node outward, once per ray */
+    '  float sp = 0.10 + mod(float(ray) * 0.0731, 0.16);',
+    '  float ph = fract(float(ray) * 0.61803);',
+    '  float d = s - fract(uTime * sp + ph);',
+    '  d = d - floor(d + 0.5);',
+    '  float head = exp(-d * d * 190.0);',
+    '  float thin = 1.0 - abs(t - 0.5) * 1.35;',
+    '  float base = 0.052 * max(thin, 0.12);',
+    '  float fade = smoothstep(0.0, 0.05, s) * smoothstep(1.0, 0.72, s)',
+    '             * (1.0 - uScroll * 0.75);',
+    '  vCol = ramp(t) * (base + head * 0.62) * fade;',
+    '}'
+  ].join('\n'), [
+    '#version 300 es', 'precision highp float;',
+    'in vec3 vCol; out vec4 frag;',
+    'void main(){ frag = vec4(vCol, 1.0); }'
+  ].join('\n'));
+
+  if (!pSim || !pSeed || !pPoint || !pContour || !pInkStep || !pInkDraw || !pLine || !pRay) return;
 
   /* ---------- resources ---------- */
   var vao = gl.createVertexArray();
@@ -460,6 +519,22 @@ var FIELD = document.querySelector('.field') || HOST;
         gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, dyeT[this.dye]);
         gl.uniform1i(pInkDraw.u.uDye, 0);
         gl.drawArrays(gl.TRIANGLES, 0, 3);
+      }
+    },
+    {
+      id: 'rays', label: 'Rays', trail: true, keep: 0.80, gain: 1.0,
+      draw: function (t, dt, scroll) {
+        gl.bindFramebuffer(gl.FRAMEBUFFER, accF[1]);
+        gl.viewport(0, 0, W, H);
+        gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE);
+        gl.useProgram(pRay);
+        gl.uniform1f(pRay.u.uTime, t);
+        gl.uniform1f(pRay.u.uAspect, W / H);
+        gl.uniform1f(pRay.u.uScroll, scroll);
+        gl.uniform1i(pRay.u.uN, RRAY);
+        gl.uniform1i(pRay.u.uS, RSEG);
+        gl.drawArrays(gl.LINES, 0, RVERT);
+        gl.disable(gl.BLEND);
       }
     },
     {
