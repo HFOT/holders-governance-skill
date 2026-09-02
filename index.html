@@ -81,8 +81,9 @@ html[data-lang="en"] body{line-height:1.75}
 .art::after{
   content:""; position:absolute; inset:0; z-index:3; pointer-events:none;
   background:
-    linear-gradient(90deg, rgba(6,7,10,.95) 0%, rgba(6,7,10,.82) 30%,
-                           rgba(6,7,10,.46) 62%, rgba(6,7,10,.12) 100%),
+    linear-gradient(90deg, rgba(6,7,10,.86) 0%, rgba(6,7,10,.72) 26%,
+                           rgba(6,7,10,.62) 50%, rgba(6,7,10,.5) 74%,
+                           rgba(6,7,10,.2) 100%),
     linear-gradient(0deg,  rgba(6,7,10,.5), transparent 28%);
 }
 .flow{position:absolute; inset:0; z-index:0; display:block; pointer-events:none}
@@ -163,17 +164,18 @@ html[data-lang="en"] body{line-height:1.75}
 .hero{position:relative; z-index:5; grid-row:2; min-width:0;
       display:grid; align-content:safe center;
       padding:clamp(24px,5vh,72px) var(--pad) clamp(40px,7vh,86px)}
-.hero-in{max-width:1400px; margin-inline:auto; width:100%; min-width:0}
+.hero-in{max-width:1400px; margin-inline:auto; width:100%; min-width:0; text-align:center}
 .eyeline{display:block; margin:0 0 clamp(14px,2vh,22px)}
 .wm{
   position:relative; margin:0 0 clamp(18px,2.4vh,30px);
   font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 118,"wght" 800;
-  font-size:clamp(2.1rem, 5.4vw, 4.85rem);
-  line-height:.98; letter-spacing:-.035em; color:var(--ink);
+  font-size:clamp(1.85rem, 5.4vw, 4.85rem);
+  line-height:1.04; letter-spacing:-.035em; color:var(--ink);
+  text-wrap:balance;
 }
 .wm .l2{color:var(--dim)}
 .jt{
-  margin:0 0 clamp(10px,1.4vh,16px);
+  margin:0 auto clamp(10px,1.4vh,16px);
   font-family:"Noto Sans JP",system-ui,sans-serif; font-weight:700;
   font-size:clamp(1.15rem,2vw,1.72rem); line-height:1.5;
   letter-spacing:-.022em; color:var(--ink);
@@ -182,20 +184,20 @@ html[data-lang="en"] .jt{font-family:"Archivo",sans-serif; letter-spacing:-.012e
 .jt em{font-style:normal;
   background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent}
 .why{
-  margin:0 0 clamp(22px,3.2vh,38px); max-width:34em;
+  margin:0 auto clamp(22px,3.2vh,38px); max-width:34em;
   font-size:clamp(.95rem,1.4vw,1.18rem); font-weight:400;
   line-height:1.9; letter-spacing:-.004em; color:var(--dim);
 }
 .lede{
-  display:flex; flex-wrap:wrap; align-items:baseline; gap:.5em 1.6em;
-  margin:0 0 clamp(28px,4.4vh,52px);
+  display:flex; flex-direction:column; align-items:center; gap:.55em;
+  margin:0 auto clamp(28px,4.4vh,52px);
   font-size:clamp(1rem,1.5vw,1.22rem); font-weight:500;
   letter-spacing:-.003em; line-height:1.75;
 }
 .lede em{font-style:normal;
   background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent}
 .lede .typed{
-  flex:1 1 20rem; min-width:0; min-height:1.9em; margin:0;
+  width:min(100%, 25rem); min-height:1.9em; margin:0;
   font-size:12.5px; font-weight:400; color:var(--dim); line-height:1.9;
 }
 .typed .cur{display:inline-block; width:2px; height:1em; background:var(--c1);
@@ -259,6 +261,7 @@ html[data-lang="en"] .jt{font-family:"Archivo",sans-serif; letter-spacing:-.012e
 }
 .pan.is-near{opacity:.26}
 .pan.is-on{opacity:1; pointer-events:auto}
+.pan{text-align:center}
 .pan .lbl{display:block; margin-bottom:.9em}
 .pan h2{
   font-size:clamp(1.02rem,1.4vw,1.28rem); font-weight:700; line-height:1.55;
@@ -315,7 +318,7 @@ html[data-lang="en"] .pan p{min-height:5.2em}
 .idx a:hover .arw{color:var(--ink); transform:translateX(5px)}
 
 .meas{
-  display:flex; flex-wrap:wrap; align-items:baseline;
+  display:flex; flex-wrap:wrap; align-items:baseline; justify-content:center;
   gap:8px clamp(22px,3.4vw,48px); margin-top:clamp(22px,3vh,34px);
   font-size:11.5px; color:var(--faint);
 }
@@ -760,7 +763,7 @@ footer a:hover{color:var(--ink)}
     <div class="hero-in">
       <span class="lbl eyeline">Cardano / public data only</span>
 
-      <h1 class="wm lat">Holders&#39;<br>Governance<br><span class="l2">Skill</span></h1>
+      <h1 class="wm lat">Holders&#39; Governance <span class="l2">Skill</span></h1>
 
       <p class="jt">
         <span class="ja"><em>研ぎ澄ませる</em>ための情報</span>
