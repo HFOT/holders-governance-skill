@@ -814,6 +814,14 @@ footer a:hover{color:var(--ink)}
           </span>
           <span class="arw lat">&rarr;</span>
         </a>
+        <a href="#alive">
+          <span class="kind">Alive</span>
+          <span class="ttl">
+            <span class="ja">採点を、生き物として見る。</span>
+            <span class="en">See the score as a living thing.</span>
+          </span>
+          <span class="arw lat">&rarr;</span>
+        </a>
         <a href="#deleg">
           <span class="kind">Delegation</span>
           <span class="ttl">
@@ -1064,7 +1072,33 @@ footer a:hover{color:var(--ink)}
         </div>
       </article>
 
-      <article class="card rv" id="deleg" style="--i:3">
+      <article class="card rv" id="alive" style="--i:3">
+        <a class="shot" href="https://hfot.github.io/spo-onchain-alive/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="shots/alive.png" data-shot-ja="shots/alive.png" data-shot-en="shots/alive-en.png"
+               width="1440" height="900" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="lbl on">SPO Onchain Alive</span>
+          <h3>
+            <span class="ja">採点を、生き物として見る。</span>
+            <span class="en">See the score as a living thing.</span>
+          </h3>
+          <p>
+            <span class="ja">6軸の点数と委任者の数が、そのプールだけの質量と運動になる。数字は Relay Health の実測値そのままで、変わるのは描き方だけ。</span>
+            <span class="en">The six axis scores and the delegator count become a mass and a motion belonging to that pool alone. The figures are the Relay Health measurements unchanged; only the drawing differs.</span>
+          </p>
+          <div class="spec">
+            <div><span class="k">Axes</span><span class="v">6</span></div>
+            <div><span class="k">Motifs</span><span class="v">5</span></div>
+            <div><span class="k">Source</span><span class="v">Relay Health</span></div>
+          </div>
+          <a class="pill" href="https://hfot.github.io/spo-onchain-alive/" target="_blank" rel="noopener">
+            <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="card rv" id="deleg" style="--i:4">
         <a class="shot" href="https://hfot.github.io/cardano-two-delegations/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
           <img src="shots/delegations.png" data-shot-ja="shots/delegations.png" data-shot-en="shots/delegations-en.png"
                width="1440" height="900" loading="lazy" decoding="async" alt="">
@@ -1274,6 +1308,12 @@ footer a:hover{color:var(--ink)}
           '1,282プールのリレーを6軸で測って並べる。届かないことは停止の証明ではない、と書き添えたうえで。'],
       en:['Score only what answered.',
           '1,282 pools scored on six axes, with the note that unreachable is no proof of offline.'] },
+    { id:'alive', icon:'icons/alive.svg', kind:'SPO Onchain Alive',
+      href:'https://hfot.github.io/spo-onchain-alive/',
+      ja:['採点を、生き物として見る。',
+          '6軸の点数と委任者の数が、そのプールだけの質量と運動になる。数字は Relay Health の実測値そのままで、変わるのは描き方だけ。'],
+      en:['See the score as a living thing.',
+          'The six axis scores and the delegator count become a mass and a motion belonging to that pool alone. The figures are the Relay Health measurements unchanged; only the drawing differs.'] },
     { id:'deleg', icon:'icons/deleg.svg', kind:'One Wallet, Two Delegations',
       href:'https://hfot.github.io/cardano-two-delegations/',
       ja:['読むのをやめて、動かしてみる。',

@@ -18,6 +18,7 @@
 | [DRep Governance Terminal](https://hfot.github.io/drep-terminal-v6/) | DRep の投票力・委任者構成・資金流入出・集中度を、公開オンチェーンデータから毎日更新する |
 | [Catalyst Japan](https://hfot.github.io/Catalyst-Japan/) | 日本の提案130件を金額・分野・進捗で並べ替える。F2 から F14、採択額 21.6M ₳ |
 | [Relay Health Ranking](https://hfot.github.io/cardano-relay-health/) | 1,282プールのリレーを6軸で採点。届かないことは停止の証明ではない、と書き添えたうえで |
+| [SPO Onchain Alive](https://hfot.github.io/spo-onchain-alive/) | Relay Health の6軸と委任者の数を、そのプールだけの質量と運動として描く。数字は実測値そのままで、変わるのは描き方だけ |
 | [One Wallet, Two Delegations](https://hfot.github.io/cardano-two-delegations/) | ステーキング委任と DRep 委任の差を、シミュレーションで確かめる |
 
 ### 道具とモデル — 実測ではないもの
