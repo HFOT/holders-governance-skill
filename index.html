@@ -160,10 +160,10 @@ html[data-lang="en"] body{line-height:1.75}
 .pill:hover .arw{transform:translateX(3px)}
 
 /* ---------- hero ---------- */
-.hero{position:relative; z-index:5; grid-row:2;
+.hero{position:relative; z-index:5; grid-row:2; min-width:0;
       display:grid; align-content:safe center;
       padding:clamp(24px,5vh,72px) var(--pad) clamp(40px,7vh,86px)}
-.hero-in{max-width:1400px; margin-inline:auto; width:100%}
+.hero-in{max-width:1400px; margin-inline:auto; width:100%; min-width:0}
 .eyeline{display:block; margin:0 0 clamp(14px,2vh,22px)}
 .wm{
   position:relative; margin:0 0 clamp(18px,2.4vh,30px);
@@ -201,69 +201,87 @@ html[data-lang="en"] .jt{font-family:"Archivo",sans-serif; letter-spacing:-.012e
 .typed .cur{display:inline-block; width:2px; height:1em; background:var(--c1);
             vertical-align:-.12em; margin-left:.3em}
 
-/* ---------- the dock: one tile per page, the selected one centred ----------
-   The rail is a fixed viewport and the track slides, so this holds any
-   number of pages. Tiles never change their layout box, only their
-   transform, which keeps the centring arithmetic stable. */
+/* ---------- the dock ----------
+   Two tracks share one index: marks on top, descriptions below. Both
+   centre the active item across the full width, so the neighbours stay
+   visible at low opacity and it is obvious there is more to either
+   side. Tiles never change their layout box, only their transform,
+   which keeps the centring arithmetic stable. */
 .dock{display:none}
 .dock-on .dock{display:block}
 .dock-on .idx{display:none}
 
 .rail{
-  position:relative; overflow:hidden;
-  width:min(100%, 520px); height:104px;
-  -webkit-mask-image:linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
-          mask-image:linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
+  position:relative; overflow:hidden; width:100%; height:132px;
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+          mask-image:linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
 }
 .track{
-  position:absolute; top:50%; left:0; display:flex; align-items:center;
-  gap:22px; padding-inline:0;
+  position:absolute; top:50%; left:0; display:flex; align-items:center; gap:30px;
   transform:translate(0,-50%);
-  transition:transform calc(var(--beat)*1.5) var(--ease);
+  transition:transform calc(var(--beat)*1.6) var(--ease);
   will-change:transform;
 }
 .tile{
   appearance:none; cursor:pointer; padding:0; flex:none;
-  width:64px; height:64px; border-radius:15px;
+  width:78px; height:78px; border-radius:19px;
   border:1px solid var(--line); background:rgba(255,255,255,.022);
   display:grid; place-items:center;
-  transform:scale(.86); opacity:.42;
-  transition:transform calc(var(--beat)*1.5) var(--ease),
-             opacity calc(var(--beat)*1.5) var(--ease),
+  transform:scale(.82); opacity:.36;
+  transition:transform calc(var(--beat)*1.6) var(--ease),
+             opacity calc(var(--beat)*1.6) var(--ease),
              border-color var(--half) var(--ease),
              background var(--half) var(--ease);
 }
-.tile img{width:44px; height:44px; display:block; border-radius:10px; pointer-events:none}
-.tile:hover{opacity:.78; border-color:var(--line-2)}
+.tile img{width:54px; height:54px; display:block; border-radius:12px; pointer-events:none}
+.tile:hover{opacity:.72; border-color:var(--line-2)}
 .tile[aria-selected="true"]{
-  transform:scale(1.3); opacity:1;
+  transform:scale(1.34); opacity:1;
   border-color:rgba(61,123,255,.5); background:rgba(61,123,255,.10);
 }
-.tile:focus-visible{outline:2px solid var(--c1); outline-offset:3px}
+.tile:focus-visible{outline:2px solid var(--c1); outline-offset:4px}
 
-.panel{
-  max-width:34rem; margin-top:clamp(14px,2vh,22px);
-  transition:opacity var(--half) var(--ease);
+.prail{
+  position:relative; overflow:hidden; width:100%; min-width:0;
+  margin-top:clamp(6px,1.2vh,14px);
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent);
+          mask-image:linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent);
 }
-.panel.swap{opacity:0}
-.panel .lbl{display:block; margin-bottom:.9em}
-.panel h2{
-  font-size:clamp(1.05rem,1.5vw,1.34rem); font-weight:700; line-height:1.55;
-  letter-spacing:-.014em; margin:0 0 .55em;
+.ptrack{
+  display:flex; align-items:flex-start; gap:clamp(30px,4vw,64px);
+  transition:transform calc(var(--beat)*1.6) var(--ease);
+  will-change:transform;
 }
-.panel p{
-  color:var(--dim); font-size:.86rem; line-height:1.95;
-  margin:0 0 1.3em; min-height:3.7em;
+.pan{
+  flex:none; width:min(430px, 76vw); opacity:.10;
+  transition:opacity calc(var(--beat)*1.6) var(--ease);
+  pointer-events:none;
 }
-html[data-lang="en"] .panel p{min-height:3.4em}
-.panel .pill{padding:8px 16px; font-size:12px}
+.pan.is-near{opacity:.26}
+.pan.is-on{opacity:1; pointer-events:auto}
+.pan .lbl{display:block; margin-bottom:.9em}
+.pan h2{
+  font-size:clamp(1.02rem,1.4vw,1.28rem); font-weight:700; line-height:1.55;
+  letter-spacing:-.014em; margin:0 0 .5em;
+}
+.pan p{color:var(--dim); font-size:.85rem; line-height:1.95; margin:0 0 1.2em; min-height:5.7em}
+html[data-lang="en"] .pan p{min-height:5.2em}
+.pan .pill{padding:8px 16px; font-size:12px}
 
 @media (max-width:560px){
-  .rail{height:88px}
-  .tile{width:54px; height:54px; border-radius:13px}
-  .tile img{width:37px; height:37px}
-  .track{gap:16px}
-  .panel p{min-height:5.2em}
+  .rail{height:104px}
+  .tile{width:62px; height:62px; border-radius:15px}
+  .tile img{width:43px; height:43px}
+  .track{gap:20px}
+  /* the panel has to sit inside the clear part of the mask, or its
+     own first and last characters fade out */
+  .prail{
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+            mask-image:linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  }
+  .ptrack{gap:26px}
+  .pan{width:68vw}
+  .pan p{min-height:7.4em}
 }
 
 /* ---------- the pages, as rules that cross the whole width ---------- */
@@ -443,7 +461,7 @@ footer a:hover{color:var(--ink)}
   .typed .cur{animation:caret var(--beat) steps(1,end) infinite}
 }
 @media (prefers-reduced-motion: reduce){
-  .track,.tile,.panel{transition:none}
+  .track,.ptrack,.tile,.pan{transition:none}
   .rn{opacity:.5; stroke-dasharray:none; stroke-dashoffset:0}
   .js .rv{opacity:1; transform:none}
   .fig .bar i{width:var(--w,60%)}
@@ -460,6 +478,29 @@ footer a:hover{color:var(--ink)}
   .idx a{padding-block:clamp(8px,1.15vh,14px)}
   .meas{margin-top:clamp(14px,2vh,22px)}
   .eyeline{margin-bottom:clamp(8px,1.2vh,14px)}
+  .rail{height:108px}
+  .tile{width:64px; height:64px; border-radius:16px}
+  .tile img{width:45px; height:45px}
+  .track{gap:24px}
+  .prail{margin-top:2px}
+  .pan p{min-height:4.6em; margin-bottom:1em}
+  .pan h2{margin-bottom:.4em}
+  .pan .lbl{margin-bottom:.7em}
+}
+@media (max-height:800px) and (min-width:1000px){
+  .rail{height:96px}
+  .tile{width:58px; height:58px}
+  .tile img{width:40px; height:40px}
+  .pan h2{font-size:1.12rem; margin-bottom:.35em}
+  .pan .lbl{margin-bottom:.6em}
+  .pan .pill{padding:6px 14px; font-size:11.5px}
+  .meas{margin-top:10px}
+  .lede{margin-bottom:14px}
+  /* the full text is on the card below, so two lines is enough here */
+  .pan p{
+    min-height:0; margin-bottom:.9em;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
 }
 @media (max-height:700px) and (min-width:1000px){
   .wm{font-size:clamp(1.7rem,3.4vw,2.9rem)}
@@ -740,13 +781,8 @@ footer a:hover{color:var(--ink)}
         <div class="rail">
           <div class="track" id="track" role="tablist" aria-label="Pages"></div>
         </div>
-        <div class="panel" id="panel" role="tabpanel">
-          <span class="lbl on" id="pKind"></span>
-          <h2 id="pTitle"></h2>
-          <p id="pDesc"></p>
-          <a class="pill" id="pLink" target="_blank" rel="noopener">
-            <span id="pOpen"></span> <span class="arw lat">&nearr;</span>
-          </a>
+        <div class="prail">
+          <div class="ptrack" id="ptrack"></div>
         </div>
       </div>
 
@@ -1187,7 +1223,6 @@ footer a:hover{color:var(--ink)}
       var next = en ? img.dataset.shotEn : img.dataset.shotJa;
       if (next && img.getAttribute('src') !== next) img.setAttribute('src', next);
     });
-    if (typeof paint === 'function' && document.getElementById('pKind')) paint();
     resetTyped();
   }
   try { if (localStorage.getItem('hgs-lang') === 'en') setLang(true); } catch (e) {}
@@ -1198,16 +1233,16 @@ footer a:hover{color:var(--ink)}
   if (!reduce && hasIO) root.classList.add('js');
 
   /* ---------- dock ----------
-     Built from data rather than markup so the panel can follow the
-     language without duplicating every string. The list version in the
-     markup stays as the no-script path. */
+     Panels are real elements holding both languages, so the existing
+     [data-lang] rules translate them and no repaint is needed. The
+     list in the markup is the no-script path. */
   var PAGES = [
     { id:'drep', icon:'icons/drep.svg', kind:'DRep Governance Terminal',
       href:'https://hfot.github.io/drep-terminal-v6/',
       ja:['DRep の力の偏りを、数字で読む。',
-          '投票力、委任者構成、資金流入出、集中度を一つの端末に集約。公開オンチェーンデータから毎日追う。'],
+          '投票力、委任者構成、資金流入出、集中度を一つの端末に集約。公開オンチェーンデータから、DRep 全体と個別の動きを毎日追う。'],
       en:['Read the balance of DRep power in numbers.',
-          'Voting power, delegator mix, flows and concentration in one terminal, followed daily from public on-chain data.'] },
+          'Voting power, delegator mix, flows and concentration in one terminal. Follow the DRep landscape and individual movements daily from public on-chain data.'] },
     { id:'catalyst', icon:'icons/catalyst.svg', kind:'Catalyst Japan',
       href:'https://hfot.github.io/Catalyst-Japan/',
       ja:['Catalyst の提案を、一望する。',
@@ -1231,41 +1266,33 @@ footer a:hover{color:var(--ink)}
       ja:['聞こえた声を、読める言葉に。',
           '分からない言語の音声を、その場で文字にして翻訳する。文字起こしはブラウザの中で完結し、APIキーもインストールも要らない。'],
       en:['Turn what you hear into words you can read.',
-          'Speech in a language you do not know, captioned and translated on the spot. Transcription runs inside the browser.'] },
+          'Speech in a language you do not know, captioned and translated on the spot. Transcription runs inside the browser, with no API key and no install.'] },
     { id:'signal', icon:'icons/signal.svg', kind:'CIGNAL Signal',
       href:'https://hfot.github.io/cignal-radar/cignal-signal-v2.html',
       ja:['貼るだけで、議論の伸びしろを見る。',
-          '𝕏 や Discord の投稿を貼ると、議論の種・広がる先・トーンをAIが分解する。投稿する前に届き方が見える。'],
+          '𝕏 や Discord の投稿を貼ると、議論の種・広がる先・トーンをAIが分解する。DRep・SPO・Holder・Devへの届き方まで、投稿する前に見える。'],
       en:['Paste it, and see where a post can go.',
-          'Paste a post from X or Discord and AI breaks down its discussion seeds, reach and tone, before you post it.'] },
+          'Paste a post from X or Discord and AI breaks down its discussion seeds, reach and tone, and how it lands with DReps, SPOs, holders and devs, before you post.'] },
     { id:'spiral', icon:'icons/spiral.svg', kind:'The Decentralization Spiral',
       href:'https://hfot.github.io/cardano-spiral/',
       ja:['あえて厳しく、現状を書かせた。',
-          '現状のモデルをAIに生成させた一枚もの。実測ではなく解釈であり、意図的に辛口に振ってある。'],
+          '研ぎ澄ませるための材料として、現状のモデルをAIに生成させた一枚もの。実測ではなく解釈であり、意図的に辛口に振ってある。'],
       en:['A deliberately severe read of where things stand.',
-          'A model of the present state generated by AI. Interpretation, not measurement, and deliberately severe.'] }
+          'A model of the present state generated by AI, as material for sharpening. Interpretation, not measurement, and deliberately severe.'] }
   ];
 
   var dock = document.getElementById('dock');
   var track = document.getElementById('track');
-  var panel = document.getElementById('panel');
-  var active = 0, touched = false, autoT = null, swapT = null;
+  var ptrack = document.getElementById('ptrack');
+  var active = 0, touched = false, autoT = null;
 
-  function paint(){
-    var p = PAGES[active], t = isEN() ? p.en : p.ja;
-    document.getElementById('pKind').textContent = p.kind;
-    document.getElementById('pTitle').textContent = t[0];
-    document.getElementById('pDesc').textContent = t[1];
-    document.getElementById('pOpen').textContent = isEN() ? 'Open' : '開く';
-    document.getElementById('pLink').href = p.href;
-    panel.setAttribute('aria-labelledby', 'tile-' + p.id);
-  }
+  function esc(t){ return t.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 
-  function centre(){
-    var el = track.children[active];
-    if (!el) return;
-    var mid = track.parentNode.clientWidth / 2;
-    track.style.transform = 'translate(' + (mid - (el.offsetLeft + el.offsetWidth / 2)) + 'px,-50%)';
+  function centreOn(el, node){
+    if (!node) return;
+    var mid = el.parentNode.clientWidth / 2;
+    el.style.transform = 'translate(' + (mid - (node.offsetLeft + node.offsetWidth / 2)) + 'px'
+                       + (el === track ? ',-50%)' : ',0)');
   }
 
   function select(i, focus){
@@ -1276,27 +1303,46 @@ footer a:hover{color:var(--ink)}
       b.tabIndex = on ? 0 : -1;
       if (on && focus) b.focus();
     });
-    centre();
-    clearTimeout(swapT);
-    panel.classList.add('swap');
-    swapT = setTimeout(function(){ paint(); panel.classList.remove('swap'); }, 150);
+    [].forEach.call(ptrack.children, function(pn, n){
+      var d = Math.abs(n - active);
+      pn.className = 'pan' + (n === active ? ' is-on' : (d === 1 ? ' is-near' : ''));
+      pn.setAttribute('aria-hidden', String(n !== active));
+      var a = pn.querySelector('a');
+      if (a) a.tabIndex = n === active ? 0 : -1;
+    });
+    centreOn(track, track.children[active]);
+    centreOn(ptrack, ptrack.children[active]);
   }
 
   function stopAuto(){ touched = true; clearInterval(autoT); }
 
-  if (dock && track){
+  if (dock && track && ptrack){
     PAGES.forEach(function(p, i){
       var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'tile';
-      b.id = 'tile-' + p.id;
+      b.type = 'button'; b.className = 'tile'; b.id = 'tile-' + p.id;
       b.setAttribute('role', 'tab');
       b.setAttribute('aria-selected', 'false');
+      b.setAttribute('aria-controls', 'pan-' + p.id);
       b.tabIndex = -1;
       b.setAttribute('aria-label', p.kind);
-      b.innerHTML = '<img src="' + p.icon + '" alt="" width="44" height="44" decoding="async">';
+      b.innerHTML = '<img src="' + p.icon + '" alt="" width="54" height="54" decoding="async">';
       b.addEventListener('click', function(){ stopAuto(); select(i); });
       track.appendChild(b);
+
+      var pn = document.createElement('article');
+      pn.className = 'pan'; pn.id = 'pan-' + p.id;
+      pn.setAttribute('role', 'tabpanel');
+      pn.setAttribute('aria-labelledby', 'tile-' + p.id);
+      pn.innerHTML =
+        '<span class="lbl on">' + esc(p.kind) + '</span>' +
+        '<h2><span class="ja">' + esc(p.ja[0]) + '</span>' +
+            '<span class="en">' + esc(p.en[0]) + '</span></h2>' +
+        '<p><span class="ja">' + esc(p.ja[1]) + '</span>' +
+           '<span class="en">' + esc(p.en[1]) + '</span></p>' +
+        '<a class="pill" href="' + p.href + '" target="_blank" rel="noopener" tabindex="-1">' +
+          '<span class="ja">開く</span><span class="en">Open</span> ' +
+          '<span class="arw lat">&nearr;</span></a>';
+      ptrack.appendChild(pn);
     });
 
     track.addEventListener('keydown', function(e){
@@ -1310,11 +1356,11 @@ footer a:hover{color:var(--ink)}
     });
 
     document.documentElement.classList.add('dock-on');
-    paint();
     select(0);
-    /* the layout settles once the icons have decoded */
-    window.addEventListener('load', centre);
-    window.addEventListener('resize', centre);
+    function recentre(){ centreOn(track, track.children[active]); centreOn(ptrack, ptrack.children[active]); }
+    window.addEventListener('load', recentre);
+    window.addEventListener('resize', recentre);
+
     /* one unattended pass so the dock shows what it does, then it rests.
        Any interaction stops it immediately. */
     if (!reduce){
@@ -1325,6 +1371,7 @@ footer a:hover{color:var(--ink)}
       }, 4200);
     }
   }
+
 
   if (hasIO){
     var io = new IntersectionObserver(function(es){
