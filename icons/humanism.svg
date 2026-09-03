@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Governance Humanism Action">
+  <title>Governance Humanism Action</title>
+
+  <!-- The page's own ground, so the tab icon and the site agree. -->
+  <rect width="32" height="32" rx="7.5" fill="#14120e"/>
+
+  <!-- A seal, pressed once. Two rings and a rosette: the mark the 決断 chamber
+       carries, and the wax that closes a completed ledger. Gold is the only
+       accent the site allows, so it is the only colour here. -->
+  <circle cx="16" cy="16" r="10" fill="none" stroke="#b0863c" stroke-width="1.6"/>
+  <circle cx="16" cy="16" r="6.4" fill="none" stroke="#d9b86a" stroke-width="1.2"/>
+
+  <!-- Solid, not outlined: at the 16px a browser tab renders, a thin star
+       closes into a blur and stops reading as a seal. -->
+  <path d="M16 9.4l1.7 4.9h5.1l-4.1 3 1.6 4.9-4.3-3.1-4.3 3.1 1.6-4.9-4.1-3h5.1z" fill="#d9b86a"/>
+</svg>
