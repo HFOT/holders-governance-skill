@@ -218,18 +218,15 @@ html[data-lang="en"] .jt{font-family:"Archivo",sans-serif; letter-spacing:-.012e
   -webkit-mask-image:linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
           mask-image:linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
 }
-.track{
-  position:absolute; top:50%; left:0; display:flex; align-items:center; gap:30px;
-  transform:translate(0,-50%);
-  transition:transform calc(var(--beat)*1.6) var(--ease);
-  will-change:transform;
-}
+.track{position:absolute; inset:0; --gap:52px}
 .tile{
-  appearance:none; cursor:pointer; padding:0; flex:none;
+  appearance:none; cursor:pointer; padding:0;
+  position:absolute; left:50%; top:50%;
   width:78px; height:78px; border-radius:19px;
   border:1px solid var(--line); background:rgba(255,255,255,.022);
   display:grid; place-items:center;
-  transform:scale(.82); opacity:.36;
+  transform:translate(calc(-50% + var(--o,0) * var(--step)), -50%) scale(var(--sc,.8));
+  opacity:var(--op,0);
   transition:transform calc(var(--beat)*1.6) var(--ease),
              opacity calc(var(--beat)*1.6) var(--ease),
              border-color var(--half) var(--ease),
@@ -238,29 +235,28 @@ html[data-lang="en"] .jt{font-family:"Archivo",sans-serif; letter-spacing:-.012e
 .tile img{width:54px; height:54px; display:block; border-radius:12px; pointer-events:none}
 .tile:hover{opacity:.72; border-color:var(--line-2)}
 .tile[aria-selected="true"]{
-  transform:scale(1.34); opacity:1;
   border-color:rgba(61,123,255,.5); background:rgba(61,123,255,.10);
 }
+/* a slot that has just wrapped from one end to the other must not be
+   seen crossing the rail, so it is moved without a transition */
+.tile.jump,.pan.jump{transition:none}
 .tile:focus-visible{outline:2px solid var(--c1); outline-offset:4px}
 
 .prail{
-  position:relative; overflow:hidden; width:100%; min-width:0;
+  position:relative; overflow:hidden; width:100%; min-width:0; height:0;
   margin-top:clamp(6px,1.2vh,14px);
   -webkit-mask-image:linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent);
           mask-image:linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent);
 }
-.ptrack{
-  display:flex; align-items:flex-start; gap:clamp(30px,4vw,64px);
-  transition:transform calc(var(--beat)*1.6) var(--ease);
-  will-change:transform;
-}
+.ptrack{position:absolute; inset:0; --gap:50px}
 .pan{
-  flex:none; width:min(430px, 76vw); opacity:.10;
-  transition:opacity calc(var(--beat)*1.6) var(--ease);
-  pointer-events:none;
+  position:absolute; left:50%; top:0; width:min(430px, 76vw);
+  transform:translateX(calc(-50% + var(--o,0) * var(--step)));
+  opacity:var(--op,0); pointer-events:none;
+  transition:transform calc(var(--beat)*1.6) var(--ease),
+             opacity calc(var(--beat)*1.6) var(--ease);
 }
-.pan.is-near{opacity:.26}
-.pan.is-on{opacity:1; pointer-events:auto}
+.pan.is-on{pointer-events:auto}
 .pan{text-align:center}
 .pan .lbl{display:block; margin-bottom:.9em}
 .pan h2{
@@ -275,14 +271,14 @@ html[data-lang="en"] .pan p{min-height:5.2em}
   .rail{height:104px}
   .tile{width:62px; height:62px; border-radius:15px}
   .tile img{width:43px; height:43px}
-  .track{gap:20px}
+  .track{--gap:22px}
+  .ptrack{--gap:26px}
   /* the panel has to sit inside the clear part of the mask, or its
      own first and last characters fade out */
   .prail{
     -webkit-mask-image:linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
             mask-image:linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
   }
-  .ptrack{gap:26px}
   .pan{width:68vw}
   .pan p{min-height:7.4em}
 }
@@ -484,7 +480,7 @@ footer a:hover{color:var(--ink)}
   .rail{height:108px}
   .tile{width:64px; height:64px; border-radius:16px}
   .tile img{width:45px; height:45px}
-  .track{gap:24px}
+  .track{--gap:44px}
   .prail{margin-top:2px}
   .pan p{min-height:4.6em; margin-bottom:1em}
   .pan h2{margin-bottom:.4em}
@@ -909,7 +905,7 @@ footer a:hover{color:var(--ink)}
         <span class="ja">可視化され、多くの人が確認し、行動できる。<b>そのフローが、将来の価値を左右する。</b></span>
         <span class="en">Made visible, checked by many, acted on. <b>That flow decides future value.</b></span>
       </p>
-      <p class="rv" style="--i:3">
+<p class="rv" style="--i:3">
         <span class="ja">可視化には、さまざまな負の憶測が伴うことがある。しかし、見る人が個別に抱いた感情が、<b>データそのものを壊すことはない。</b></span>
         <span class="en">Visualization can invite all kinds of negative speculation. But the feelings held by individual viewers <b>do not break the data itself.</b></span>
       </p>
@@ -1140,6 +1136,32 @@ footer a:hover{color:var(--ink)}
         </div>
       </article>
 
+      <article class="card rv" id="poc" style="--i:4">
+        <a class="shot" href="https://hfot.github.io/proof-of-code/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="shots/poc.png" data-shot-ja="shots/poc.png" data-shot-en="shots/poc-en.png"
+               width="1440" height="900" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="lbl on">Proof of Code</span>
+          <h3>
+            <span class="ja">エコシステムの、生きた証明。</span>
+            <span class="en">Living proof of the ecosystem.</span>
+          </h3>
+          <p>
+            <span class="ja">GitHub の 924 リポジトリから、確かに脈打つ 210 を測って棚に並べた。折れ線は52週の鼓動。数字はすべて自前の測定で、借りたのはロゴだけ。</span>
+            <span class="en">Out of 924 repositories on GitHub, the 210 with a true heartbeat, measured and shelved. Each line is 52 weeks of pulse; every figure measured first-hand, only the logos borrowed.</span>
+          </p>
+          <div class="spec">
+            <div><span class="k">Repos</span><span class="v">210</span></div>
+            <div><span class="k">Population</span><span class="v">924</span></div>
+            <div><span class="k">Shelves</span><span class="v">8</span></div>
+          </div>
+          <a class="pill" href="https://hfot.github.io/proof-of-code/" target="_blank" rel="noopener">
+            <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
+          </a>
+        </div>
+      </article>
+
       <article class="card rv" id="deleg" style="--i:5">
         <a class="shot" href="https://hfot.github.io/cardano-two-delegations/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
           <img src="shots/delegations.png" data-shot-ja="shots/delegations.png" data-shot-en="shots/delegations-en.png"
@@ -1351,6 +1373,7 @@ footer a:hover{color:var(--ink)}
       var next = en ? img.dataset.shotEn : img.dataset.shotJa;
       if (next && img.getAttribute('src') !== next) img.setAttribute('src', next);
     });
+    if (typeof relayoutDock === 'function') relayoutDock();
     resetTyped();
   }
   try { if (localStorage.getItem('hgs-lang') === 'en') setLang(true); } catch (e) {}
@@ -1430,34 +1453,67 @@ footer a:hover{color:var(--ink)}
   var dock = document.getElementById('dock');
   var track = document.getElementById('track');
   var ptrack = document.getElementById('ptrack');
-  var active = 0, touched = false, autoT = null;
+  var active = 0, touched = false, autoT = null, relayoutDock = null;
 
   function esc(t){ return t.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 
-  function centreOn(el, node){
-    if (!node) return;
-    var mid = el.parentNode.clientWidth / 2;
-    el.style.transform = 'translate(' + (mid - (node.offsetLeft + node.offsetWidth / 2)) + 'px'
-                       + (el === track ? ',-50%)' : ',0)');
+  /* Slots are fixed. The pages rotate through them, so the one at the
+     far left reappears at the far right rather than the rail running
+     out of items at either end. */
+  var TSC = [1.34, .88, .80, .74];
+  var TOP = [1, .55, .30, .13];
+  var POP = [1, .26, .07, 0];
+
+  function wrapOff(i){
+    var n = PAGES.length, h = Math.floor(n / 2);
+    return ((i - active + n + h) % n) - h;
+  }
+
+  function place(el, off, sc, op){
+    var was = el._off;
+    if (was !== undefined && Math.abs(off - was) > 1){
+      el.classList.add('jump');
+      el.style.setProperty('--o', off);
+      /* let the jump land, then hand the element back to the transition */
+      void el.offsetWidth;
+      el.classList.remove('jump');
+    } else {
+      el.style.setProperty('--o', off);
+    }
+    el._off = off;
+    if (sc !== null) el.style.setProperty('--sc', sc);
+    el.style.setProperty('--op', op);
+  }
+
+  function measure(){
+    var t0 = track.children[0], p0 = ptrack.children[0];
+    function gap(el){ return parseFloat(getComputedStyle(el).getPropertyValue('--gap')) || 0; }
+    if (t0) track.style.setProperty('--step', (t0.offsetWidth + gap(track)) + 'px');
+    if (p0){
+      ptrack.style.setProperty('--step', (p0.offsetWidth + gap(ptrack)) + 'px');
+      var h = 0;
+      [].forEach.call(ptrack.children, function(pn){ h = Math.max(h, pn.offsetHeight); });
+      ptrack.parentNode.style.height = h + 'px';
+    }
   }
 
   function select(i, focus){
     active = (i + PAGES.length) % PAGES.length;
     [].forEach.call(track.children, function(b, n){
-      var on = n === active;
+      var on = n === active, d = Math.min(Math.abs(wrapOff(n)), 3);
       b.setAttribute('aria-selected', String(on));
       b.tabIndex = on ? 0 : -1;
+      place(b, wrapOff(n), on ? TSC[0] : TSC[d], TOP[d]);
       if (on && focus) b.focus();
     });
     [].forEach.call(ptrack.children, function(pn, n){
-      var d = Math.abs(n - active);
-      pn.className = 'pan' + (n === active ? ' is-on' : (d === 1 ? ' is-near' : ''));
-      pn.setAttribute('aria-hidden', String(n !== active));
+      var on = n === active, d = Math.min(Math.abs(wrapOff(n)), 3);
+      pn.className = 'pan' + (on ? ' is-on' : '');
+      pn.setAttribute('aria-hidden', String(!on));
+      place(pn, wrapOff(n), null, POP[d]);
       var a = pn.querySelector('a');
-      if (a) a.tabIndex = n === active ? 0 : -1;
+      if (a) a.tabIndex = on ? 0 : -1;
     });
-    centreOn(track, track.children[active]);
-    centreOn(ptrack, ptrack.children[active]);
   }
 
   function stopAuto(){ touched = true; clearInterval(autoT); }
@@ -1502,10 +1558,13 @@ footer a:hover{color:var(--ink)}
     });
 
     document.documentElement.classList.add('dock-on');
+    measure();
     select(0);
-    function recentre(){ centreOn(track, track.children[active]); centreOn(ptrack, ptrack.children[active]); }
-    window.addEventListener('load', recentre);
-    window.addEventListener('resize', recentre);
+    function relayout(){ measure(); select(active); }
+    relayoutDock = relayout;
+    window.addEventListener('load', relayout);
+    window.addEventListener('resize', relayout);
+    if (window.ResizeObserver) new ResizeObserver(measure).observe(ptrack.children[0]);
 
     /* one unattended pass so the dock shows what it does, then it rests.
        Any interaction stops it immediately. */
