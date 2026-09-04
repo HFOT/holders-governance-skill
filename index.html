@@ -1354,6 +1354,39 @@ footer a:hover{color:var(--ink)}
         </div>
       </article>
 
+      <article class="card rv" id="dvm" style="--i:4">
+        <a class="shot" href="https://hfot.github.io/dialogue-verification-model/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="shots/dvm.png" data-shot-ja="shots/dvm.png" data-shot-en="shots/dvm-en.png"
+               width="1440" height="900" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="top">
+            <span class="lbl on">Dialogue Verification Model</span>
+            <span class="badge"><span class="ja">仮説・合成会話モデル</span><span class="en">Hypothesis · synthetic conversation</span></span>
+          </span>
+          <h3>
+            <span class="ja">閉じるのは、提案の瞬間ではない。</span>
+            <span class="en">It doesn&#39;t close at the moment of the proposal.</span>
+          </h3>
+          <p>
+            <span class="ja">中心人物のいない場が、なぜ同じ形で閉じていくのか。架空の会話を分岐させ、27通りを全数列挙し、10万回のエージェント・シミュレーションで確かめた。分岐点は「まとめ役を決めよう」という善意の提案そのものではなく、その前の確認要求への応答履歴だった、という仮説。</span>
+            <span class="en">Why do leaderless rooms keep closing the same way? A fictional conversation branches, all 27 outcomes are enumerated, and 100,000 agent simulations test the idea that the hinge is not the well-meant proposal to consolidate, but the response history right before it.</span>
+          </p>
+          <p class="note">
+            <span class="ja">反証条件つき。会話データ・判定コード・シミュレーションのパラメータはすべて公開。日英対応。</span>
+            <span class="en">Comes with its own conditions for refutation. Conversation data, judgment code and simulation parameters are all public. Japanese and English.</span>
+          </p>
+          <div class="spec">
+            <div><span class="k">Paths</span><span class="v">27</span></div>
+            <div><span class="k">Simulated</span><span class="v">100k&times;</span></div>
+            <div><span class="k">Cost</span><span class="v">Free</span></div>
+          </div>
+          <a class="pill" href="https://hfot.github.io/dialogue-verification-model/" target="_blank" rel="noopener">
+            <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
+          </a>
+        </div>
+      </article>
+
     </div>
   </div>
 </section>
@@ -1473,7 +1506,13 @@ footer a:hover{color:var(--ink)}
       ja:['条件がそろうと、同じ顔が前に出る。',
           '八つの間で立ち位置を刻み、十の問いを歩き、十四の分岐を読む。良い方向とよくない方向を並べたまま置き、その分岐を決めるものだけを書いた。'],
       en:['When the conditions line up, the same faces step forward.',
-          'Mark where you stand across eight chambers, walk ten questions, read fourteen forks. Both directions are held open, and only the hinge between them is written.'] }
+          'Mark where you stand across eight chambers, walk ten questions, read fourteen forks. Both directions are held open, and only the hinge between them is written.'] },
+    { id:'dvm', icon:'icons/dvm.svg', kind:'Dialogue Verification Model',
+      href:'https://hfot.github.io/dialogue-verification-model/',
+      ja:['閉じるのは、提案の瞬間ではない。',
+          '架空の会話を分岐させ、27通りを全数列挙、10万回のシミュレーションで確かめた仮説。分岐点は善意の提案そのものではなく、その前の応答履歴だった。'],
+      en:["It doesn't close at the moment of the proposal.",
+          'A fictional conversation branches into 27 enumerated outcomes and 100,000 simulations, testing the idea that the hinge is the response history before the proposal, not the proposal itself.'] }
   ];
 
   var dock = document.getElementById('dock');
