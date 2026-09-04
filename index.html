@@ -806,6 +806,14 @@ footer a:hover{color:var(--ink)}
           </span>
           <span class="arw lat">&rarr;</span>
         </a>
+        <a href="#core">
+          <span class="kind">CORE</span>
+          <span class="ttl">
+            <span class="ja">起きたことだけを、全件で見る。</span>
+            <span class="en">See only what happened, across every proposal.</span>
+          </span>
+          <span class="arw lat">&rarr;</span>
+        </a>
         <a href="#relay">
           <span class="kind">Relay</span>
           <span class="ttl">
@@ -1054,7 +1062,33 @@ footer a:hover{color:var(--ink)}
         </div>
       </article>
 
-      <article class="card rv" id="relay" style="--i:2">
+      <article class="card rv" id="core" style="--i:2">
+        <a class="shot" href="https://hfot.github.io/holders-core/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="shots/core.png" data-shot-ja="shots/core.png" data-shot-en="shots/core-en.png"
+               width="1440" height="900" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="lbl on">holders CORE</span>
+          <h3>
+            <span class="ja">起きたことだけを、全件で見る。</span>
+            <span class="en">See only what happened, across every proposal.</span>
+          </h3>
+          <p>
+            <span class="ja">11,385件を ①提案 →②採択 →③納品 →④使用 で並べ、どこで止まったかを一次情報付きで示す。うち2,347件は「実際に使われたか」が誰にも記録されていない。その欠落も数えて出す。</span>
+            <span class="en">11,385 proposals placed on proposed &rarr; approved &rarr; delivered &rarr; used, each with primary sources, showing where it stopped. For 2,347 of them nobody has recorded whether the thing was actually used &mdash; that gap is counted and shown rather than hidden.</span>
+          </p>
+          <div class="spec">
+            <div><span class="k">Proposals</span><span class="v">11,385</span></div>
+            <div><span class="k">Unrecorded &#9316;</span><span class="v">2,347</span></div>
+            <div><span class="k">Rounds</span><span class="v">F2 &ndash; F15</span></div>
+          </div>
+          <a class="pill" href="https://hfot.github.io/holders-core/" target="_blank" rel="noopener">
+            <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
+          </a>
+        </div>
+      </article>
+
+      <article class="card rv" id="relay" style="--i:3">
         <a class="shot" href="https://hfot.github.io/cardano-relay-health/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
           <img src="shots/relay.png" data-shot-ja="shots/relay.png" data-shot-en="shots/relay-en.png"
                width="1440" height="900" loading="lazy" decoding="async" alt="">
@@ -1080,7 +1114,7 @@ footer a:hover{color:var(--ink)}
         </div>
       </article>
 
-      <article class="card rv" id="alive" style="--i:3">
+      <article class="card rv" id="alive" style="--i:4">
         <a class="shot" href="https://hfot.github.io/spo-onchain-alive/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
           <img src="shots/alive.png" data-shot-ja="shots/alive.png" data-shot-en="shots/alive-en.png"
                width="1440" height="900" loading="lazy" decoding="async" alt="">
@@ -1106,7 +1140,7 @@ footer a:hover{color:var(--ink)}
         </div>
       </article>
 
-      <article class="card rv" id="deleg" style="--i:4">
+      <article class="card rv" id="deleg" style="--i:5">
         <a class="shot" href="https://hfot.github.io/cardano-two-delegations/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
           <img src="shots/delegations.png" data-shot-ja="shots/delegations.png" data-shot-en="shots/delegations-en.png"
                width="1440" height="900" loading="lazy" decoding="async" alt="">
@@ -1343,6 +1377,12 @@ footer a:hover{color:var(--ink)}
           '130件を金額・分野・進捗で並べ替える。完了報告と動画まで一枚に載せた、F2 から F14 の全記録。'],
       en:['See every proposal at once.',
           '130 proposals sorted by amount, sector and status. Completion reports and videos on one page, F2 through F14.'] },
+    { id:'core', icon:'icons/core.svg', kind:'holders CORE',
+      href:'https://hfot.github.io/holders-core/',
+      ja:['起きたことだけを、全件で見る。',
+          '11,385件を ①提案 →②採択 →③納品 →④使用 で並べ、どこで止まったかを一次情報付きで示す。うち2,347件は「実際に使われたか」が誰にも記録されていない。その欠落も数えて出す。'],
+      en:['See only what happened, across every proposal.',
+          '11,385 proposals placed on proposed → approved → delivered → used, each with primary sources, showing where it stopped. For 2,347 of them nobody has recorded whether the thing was actually used — that gap is counted and shown rather than hidden.'] },
     { id:'relay', icon:'icons/relay.svg', kind:'Relay Health Ranking',
       href:'https://hfot.github.io/cardano-relay-health/',
       ja:['応答したものだけを、採点する。',

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="holders CORE">
+  <title>holders CORE</title>
+
+  <!-- Same dark rounded ground the other marks stand on, so the row of
+       icons keeps one edge on a light browser tab. -->
+  <rect width="32" height="32" rx="7" fill="#1a1715"/>
+
+  <!-- A record read as three lines. The middle one stops short: the gap is
+       the point of the tool, so it is drawn rather than filled in. Stroke is
+       heavy on purpose - a finer line closes up at the 16px a tab renders. -->
+  <g fill="none" stroke="#f5f1e8" stroke-width="3.6" stroke-linecap="round">
+    <path d="M8 9.6h16"/>
+    <path d="M8 16h6.4"/>
+    <path d="M8 22.4h16"/>
+  </g>
+</svg>
