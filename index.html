@@ -587,6 +587,20 @@ footer a:hover{color:var(--ink)}
   border:1px solid rgba(255,255,255,.18); border-radius:999px; padding:3px 7px; line-height:1}
 @media (min-width:1500px){.workgrid{grid-template-columns:repeat(5,1fr)}}
 </style>
+<style>
+/* Phones: the WebGL flow never starts under 1000px, so the SVG filament art
+   was carrying the hero alone — dense lines behind small type. Below that
+   width the filaments go away and the hero rests on a quiet glow instead. */
+@media (max-width:999px){
+  .fil{display:none}
+  .art{background:
+    radial-gradient(70% 45% at 50% 18%, rgba(61,123,255,.16), transparent 70%),
+    radial-gradient(60% 40% at 82% 70%, rgba(168,85,247,.10), transparent 70%),
+    radial-gradient(50% 35% at 12% 62%, rgba(34,211,238,.08), transparent 70%),
+    var(--bg)}
+  .art::after{background:linear-gradient(0deg, rgba(6,7,10,.55), transparent 40%)}
+}
+</style>
 </head>
 <body>
 
