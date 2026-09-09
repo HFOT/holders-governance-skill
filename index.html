@@ -834,10 +834,10 @@ footer a:hover{color:var(--ink)}
           <span class="arw lat">&rarr;</span>
         </a>
         <a href="#alive">
-          <span class="kind">Alive</span>
+          <span class="kind">Explorer</span>
           <span class="ttl">
-            <span class="ja">採点を、生き物として見る。</span>
-            <span class="en">See the score as a living thing.</span>
+            <span class="ja">全体を眺めて、一つに降りる。</span>
+            <span class="en">See the whole, then go into one.</span>
           </span>
           <span class="arw lat">&rarr;</span>
         </a>
@@ -1191,14 +1191,14 @@ footer a:hover{color:var(--ink)}
                width="1440" height="900" loading="lazy" decoding="async" alt="">
         </a>
         <div class="body">
-          <span class="lbl on">SPO Onchain Alive</span>
+          <span class="lbl on">Cardano Art Explorer</span>
           <h3>
-            <span class="ja">採点を、生き物として見る。</span>
-            <span class="en">See the score as a living thing.</span>
+            <span class="ja">全体を眺めて、一つに降りる。</span>
+            <span class="en">See the whole, then go into one.</span>
           </h3>
           <p>
-            <span class="ja">6軸の点数と委任者の数が、そのプールだけの質量と運動になる。数字は Relay Health の実測値そのままで、変わるのは描き方だけ。</span>
-            <span class="en">The six axis scores and the delegator count become a mass and a motion belonging to that pool alone. The figures are the Relay Health measurements unchanged; only the drawing differs.</span>
+            <span class="ja">ランキングにあるすべてのプールが同じ円盤を回っている。距離はステーク、明るさは健全性スコア、大きさは委任者。拡大すると、一つひとつがそのプールだけのアートになる。数字は Relay Health の実測値そのままで、変わるのは描き方だけ。</span>
+            <span class="en">Every ranked pool turns in one disc: distance is stake, brightness is the health score, size is delegators. Go in, and each one becomes an artwork belonging to that pool alone. The figures are the Relay Health measurements unchanged; only the drawing differs.</span>
           </p>
           <div class="spec">
             <div><span class="k">Axes</span><span class="v">6</span></div>
@@ -1565,12 +1565,12 @@ footer a:hover{color:var(--ink)}
           '1,282プールのリレーを6軸で測って並べる。届かないことは停止の証明ではない、と書き添えたうえで。'],
       en:['Score only what answered.',
           '1,282 pools scored on six axes, with the note that unreachable is no proof of offline.'] },
-    { id:'alive', icon:'icons/alive.svg', kind:'SPO Onchain Alive',
+    { id:'alive', icon:'icons/alive.svg', kind:'Cardano Art Explorer',
       href:'https://hfot.github.io/spo-onchain-alive/',
-      ja:['採点を、生き物として見る。',
-          '6軸の点数と委任者の数が、そのプールだけの質量と運動になる。数字は Relay Health の実測値そのままで、変わるのは描き方だけ。'],
-      en:['See the score as a living thing.',
-          'The six axis scores and the delegator count become a mass and a motion belonging to that pool alone. The figures are the Relay Health measurements unchanged; only the drawing differs.'] },
+      ja:['全体を眺めて、一つに降りる。',
+          'ランキングにあるすべてのプールが同じ円盤を回る。距離はステーク、明るさは健全性スコア、大きさは委任者。拡大すると、一つひとつがそのプールだけのアートになる。'],
+      en:['See the whole, then go into one.',
+          'Every ranked pool turns in one disc: distance is stake, brightness is the health score, size is delegators. Go in, and each one becomes an artwork belonging to that pool alone.'] },
     { id:'deleg', icon:'icons/deleg.svg', kind:'One Wallet, Two Delegations',
       href:'https://hfot.github.io/cardano-two-delegations/',
       ja:['読むのをやめて、動かしてみる。',
@@ -1612,7 +1612,7 @@ footer a:hover{color:var(--ink)}
       ja:['難解な構造を、歩ける町にする。',
           'Cardanoの仕組みを、8体のからくりと一つの城郭都市として組み上げた。六つの門はリレー健全性の6軸、中央の書庫塔は憲法。すべてブラウザの中で生成される、実測ではなく寓話。'],
       en:['Turn the hard structure into a town you can walk.',
-          'Cardano's machinery as eight automata and one walled city. Six gates for the six axes of relay health, the archive tower at the centre for the constitution. Generated in the browser: allegory, not measurement.'] }
+          "Cardano's machinery as eight automata and one walled city. Six gates for the six axes of relay health, the archive tower at the centre for the constitution. Generated in the browser: allegory, not measurement."] }
   ];
 
   var dock = document.getElementById('dock');
