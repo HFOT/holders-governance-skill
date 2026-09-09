@@ -28,6 +28,7 @@
 | [Space Translate](https://hfot.github.io/space-translate/app.html) | 分からない言語の音声を、その場で字幕にして翻訳する。ブラウザ内 Whisper、APIキー不要 |
 | [The Decentralization Spiral](https://hfot.github.io/cardano-spiral/) | 現状のモデルを AI に生成させた一枚もの。**実測ではなく解釈**であり、意図的に辛口に振ってある |
 | [Governance Humanism Action](https://hfot.github.io/governance-humanism-action/) | 八つの間で立ち位置を刻み、十の問いを歩き、十四の分岐を読む。**分析はAI生成**で、良い方向とよくない方向を並べたまま置く。日本語のみ |
+| [CARAKURI — からくりの町](https://hfot.github.io/nomad-3d/town/) | Cardanoの仕組みを8体のからくりと一つの城郭都市に組み上げた3D。六つの門はリレー健全性の6軸、中央の書庫塔は憲法。**実測ではなく寓話**で、すべてブラウザ内で生成される |
 
 実測とそれ以外は、ページ上でも分けて表示している。AI が生成したものを測定値と同格に並べない。
 
