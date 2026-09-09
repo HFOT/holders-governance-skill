@@ -601,6 +601,21 @@ footer a:hover{color:var(--ink)}
   .art::after{background:linear-gradient(0deg, rgba(6,7,10,.55), transparent 40%)}
 }
 </style>
+<style>
+/* Cards, tighter still: the description folds to two lines and the note to
+   one (both open on hover or focus), the spec row stays a single row with
+   the open button riding its right end, and the title sits closer. */
+.workgrid .card h3{font-size:clamp(.9rem,.95vw,1rem); line-height:1.45; margin:.45em 0 .35em}
+.workgrid .card p{font-size:.76rem; line-height:1.7; margin-bottom:.7em}
+.workgrid .card p:not(.note){-webkit-line-clamp:2}
+.workgrid .card p.note{-webkit-line-clamp:1}
+.workgrid .card .body{padding-bottom:12px}
+.workgrid .card .spec{display:flex; flex-wrap:nowrap; gap:0 12px; margin:auto 0 0; padding:.7em 0 0; align-items:flex-end}
+.workgrid .card .spec div{flex:0 1 auto; min-width:0; gap:2px}
+.workgrid .card .spec .v{font-size:11px}
+.workgrid .card .spec .k{font-size:7.5px}
+.workgrid .card .pill{margin-left:auto; align-self:flex-end; padding:6px 10px; font-size:10.5px; white-space:nowrap}
+</style>
 </head>
 <body>
 
@@ -1105,10 +1120,10 @@ footer a:hover{color:var(--ink)}
             <div><span class="k">Topics</span><span class="v">8</span></div>
             <div><span class="k">Answers</span><span class="v">129</span></div>
             <div><span class="k">AI API</span><span class="v">0</span></div>
-          </div>
           <a class="pill" href="https://hfot.github.io/cardano-qa-bot/" target="_blank" rel="noopener">
             <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
           </a>
+          </div>
         </div>
       </article>
 
@@ -1131,10 +1146,10 @@ footer a:hover{color:var(--ink)}
             <div><span class="k">Active DReps</span><span class="v">370</span></div>
             <div><span class="k">Voting power</span><span class="v">4.96B &#8371;</span></div>
             <div><span class="k">Nakamoto</span><span class="v">10</span></div>
-          </div>
           <a class="pill" href="https://hfot.github.io/drep-terminal-v6/" target="_blank" rel="noopener">
             <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
           </a>
+          </div>
         </div>
       </article>
 
@@ -1157,10 +1172,10 @@ footer a:hover{color:var(--ink)}
             <div><span class="k">Proposals</span><span class="v">130</span></div>
             <div><span class="k">Funded</span><span class="v">21.6M &#8371;</span></div>
             <div><span class="k">Rounds</span><span class="v">F2 &ndash; F14</span></div>
-          </div>
           <a class="pill" href="https://hfot.github.io/Catalyst-Japan/" target="_blank" rel="noopener">
             <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
           </a>
+          </div>
         </div>
       </article>
 
@@ -1183,10 +1198,10 @@ footer a:hover{color:var(--ink)}
             <div><span class="k">Funded</span><span class="v">2,221</span></div>
             <div><span class="k">Reports</span><span class="v">1,716</span></div>
             <div><span class="k">Countries</span><span class="v">96</span></div>
-          </div>
           <a class="pill" href="https://hfot.github.io/holders-core/catalyst-map/" target="_blank" rel="noopener">
             <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
           </a>
+          </div>
         </div>
       </article>
 
@@ -1209,10 +1224,10 @@ footer a:hover{color:var(--ink)}
             <div><span class="k">Proposals</span><span class="v">11,385</span></div>
             <div><span class="k">Unrecorded &#9315;</span><span class="v">2,347</span></div>
             <div><span class="k">Rounds</span><span class="v">F2 &ndash; F15</span></div>
-          </div>
           <a class="pill" href="https://hfot.github.io/holders-core/" target="_blank" rel="noopener">
             <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
           </a>
+          </div>
         </div>
       </article>
 
@@ -1235,10 +1250,10 @@ footer a:hover{color:var(--ink)}
             <div><span class="k">Pools</span><span class="v">1,282</span></div>
             <div><span class="k">Axes</span><span class="v">6</span></div>
             <div><span class="k">Grades</span><span class="v">S &ndash; D</span></div>
-          </div>
           <a class="pill" href="https://hfot.github.io/cardano-relay-health/" target="_blank" rel="noopener">
             <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
           </a>
+          </div>
         </div>
       </article>
 
@@ -1261,10 +1276,10 @@ footer a:hover{color:var(--ink)}
             <div><span class="k">Axes</span><span class="v">6</span></div>
             <div><span class="k">Motifs</span><span class="v">5</span></div>
             <div><span class="k">Source</span><span class="v">Relay Health</span></div>
-          </div>
           <a class="pill" href="https://hfot.github.io/spo-onchain-alive/" target="_blank" rel="noopener">
             <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
           </a>
+          </div>
         </div>
       </article>
 
@@ -1287,10 +1302,10 @@ footer a:hover{color:var(--ink)}
             <div><span class="k">Repos</span><span class="v">210</span></div>
             <div><span class="k">Population</span><span class="v">924</span></div>
             <div><span class="k">Shelves</span><span class="v">8</span></div>
-          </div>
           <a class="pill" href="https://hfot.github.io/proof-of-code/" target="_blank" rel="noopener">
             <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
           </a>
+          </div>
         </div>
       </article>
 
@@ -1313,10 +1328,10 @@ footer a:hover{color:var(--ink)}
             <div><span class="k">Simulations</span><span class="v">5</span></div>
             <div><span class="k">Logic tree</span><span class="v">16</span></div>
             <div><span class="k">Basis</span><span class="v">CIP-1694</span></div>
-          </div>
           <a class="pill" href="https://hfot.github.io/cardano-two-delegations/" target="_blank" rel="noopener">
             <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
           </a>
+          </div>
         </div>
       </article>
 
@@ -1354,10 +1369,10 @@ footer a:hover{color:var(--ink)}
             <div><span class="k">Engine</span><span class="v">Whisper</span></div>
             <div><span class="k">Runs</span><span class="v">In browser</span></div>
             <div><span class="k">Cost</span><span class="v">Free</span></div>
-          </div>
           <a class="pill" href="https://hfot.github.io/space-translate/app.html" target="_blank" rel="noopener">
             <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
           </a>
+          </div>
         </div>
       </article>
 
@@ -1387,10 +1402,10 @@ footer a:hover{color:var(--ink)}
             <div><span class="k">Chapters</span><span class="v">19</span></div>
             <div><span class="k">Positions</span><span class="v">9</span></div>
             <div><span class="k">Readings</span><span class="v">3</span></div>
-          </div>
           <a class="pill" href="https://hfot.github.io/cardano-spiral/" target="_blank" rel="noopener">
             <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
           </a>
+          </div>
         </div>
       </article>
 
@@ -1420,10 +1435,10 @@ footer a:hover{color:var(--ink)}
             <div><span class="k">Sources</span><span class="v">X &middot; Discord &middot; more</span></div>
             <div><span class="k">Audiences</span><span class="v">5</span></div>
             <div><span class="k">Cost</span><span class="v">Free tier</span></div>
-          </div>
           <a class="pill" href="https://hfot.github.io/cignal-radar/cignal-signal-v2.html" target="_blank" rel="noopener">
             <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
           </a>
+          </div>
         </div>
       </article>
 
@@ -1453,10 +1468,10 @@ footer a:hover{color:var(--ink)}
             <div><span class="k">Chambers</span><span class="v">8</span></div>
             <div><span class="k">Questions</span><span class="v">10</span></div>
             <div><span class="k">Forks</span><span class="v">14</span></div>
-          </div>
           <a class="pill" href="https://hfot.github.io/governance-humanism-action/" target="_blank" rel="noopener">
             <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
           </a>
+          </div>
         </div>
       </article>
 
@@ -1486,10 +1501,10 @@ footer a:hover{color:var(--ink)}
             <div><span class="k">Paths</span><span class="v">27</span></div>
             <div><span class="k">Simulated</span><span class="v">100k&times;</span></div>
             <div><span class="k">Cost</span><span class="v">Free</span></div>
-          </div>
           <a class="pill" href="https://hfot.github.io/dialogue-verification-model/" target="_blank" rel="noopener">
             <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
           </a>
+          </div>
         </div>
       </article>
 
@@ -1519,10 +1534,10 @@ footer a:hover{color:var(--ink)}
             <div><span class="k">Automata</span><span class="v">8</span></div>
             <div><span class="k">Buildings</span><span class="v">5</span></div>
             <div><span class="k">Gates</span><span class="v">6</span></div>
-          </div>
           <a class="pill" href="https://hfot.github.io/nomad-3d/town/" target="_blank" rel="noopener">
             <span class="ja">開く</span><span class="en">Open</span> <span class="arw lat">&nearr;</span>
           </a>
+          </div>
         </div>
       </article>
 
