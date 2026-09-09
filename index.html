@@ -561,7 +561,12 @@ footer a:hover{color:var(--ink)}
   .stance .head{grid-column:1; margin:0; position:sticky; top:96px}
   .stance .manifesto{grid-column:2; grid-template-columns:1fr 1fr; column-gap:clamp(22px,2.6vw,40px); row-gap:clamp(12px,1.6vw,20px); max-width:none; margin-top:clamp(4px,.8vw,10px)}
   .stance .manifesto p{font-size:.92em; line-height:1.8}
-  .stance .manifesto p:last-child{grid-column:1/-1; max-width:44em}
+  .stance .manifesto p:last-child{
+    grid-column:1/-1; max-width:none;
+    margin-top:clamp(10px,1.4vw,18px); padding-top:clamp(16px,2vw,26px);
+    border-top:1px solid var(--line);
+    font-size:1em; color:var(--ink);
+  }
   .stance .exlabel, .stance .creed{grid-column:1/-1}
 }
 </style>
