@@ -388,7 +388,7 @@ html[data-lang="en"] .manifesto p{line-height:1.95}
 
 /* three pages side by side, so the page stays short */
 /* one grid for every group, so a new page is just another cell */
-.workgrid{display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(14px,1.5vw,24px)}
+.workgrid{display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(18px,2vw,32px)}
 .card{
   display:flex; flex-direction:column; overflow:hidden;
   border:1px solid var(--line); border-radius:var(--r);
@@ -514,15 +514,9 @@ footer a:hover{color:var(--ink)}
 }
 
 /* ===================== responsive ===================== */
-@media (max-width:1280px){
-  .workgrid,.workgrid.two{grid-template-columns:repeat(3,1fr)}
-}
 @media (max-width:1100px){
   .nav .links{display:none}
   .brand .rom{display:none}
-}
-@media (max-width:980px){
-  .workgrid,.workgrid.two{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:999px){
   .art::after{
@@ -590,7 +584,6 @@ footer a:hover{color:var(--ink)}
 .workgrid .card .body::before{content:counter(card,decimal-leading-zero); align-self:flex-start; margin-bottom:9px;
   font-size:10px; letter-spacing:.12em; color:rgba(255,255,255,.55); background:rgba(0,0,0,.55);
   border:1px solid rgba(255,255,255,.18); border-radius:999px; padding:3px 7px; line-height:1}
-@media (min-width:1500px){.workgrid{grid-template-columns:repeat(5,1fr)}}
 </style>
 <style>
 /* Phones: the WebGL flow never starts under 1000px, so the SVG filament art
