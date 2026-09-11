@@ -604,10 +604,21 @@ footer a:hover{color:var(--ink)}
 @media (max-width:560px){.askgrid{grid-template-columns:1fr}}
 .gnote{margin:-.2em 0 1.4em; max-width:46em; font-size:.86rem; line-height:1.85; color:var(--dim)}
 
+/* ===== lab: row card = poster left, reading right ===== */
+.workgrid, .workgrid.two{grid-template-columns:1fr; gap:clamp(16px,1.8vw,26px)}
+.workgrid .card{display:grid; grid-template-columns:minmax(0,58fr) minmax(0,42fr); align-items:stretch}
+.workgrid .card .shot{aspect-ratio:1200/630; border-bottom:none; border-right:1px solid rgba(255,255,255,.12); align-self:center}
+.workgrid .card .body{padding:clamp(18px,1.8vw,28px) clamp(20px,2vw,32px)}
+.workgrid .card .body::before{display:inline-block; align-self:flex-start; margin-bottom:12px}
+.workgrid .card h3{font-size:clamp(1.05rem,1.35vw,1.3rem); line-height:1.5; margin:.5em 0 .6em}
+.workgrid .card p:not(.use){display:block; -webkit-line-clamp:unset; overflow:visible; font-size:.84rem; line-height:1.9; margin:0 0 1em}
+.workgrid .card p.note{color:var(--dim); opacity:.85}
+@media (max-width:900px){
+  .workgrid .card{grid-template-columns:1fr}
+  .workgrid .card .shot{border-right:none; border-bottom:1px solid rgba(255,255,255,.12)}
+}
 /* ===== lab: card = poster + one use line + one open bar ===== */
-.workgrid .card .body::before{display:none}
 .workgrid .card .body .top .badge, .workgrid .card .body > .badge{order:0}
-.workgrid .card p:not(.use){display:none}
 .card .use{display:block !important; margin:.2em 0 1.1em; padding:.9em 1em; border-radius:10px;
   background:rgba(61,123,255,.07); border:1px solid rgba(61,123,255,.22); color:var(--ink);
   font-size:.86rem; line-height:1.8; -webkit-line-clamp:unset !important}
