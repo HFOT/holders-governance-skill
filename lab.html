@@ -44,6 +44,11 @@
   --faint:   #565f73;
   --line:    rgba(255,255,255,.085);
   --line-2:  rgba(255,255,255,.16);
+  --fg-rgb:  255,255,255;
+  --cardshadow: var(--cardshadow);
+  --pillbg:  rgba(0,0,0,.55);
+  --dockshadow: 0 6px 24px rgba(0,0,0,.45);
+  color-scheme:dark;
 
   --c1: #3d7bff;
   --c2: #21d4c2;
@@ -115,7 +120,7 @@ html[data-lang="en"] body{line-height:1.75}
   font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 100,"wght" 600;
   font-size:10px; letter-spacing:.16em; text-transform:uppercase;
   padding:7px 13px; border-radius:var(--rp);
-  border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--faint);
+  border:1px solid var(--line); background:rgba(var(--fg-rgb),.03); color:var(--faint);
   backdrop-filter:blur(8px);
   transition:color var(--half) var(--ease), border-color var(--half) var(--ease),
              background var(--half) var(--ease);
@@ -230,7 +235,7 @@ html[data-lang="en"] .jt{font-family:"Archivo",sans-serif; letter-spacing:-.012e
   appearance:none; cursor:pointer; padding:0;
   position:absolute; left:50%; top:50%;
   width:78px; height:78px; border-radius:19px;
-  border:1px solid var(--line); background:rgba(255,255,255,.022);
+  border:1px solid var(--line); background:rgba(var(--fg-rgb),.022);
   display:grid; place-items:center;
   transform:translate(calc(-50% + var(--o,0) * var(--step)), -50%) scale(var(--sc,.8));
   opacity:var(--op,0);
@@ -380,7 +385,7 @@ html[data-lang="en"] .manifesto p{line-height:1.95}
   background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;
 }
 .fig .bar{display:block; height:2px; margin:16px 0 14px;
-          background:rgba(255,255,255,.07); border-radius:2px; position:relative; overflow:hidden}
+          background:rgba(var(--fg-rgb),.07); border-radius:2px; position:relative; overflow:hidden}
 .fig .bar i{position:absolute; inset:0 auto 0 0; width:0; border-radius:2px;
             background:var(--grad); transition:width calc(var(--beat)*6) var(--ease)}
 .fig.in .bar i{width:var(--w,60%)}
@@ -392,14 +397,14 @@ html[data-lang="en"] .manifesto p{line-height:1.95}
 .card{
   display:flex; flex-direction:column; overflow:hidden;
   border:1px solid var(--line); border-radius:var(--r);
-  background:rgba(255,255,255,.016);
+  background:rgba(var(--fg-rgb),.016);
   transition:border-color var(--half) var(--ease), transform var(--half) var(--ease),
              background var(--half) var(--ease);
 }
-.card:hover{border-color:var(--line-2); background:rgba(255,255,255,.03); transform:translateY(-3px)}
+.card:hover{border-color:var(--line-2); background:rgba(var(--fg-rgb),.03); transform:translateY(-3px)}
 .card .shot{
   display:block; aspect-ratio:1200 / 630; overflow:hidden;
-  background:rgba(255,255,255,.02); border-bottom:1px solid var(--line);
+  background:rgba(var(--fg-rgb),.02); border-bottom:1px solid var(--line);
 }
 .card .shot img{
   width:100%; height:100%; object-fit:cover; object-position:center;
@@ -568,10 +573,10 @@ footer a:hover{color:var(--ink)}
 /* Cards: a frame you can actually see, and a height you can survey. Every
    word stays; the description folds to three lines and opens on hover or
    focus, the shot is a wide banner, and each card carries its number. */
-.workgrid .card{border-color:rgba(255,255,255,.15); background:rgba(255,255,255,.035);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.07), 0 12px 32px rgba(0,0,0,.38)}
-.workgrid .card:hover{border-color:rgba(255,255,255,.34); background:rgba(255,255,255,.05)}
-.workgrid .card .shot{border-bottom-color:rgba(255,255,255,.12)}
+.workgrid .card{border-color:rgba(var(--fg-rgb),.15); background:rgba(var(--fg-rgb),.035);
+  box-shadow:inset 0 1px 0 rgba(var(--fg-rgb),.07), var(--cardshadow)}
+.workgrid .card:hover{border-color:rgba(var(--fg-rgb),.34); background:rgba(var(--fg-rgb),.05)}
+.workgrid .card .shot{border-bottom-color:rgba(var(--fg-rgb),.12)}
 .workgrid .card .body{padding:clamp(13px,1.1vw,17px) clamp(14px,1.2vw,18px)}
 .workgrid .card h3{margin:.55em 0 .4em}
 .workgrid .card p{display:-webkit-box; -webkit-box-orient:vertical; overflow:hidden; margin-bottom:1em; transition:none}
@@ -582,8 +587,8 @@ footer a:hover{color:var(--ink)}
 .workgrid{counter-reset:card}
 .workgrid .card{counter-increment:card; position:relative}
 .workgrid .card .body::before{content:counter(card,decimal-leading-zero); align-self:flex-start; margin-bottom:9px;
-  font-size:10px; letter-spacing:.12em; color:rgba(255,255,255,.55); background:rgba(0,0,0,.55);
-  border:1px solid rgba(255,255,255,.18); border-radius:999px; padding:3px 7px; line-height:1}
+  font-size:10px; letter-spacing:.12em; color:rgba(var(--fg-rgb),.55); background:var(--pillbg);
+  border:1px solid rgba(var(--fg-rgb),.18); border-radius:999px; padding:3px 7px; line-height:1}
 
 /* ===== lab: plain entrance ===== */
 .one{margin:clamp(14px,2vh,22px) auto clamp(26px,3.6vh,44px); max-width:40em;
@@ -607,7 +612,7 @@ footer a:hover{color:var(--ink)}
 /* ===== lab: row card = poster left, reading right ===== */
 .workgrid, .workgrid.two{grid-template-columns:1fr; gap:clamp(16px,1.8vw,26px)}
 .workgrid .card{display:grid; grid-template-columns:minmax(0,58fr) minmax(0,42fr); align-items:stretch}
-.workgrid .card .shot{aspect-ratio:1200/630; border-bottom:none; border-right:1px solid rgba(255,255,255,.12); align-self:center}
+.workgrid .card .shot{aspect-ratio:1200/630; border-bottom:none; border-right:1px solid rgba(var(--fg-rgb),.12); align-self:center}
 .workgrid .card .body{padding:clamp(18px,1.8vw,28px) clamp(20px,2vw,32px)}
 .workgrid .card .body::before{display:inline-block; align-self:flex-start; margin-bottom:12px}
 .workgrid .card h3{font-size:clamp(1.05rem,1.35vw,1.3rem); line-height:1.5; margin:.5em 0 .6em}
@@ -615,7 +620,7 @@ footer a:hover{color:var(--ink)}
 .workgrid .card p.note{color:var(--dim); opacity:.85}
 @media (max-width:900px){
   .workgrid .card{grid-template-columns:1fr}
-  .workgrid .card .shot{border-right:none; border-bottom:1px solid rgba(255,255,255,.12)}
+  .workgrid .card .shot{border-right:none; border-bottom:1px solid rgba(var(--fg-rgb),.12)}
 }
 /* ===== lab: card = poster + one use line + one open bar ===== */
 .workgrid .card .body .top .badge, .workgrid .card .body > .badge{order:0}
@@ -633,7 +638,44 @@ footer a:hover{color:var(--ink)}
 .workgrid .card .pill:hover{background:rgba(61,123,255,.2); border-color:rgba(61,123,255,.8)}
 .workgrid .card .pill::after{content:""; position:absolute; inset:0; border-radius:inherit}
 .workgrid .card{position:relative}
-.workgrid .card.hit{border-color:rgba(61,123,255,.85); box-shadow:0 0 0 3px rgba(61,123,255,.28), 0 12px 32px rgba(0,0,0,.38)}
+.workgrid .card.hit{border-color:rgba(61,123,255,.85); box-shadow:0 0 0 3px rgba(61,123,255,.28), var(--cardshadow)}
+
+/* ===== light mode ===== */
+:root[data-theme="light"]{
+  --bg:      #f4f5f8;
+  --surface: rgba(10,14,24,.03);
+  --ink:     #0e1220;
+  --dim:     #5a6478;
+  --faint:   #8b94a8;
+  --line:    rgba(10,14,24,.10);
+  --line-2:  rgba(10,14,24,.22);
+  --fg-rgb:  10,14,24;
+  --c1: #2b5fd9;
+  --c2: #0e9c8f;
+  --c3: #6a4be0;
+  --cardshadow: 0 12px 32px rgba(20,30,60,.10);
+  --pillbg:  rgba(255,255,255,.75);
+  --dockshadow: 0 6px 24px rgba(20,30,60,.16);
+  color-scheme:light;
+}
+:root[data-theme="light"] .flow{filter:invert(1) hue-rotate(180deg) saturate(1.3); opacity:.55}
+:root[data-theme="light"] .art::after{background:
+    linear-gradient(90deg, rgba(244,245,248,.92) 0%, rgba(244,245,248,.8) 26%,
+                           rgba(244,245,248,.7) 50%, rgba(244,245,248,.55) 74%,
+                           rgba(244,245,248,.25) 100%),
+    linear-gradient(0deg,  rgba(244,245,248,.7), transparent 28%)}
+:root[data-theme="light"] .one{color:#2c3446}
+:root[data-theme="light"] .nav .links a{color:#3f4860}
+:root[data-theme="light"] #qa-fab{background:rgba(255,255,255,.88); border-color:rgba(10,14,24,.18)}
+:root[data-theme="light"] .fx button{background:rgba(255,255,255,.6)}
+:root[data-theme="light"] .meas{color:#3f4860}
+:root[data-theme="light"] .workgrid .card{background:#fff; border-color:rgba(10,14,24,.12); box-shadow:inset 0 1px 0 #fff, var(--cardshadow)}
+:root[data-theme="light"] .workgrid .card:hover{background:#fff; border-color:rgba(10,14,24,.3)}
+:root[data-theme="light"] .askgrid a{background:#fff}
+:root[data-theme="light"] .askgrid a:hover{background:rgba(43,95,217,.06)}
+:root[data-theme="light"] .card .use{background:rgba(43,95,217,.06); border-color:rgba(43,95,217,.25)}
+:root[data-theme="light"] .workgrid .card .pill{background:rgba(43,95,217,.08); border-color:rgba(43,95,217,.4)}
+:root[data-theme="light"] .workgrid .card .pill:hover{background:rgba(43,95,217,.16)}
 </style>
 <style>
 /* Phones: the WebGL flow never starts under 1000px, so the SVG filament art
@@ -875,6 +917,7 @@ footer a:hover{color:var(--ink)}
     <button class="lang" id="lang" type="button">
       <span class="ja">EN</span><span class="en">日本語</span>
     </button>
+    <button class="lang" id="theme" type="button" aria-label="theme">Light</button>
     <a class="pill" href="#drep">
       <span class="ja">はじめる</span><span class="en">Start</span>
       <span class="arw lat">&rarr;</span>
@@ -1545,6 +1588,21 @@ footer a:hover{color:var(--ink)}
   var hasIO  = 'IntersectionObserver' in window;
   var BEAT   = 469;
 
+
+  /* ---------- theme ---------- */
+  function setTheme(light){
+    if (light) root.setAttribute('data-theme','light'); else root.removeAttribute('data-theme');
+    var tb = document.getElementById('theme'); if (tb) tb.textContent = light ? 'Dark' : 'Light';
+    try { localStorage.setItem('hgs-theme', light ? 'light' : 'dark'); } catch (e) {}
+  }
+  (function(){
+    var saved = null; try { saved = localStorage.getItem('hgs-theme'); } catch (e) {}
+    if (saved) setTheme(saved === 'light');
+    else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) setTheme(true);
+  })();
+  var themeBtn = document.getElementById('theme');
+  if (themeBtn) themeBtn.addEventListener('click', function(){ setTheme(root.getAttribute('data-theme') !== 'light'); });
+
   /* ---------- language ---------- */
   function isEN(){ return root.getAttribute('data-lang') === 'en'; }
   function setLang(en){
@@ -1862,7 +1920,7 @@ footer a:hover{color:var(--ink)}
   background:rgba(10,12,18,.82); border:1px solid var(--line-2);
   color:var(--ink); text-decoration:none; font-size:.82rem; font-weight:600; letter-spacing:.01em;
   backdrop-filter:blur(14px) saturate(1.4); -webkit-backdrop-filter:blur(14px) saturate(1.4);
-  box-shadow:0 6px 24px rgba(0,0,0,.45);
+  box-shadow:var(--dockshadow);
   transition:transform var(--half) var(--ease), border-color var(--half) var(--ease), box-shadow var(--half) var(--ease);
 }
 #qa-fab:hover{transform:translateY(-2px); border-color:var(--c1); box-shadow:0 10px 30px rgba(61,123,255,.25)}
