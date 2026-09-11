@@ -398,12 +398,12 @@ html[data-lang="en"] .manifesto p{line-height:1.95}
 }
 .card:hover{border-color:var(--line-2); background:rgba(255,255,255,.03); transform:translateY(-3px)}
 .card .shot{
-  display:block; aspect-ratio:16 / 10; overflow:hidden;
+  display:block; aspect-ratio:1200 / 630; overflow:hidden;
   background:rgba(255,255,255,.02); border-bottom:1px solid var(--line);
 }
 .card .shot img{
-  width:100%; height:100%; object-fit:cover; object-position:left top;
-  transform:scale(1.025); transform-origin:left top;
+  width:100%; height:100%; object-fit:cover; object-position:center;
+  transform:scale(1.025); transform-origin:center;
   transition:transform calc(var(--beat)*2.4) var(--ease);
 }
 .card:hover .shot img{transform:scale(1.06)}
@@ -577,7 +577,7 @@ footer a:hover{color:var(--ink)}
 .workgrid .card{border-color:rgba(255,255,255,.15); background:rgba(255,255,255,.035);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.07), 0 12px 32px rgba(0,0,0,.38)}
 .workgrid .card:hover{border-color:rgba(255,255,255,.34); background:rgba(255,255,255,.05)}
-.workgrid .card .shot{aspect-ratio:21 / 9; border-bottom-color:rgba(255,255,255,.12)}
+.workgrid .card .shot{border-bottom-color:rgba(255,255,255,.12)}
 .workgrid .card .body{padding:clamp(13px,1.1vw,17px) clamp(14px,1.2vw,18px)}
 .workgrid .card h3{margin:.55em 0 .4em}
 .workgrid .card p{display:-webkit-box; -webkit-box-orient:vertical; overflow:hidden; margin-bottom:1em; transition:none}
@@ -1108,8 +1108,8 @@ footer a:hover{color:var(--ink)}
 
       <article class="card rv" id="qa">
         <a class="shot" href="https://hfot.github.io/cardano-qa-bot/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-          <img src="shots/qa.png" data-shot-ja="shots/qa.png" data-shot-en="shots/qa.png"
-               width="1440" height="900" loading="lazy" decoding="async" alt="">
+          <img src="og/qa.png" data-shot-ja="og/qa.png" data-shot-en="og/qa.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
         </a>
         <div class="body">
           <span class="lbl on">What's Cardano?</span>
@@ -1134,8 +1134,8 @@ footer a:hover{color:var(--ink)}
 
       <article class="card rv" id="drep" style="--i:1">
         <a class="shot" href="https://hfot.github.io/drep-terminal-v6/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-          <img src="shots/drep.png" data-shot-ja="shots/drep.png" data-shot-en="shots/drep-en.png"
-               width="1440" height="900" loading="lazy" decoding="async" alt="">
+          <img src="og/drep.png" data-shot-ja="og/drep.png" data-shot-en="og/drep.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
         </a>
         <div class="body">
           <span class="lbl on">DRep Governance Terminal</span>
@@ -1160,8 +1160,8 @@ footer a:hover{color:var(--ink)}
 
       <article class="card rv" id="catalyst" style="--i:1">
         <a class="shot" href="https://hfot.github.io/Catalyst-Japan/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-          <img src="shots/catalyst.png" data-shot-ja="shots/catalyst.png" data-shot-en="shots/catalyst-en.png"
-               width="1440" height="900" loading="lazy" decoding="async" alt="">
+          <img src="og/catalyst.png" data-shot-ja="og/catalyst.png" data-shot-en="og/catalyst.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
         </a>
         <div class="body">
           <span class="lbl on">Catalyst Japan</span>
@@ -1186,8 +1186,8 @@ footer a:hover{color:var(--ink)}
 
       <article class="card rv" id="cmap" style="--i:2">
         <a class="shot" href="https://hfot.github.io/holders-core/catalyst-map/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-          <img src="shots/cmap.png" data-shot-ja="shots/cmap.png" data-shot-en="shots/cmap.png"
-               width="1440" height="900" loading="lazy" decoding="async" alt="">
+          <img src="og/cmap.png" data-shot-ja="og/cmap.png" data-shot-en="og/cmap.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
         </a>
         <div class="body">
           <span class="lbl on">Catalyst Detailed Map</span>
@@ -1212,8 +1212,8 @@ footer a:hover{color:var(--ink)}
 
       <article class="card rv" id="core" style="--i:2">
         <a class="shot" href="https://hfot.github.io/holders-core/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-          <img src="shots/core.png" data-shot-ja="shots/core.png" data-shot-en="shots/core-en.png"
-               width="1440" height="900" loading="lazy" decoding="async" alt="">
+          <img src="og/core.png" data-shot-ja="og/core.png" data-shot-en="og/core.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
         </a>
         <div class="body">
           <span class="lbl on">holders CORE</span>
@@ -1238,8 +1238,8 @@ footer a:hover{color:var(--ink)}
 
       <article class="card rv" id="relay" style="--i:3">
         <a class="shot" href="https://hfot.github.io/cardano-relay-health/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-          <img src="shots/relay.png" data-shot-ja="shots/relay.png" data-shot-en="shots/relay-en.png"
-               width="1440" height="900" loading="lazy" decoding="async" alt="">
+          <img src="og/relay.png" data-shot-ja="og/relay.png" data-shot-en="og/relay.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
         </a>
         <div class="body">
           <span class="lbl on">Relay Health Ranking</span>
@@ -1264,8 +1264,8 @@ footer a:hover{color:var(--ink)}
 
       <article class="card rv" id="alive" style="--i:4">
         <a class="shot" href="https://hfot.github.io/spo-onchain-alive/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-          <img src="shots/alive.png" data-shot-ja="shots/alive.png" data-shot-en="shots/alive-en.png"
-               width="1440" height="900" loading="lazy" decoding="async" alt="">
+          <img src="og/alive.png" data-shot-ja="og/alive.png" data-shot-en="og/alive.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
         </a>
         <div class="body">
           <span class="lbl on">Cardano Art Explorer</span>
@@ -1290,8 +1290,8 @@ footer a:hover{color:var(--ink)}
 
       <article class="card rv" id="poc" style="--i:4">
         <a class="shot" href="https://hfot.github.io/proof-of-code/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-          <img src="shots/poc.png" data-shot-ja="shots/poc.png" data-shot-en="shots/poc-en.png"
-               width="1440" height="900" loading="lazy" decoding="async" alt="">
+          <img src="og/poc.png" data-shot-ja="og/poc.png" data-shot-en="og/poc.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
         </a>
         <div class="body">
           <span class="lbl on">Proof of Code</span>
@@ -1316,8 +1316,8 @@ footer a:hover{color:var(--ink)}
 
       <article class="card rv" id="deleg" style="--i:5">
         <a class="shot" href="https://hfot.github.io/cardano-two-delegations/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-          <img src="shots/delegations.png" data-shot-ja="shots/delegations.png" data-shot-en="shots/delegations-en.png"
-               width="1440" height="900" loading="lazy" decoding="async" alt="">
+          <img src="og/deleg.png" data-shot-ja="og/deleg.png" data-shot-en="og/deleg.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
         </a>
         <div class="body">
           <span class="lbl on">One Wallet, Two Delegations</span>
@@ -1350,8 +1350,8 @@ footer a:hover{color:var(--ink)}
 
       <article class="card rv" id="translate">
         <a class="shot" href="https://hfot.github.io/space-translate/app.html" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-          <img src="shots/translate.png" data-shot-ja="shots/translate.png" data-shot-en="shots/translate-en.png"
-               width="1440" height="900" loading="lazy" decoding="async" alt="">
+          <img src="og/translate.png" data-shot-ja="og/translate.png" data-shot-en="og/translate.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
         </a>
         <div class="body">
           <span class="top">
@@ -1383,8 +1383,8 @@ footer a:hover{color:var(--ink)}
 
       <article class="card rv" id="spiral" style="--i:1">
         <a class="shot" href="https://hfot.github.io/cardano-spiral/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-          <img src="shots/spiral.png" data-shot-ja="shots/spiral.png" data-shot-en="shots/spiral-en.png"
-               width="1440" height="900" loading="lazy" decoding="async" alt="">
+          <img src="og/spiral.png" data-shot-ja="og/spiral.png" data-shot-en="og/spiral.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
         </a>
         <div class="body">
           <span class="top">
@@ -1416,8 +1416,8 @@ footer a:hover{color:var(--ink)}
 
       <article class="card rv" id="signal" style="--i:2">
         <a class="shot" href="https://hfot.github.io/cignal-radar/cignal-signal-v2.html" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-          <img src="shots/signal.png" data-shot-ja="shots/signal.png" data-shot-en="shots/signal.png"
-               width="1440" height="900" loading="lazy" decoding="async" alt="">
+          <img src="og/signal.png" data-shot-ja="og/signal.png" data-shot-en="og/signal.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
         </a>
         <div class="body">
           <span class="top">
@@ -1449,8 +1449,8 @@ footer a:hover{color:var(--ink)}
 
       <article class="card rv" id="humanism" style="--i:3">
         <a class="shot" href="https://hfot.github.io/governance-humanism-action/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-          <img src="shots/humanism.png" data-shot-ja="shots/humanism.png" data-shot-en="shots/humanism-en.png"
-               width="1440" height="900" loading="lazy" decoding="async" alt="">
+          <img src="og/humanism.png" data-shot-ja="og/humanism.png" data-shot-en="og/humanism.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
         </a>
         <div class="body">
           <span class="top">
@@ -1482,8 +1482,8 @@ footer a:hover{color:var(--ink)}
 
       <article class="card rv" id="dvm" style="--i:4">
         <a class="shot" href="https://hfot.github.io/dialogue-verification-model/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-          <img src="shots/dvm.png" data-shot-ja="shots/dvm.png" data-shot-en="shots/dvm-en.png"
-               width="1440" height="900" loading="lazy" decoding="async" alt="">
+          <img src="og/dvm.png" data-shot-ja="og/dvm.png" data-shot-en="og/dvm.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
         </a>
         <div class="body">
           <span class="top">
@@ -1515,8 +1515,8 @@ footer a:hover{color:var(--ink)}
 
       <article class="card rv" id="carakuri" style="--i:5">
         <a class="shot" href="https://hfot.github.io/nomad-3d/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-          <img src="shots/carakuri.png" data-shot-ja="shots/carakuri.png" data-shot-en="shots/carakuri-en.png"
-               width="1440" height="900" loading="lazy" decoding="async" alt="">
+          <img src="og/carakuri.png" data-shot-ja="og/carakuri.png" data-shot-en="og/carakuri.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
         </a>
         <div class="body">
           <span class="top">
