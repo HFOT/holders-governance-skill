@@ -1,0 +1,1904 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Holders&#39; Governance Skill / 研ぎ澄ませるための情報</title>
+<meta name="description" content="本物を見極めるには、それに見合った情報がいる。公開されているのに読めない、在り処も分からない。その情報を探して、読める形にして置いています。Catalyst の提案、リレーの健全性、二種類の委任、音声の字幕翻訳、分散型スパイラル。">
+<meta property="og:title" content="Holders&#39; Governance Skill / 研ぎ澄ませるための情報">
+<meta property="og:description" content="本物を見極めるには、それに見合った情報がいる。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hfot.github.io/holders-governance-skill/">
+<!-- 絶対URLでないと各SNSのクローラーが拾えない -->
+<meta property="og:image" content="https://hfot.github.io/holders-governance-skill/og.png?v=1">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Holders' Governance Skill — 公開されているものを、読める形にして置いています">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ===========================================================
+   Holders' Governance Skill / 研ぎ澄ませるための情報
+
+   A realtime particle field runs the full width of the opening
+   screen. Stability comes from a fixed scrim that caps how
+   bright the ground under the type can get, never from fencing
+   the art into a column.
+
+   Bilingual: both languages sit in the markup and the root
+   [data-lang] attribute decides which one shows. With no
+   script, Japanese is what you get.
+   =========================================================== */
+:root{
+  --beat: 469ms;
+  --half: 234ms;
+  --ease: cubic-bezier(.16,1,.3,1);
+
+  --bg:      #06070a;
+  --surface: rgba(255,255,255,.028);
+  --ink:     #f2f4f8;
+  --dim:     #8a92a6;
+  --faint:   #565f73;
+  --line:    rgba(255,255,255,.085);
+  --line-2:  rgba(255,255,255,.16);
+
+  --c1: #3d7bff;
+  --c2: #21d4c2;
+  --c3: #8b6cff;
+  --grad: linear-gradient(96deg, var(--c1), var(--c3) 86%);
+
+  --r:  14px;
+  --rp: 999px;
+  --pad: clamp(18px, 3.4vw, 56px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Noto Sans JP",system-ui,sans-serif;
+  font-weight:400; line-height:1.9; letter-spacing:.01em;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+a{color:inherit; text-decoration:none}
+img{max-width:100%; display:block}
+::selection{background:rgba(61,123,255,.35)}
+.lat{font-family:"Archivo",sans-serif}
+.wrap{max-width:1400px; margin-inline:auto; padding-inline:var(--pad)}
+
+/* language: japanese unless the root says otherwise */
+html[data-lang="en"] .ja{display:none}
+html:not([data-lang="en"]) .en{display:none}
+html[data-lang="en"] body{line-height:1.75}
+
+.lbl{
+  font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 100,"wght" 600;
+  font-size:10.5px; letter-spacing:.19em; text-transform:uppercase; color:var(--faint);
+}
+.lbl.on{color:var(--c1)}
+
+/* ===================== FIELD ===================== */
+.field{
+  position:relative; min-height:100dvh;
+  display:grid; grid-template-rows:auto 1fr;
+}
+.art{position:absolute; inset:0; z-index:0; overflow:hidden}
+.art::after{
+  content:""; position:absolute; inset:0; z-index:3; pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(6,7,10,.86) 0%, rgba(6,7,10,.72) 26%,
+                           rgba(6,7,10,.62) 50%, rgba(6,7,10,.5) 74%,
+                           rgba(6,7,10,.2) 100%),
+    linear-gradient(0deg,  rgba(6,7,10,.5), transparent 28%);
+}
+.flow{position:absolute; inset:0; z-index:0; display:block; pointer-events:none}
+.field.has-flow .fil{opacity:0; transition:opacity calc(var(--beat)*4) linear}
+.fil{
+  position:absolute; inset:-12% -14%; width:128%; height:124%;
+  z-index:1; pointer-events:none;
+  -webkit-mask-image:linear-gradient(90deg, transparent 0%, #000 34%);
+          mask-image:linear-gradient(90deg, transparent 0%, #000 34%);
+}
+.fil svg{width:100%; height:100%; fill:none; display:block}
+.rn{stroke-width:1.25; opacity:0; stroke-dasharray:132 1000; stroke-dashoffset:1132; stroke-linecap:round}
+
+/* background presets */
+.fx{
+  position:absolute; right:var(--pad); bottom:clamp(18px,3.4vh,34px); z-index:6;
+  display:none; gap:6px; align-items:center;
+}
+.field.has-flow .fx{display:flex}
+.fx button{
+  appearance:none; cursor:pointer; font:inherit;
+  font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 100,"wght" 600;
+  font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+  padding:7px 13px; border-radius:var(--rp);
+  border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--faint);
+  backdrop-filter:blur(8px);
+  transition:color var(--half) var(--ease), border-color var(--half) var(--ease),
+             background var(--half) var(--ease);
+}
+.fx button:hover{color:var(--ink); border-color:var(--line-2)}
+.fx button[aria-pressed="true"]{
+  color:var(--ink); border-color:rgba(61,123,255,.55); background:rgba(61,123,255,.12);
+}
+
+/* ---------- nav ---------- */
+.nav{
+  position:relative; z-index:6;
+  display:flex; align-items:center; gap:clamp(12px,1.8vw,30px);
+  padding:20px var(--pad);
+}
+.brand{display:flex; align-items:baseline; gap:.7em; font-weight:700; font-size:13px;
+       letter-spacing:.02em; white-space:nowrap}
+.brand .rom{
+  font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 100,"wght" 600;
+  font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--faint);
+}
+.nav .links{display:flex; gap:clamp(12px,1.8vw,26px); margin-left:auto}
+.nav .links a{
+  font-size:12.5px; color:var(--dim); padding:6px 2px;
+  transition:color var(--half) var(--ease);
+}
+.nav .links a:hover{color:var(--ink)}
+.lang{
+  appearance:none; cursor:pointer; font:inherit;
+  font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 100,"wght" 600;
+  font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+  padding:7px 12px; border-radius:var(--rp);
+  border:1px solid var(--line); background:transparent; color:var(--dim);
+  transition:color var(--half) var(--ease), border-color var(--half) var(--ease);
+}
+.lang:hover{color:var(--ink); border-color:var(--line-2)}
+.pill{
+  display:inline-flex; align-items:center; gap:.6em;
+  padding:9px 18px; border-radius:var(--rp);
+  border:1px solid var(--line-2); background:var(--surface);
+  font-size:12.5px; font-weight:500; color:var(--ink);
+  backdrop-filter:blur(8px);
+  transition:border-color var(--half) var(--ease),
+             background var(--half) var(--ease),
+             transform var(--half) var(--ease);
+}
+.pill:hover{border-color:rgba(61,123,255,.6); background:rgba(61,123,255,.12)}
+.pill:active{transform:translateY(1px)}
+.pill .arw{font-size:11px; opacity:.7; transition:transform var(--half) var(--ease)}
+.pill:hover .arw{transform:translateX(3px)}
+
+/* ---------- hero ---------- */
+.hero{position:relative; z-index:5; grid-row:2; min-width:0;
+      display:grid; align-content:safe center;
+      padding:clamp(24px,5vh,72px) var(--pad) clamp(40px,7vh,86px)}
+.hero-in{max-width:1400px; margin-inline:auto; width:100%; min-width:0; text-align:center}
+.eyeline{display:block; margin:0 0 clamp(14px,2vh,22px)}
+.wm{
+  position:relative; margin:0 0 clamp(18px,2.4vh,30px);
+  font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 118,"wght" 800;
+  font-size:clamp(1.85rem, 5.4vw, 4.85rem);
+  line-height:1.04; letter-spacing:-.035em; color:var(--ink);
+  text-wrap:balance;
+}
+.wm .l2{color:var(--dim)}
+.jt{
+  margin:0 auto clamp(10px,1.4vh,16px);
+  font-family:"Noto Sans JP",system-ui,sans-serif; font-weight:700;
+  font-size:clamp(1.15rem,2vw,1.72rem); line-height:1.5;
+  letter-spacing:-.022em; color:var(--ink);
+}
+html[data-lang="en"] .jt{font-family:"Archivo",sans-serif; letter-spacing:-.012em}
+.jt em{font-style:normal;
+  background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent}
+.why{
+  margin:0 auto clamp(22px,3.2vh,38px); max-width:34em;
+  font-size:clamp(.95rem,1.4vw,1.18rem); font-weight:400;
+  line-height:1.9; letter-spacing:-.004em; color:var(--dim);
+}
+.lede{
+  display:flex; flex-direction:column; align-items:center; gap:.55em;
+  margin:0 auto clamp(28px,4.4vh,52px);
+  font-size:clamp(1rem,1.5vw,1.22rem); font-weight:500;
+  letter-spacing:-.003em; line-height:1.75;
+}
+.lede em{font-style:normal;
+  background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent}
+.lede .typed{
+  width:min(100%, 25rem); min-height:1.9em; margin:0;
+  font-size:12.5px; font-weight:400; color:var(--dim); line-height:1.9;
+}
+.typed .cur{display:inline-block; width:2px; height:1em; background:var(--c1);
+            vertical-align:-.12em; margin-left:.3em}
+
+/* ---------- the dock ----------
+   Two tracks share one index: marks on top, descriptions below. Both
+   centre the active item across the full width, so the neighbours stay
+   visible at low opacity and it is obvious there is more to either
+   side. Tiles never change their layout box, only their transform,
+   which keeps the centring arithmetic stable. */
+.dock{display:none}
+.dock-on .dock{display:block}
+.dock-on .idx{display:none}
+
+.rail{
+  position:relative; overflow:hidden; width:100%; height:132px;
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+          mask-image:linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+}
+.track{position:absolute; inset:0; --gap:52px}
+.tile{
+  appearance:none; cursor:pointer; padding:0;
+  position:absolute; left:50%; top:50%;
+  width:78px; height:78px; border-radius:19px;
+  border:1px solid var(--line); background:rgba(255,255,255,.022);
+  display:grid; place-items:center;
+  transform:translate(calc(-50% + var(--o,0) * var(--step)), -50%) scale(var(--sc,.8));
+  opacity:var(--op,0);
+  transition:transform calc(var(--beat)*1.6) var(--ease),
+             opacity calc(var(--beat)*1.6) var(--ease),
+             border-color var(--half) var(--ease),
+             background var(--half) var(--ease);
+}
+.tile img{width:54px; height:54px; display:block; border-radius:12px; pointer-events:none}
+.tile:hover{opacity:.72; border-color:var(--line-2)}
+.tile[aria-selected="true"]{
+  border-color:rgba(61,123,255,.5); background:rgba(61,123,255,.10);
+}
+/* a slot that has just wrapped from one end to the other must not be
+   seen crossing the rail, so it is moved without a transition */
+.tile.jump,.pan.jump{transition:none}
+.tile:focus-visible{outline:2px solid var(--c1); outline-offset:4px}
+
+.prail{
+  position:relative; overflow:hidden; width:100%; min-width:0; height:0;
+  margin-top:clamp(6px,1.2vh,14px);
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent);
+          mask-image:linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent);
+}
+.ptrack{position:absolute; inset:0; --gap:50px}
+.pan{
+  position:absolute; left:50%; top:0; width:min(430px, 76vw);
+  transform:translateX(calc(-50% + var(--o,0) * var(--step)));
+  opacity:var(--op,0); pointer-events:none;
+  transition:transform calc(var(--beat)*1.6) var(--ease),
+             opacity calc(var(--beat)*1.6) var(--ease);
+}
+.pan.is-on{pointer-events:auto}
+.pan{text-align:center}
+.pan .lbl{display:block; margin-bottom:.9em}
+.pan h2{
+  font-size:clamp(1.02rem,1.4vw,1.28rem); font-weight:700; line-height:1.55;
+  letter-spacing:-.014em; margin:0 0 .5em;
+}
+.pan p{color:var(--dim); font-size:.85rem; line-height:1.95; margin:0 0 1.2em; min-height:5.7em}
+html[data-lang="en"] .pan p{min-height:5.2em}
+.pan .pill{padding:8px 16px; font-size:12px}
+
+@media (max-width:560px){
+  .rail{height:104px}
+  .tile{width:62px; height:62px; border-radius:15px}
+  .tile img{width:43px; height:43px}
+  .track{--gap:22px}
+  .ptrack{--gap:26px}
+  /* the panel has to sit inside the clear part of the mask, or its
+     own first and last characters fade out */
+  .prail{
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+            mask-image:linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  }
+  .pan{width:68vw}
+  .pan p{min-height:7.4em}
+}
+
+/* ---------- the pages, as rules that cross the whole width ---------- */
+.idx{display:grid; grid-template-columns:repeat(2,1fr); column-gap:clamp(20px,3vw,56px); border-top:1px solid var(--line)}
+.idx a{
+  position:relative;
+  display:grid; grid-template-columns:7.4em 1fr auto; align-items:center;
+  gap:clamp(14px,2vw,26px);
+  padding:clamp(15px,2vh,20px) clamp(2px,1vw,12px);
+  border-bottom:1px solid var(--line);
+}
+.idx a:nth-child(2n){border-left:1px solid var(--line); padding-left:clamp(20px,3vw,56px)}
+.idx a::after{
+  content:""; position:absolute; left:0; right:0; bottom:-1px; height:1px;
+  background:var(--grad); transform:scaleX(0); transform-origin:0 50%;
+  transition:transform calc(var(--beat)*.9) var(--ease);
+}
+.idx a:hover::after{transform:scaleX(1)}
+.idx .kind{
+  font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 100,"wght" 600;
+  font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--faint);
+  transition:color var(--half) var(--ease);
+}
+.idx a:hover .kind{color:var(--c1)}
+.idx .ttl{
+  font-size:clamp(.98rem,1.25vw,1.12rem); font-weight:700;
+  letter-spacing:-.008em; line-height:1.5;
+}
+.idx .arw{font-size:13px; color:var(--dim);
+          transition:transform var(--half) var(--ease), color var(--half) var(--ease)}
+.idx a:hover .arw{color:var(--ink); transform:translateX(5px)}
+
+.meas{
+  display:flex; flex-wrap:wrap; align-items:baseline; justify-content:center;
+  gap:8px clamp(22px,3.4vw,48px); margin-top:clamp(22px,3vh,34px);
+  font-size:11.5px; color:var(--faint);
+}
+.meas b{
+  font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 100,"wght" 600;
+  font-variant-numeric:tabular-nums; font-weight:400;
+  color:var(--ink); font-size:14px; margin-right:.55em;
+}
+
+/* ===================== SECTIONS ===================== */
+.sec{border-top:1px solid var(--line); padding-block:clamp(42px,5vw,78px); position:relative}
+.head{margin:0 0 clamp(22px,3vw,38px)}
+.head .lbl{display:block; margin-bottom:1.2em}
+.h2{
+  font-size:clamp(1.25rem,2.1vw,1.75rem); font-weight:700; line-height:1.62;
+  letter-spacing:-.018em; margin:0; max-width:34rem;
+}
+.h2 em{font-style:normal;
+  background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent}
+
+.manifesto{display:grid; gap:clamp(18px,2.2vw,30px); max-width:44em; margin-top:clamp(20px,2.4vw,32px)}
+.manifesto p{
+  position:relative; margin:0; padding-left:clamp(20px,2.4vw,34px);
+  font-size:clamp(1rem,1.55vw,1.24rem); font-weight:400; line-height:2.15;
+  letter-spacing:-.004em; color:var(--dim);
+}
+html[data-lang="en"] .manifesto p{line-height:1.95}
+.manifesto p::before{
+  content:""; position:absolute; left:0; top:1.05em; width:clamp(10px,1.4vw,18px); height:1px;
+  background:var(--grad);
+}
+.manifesto b{color:var(--ink); font-weight:700}
+.exlabel{display:block; margin:clamp(30px,3.6vw,52px) 0 clamp(14px,1.8vw,22px)}
+
+.creed{display:grid; gap:clamp(10px,1.4vw,18px); max-width:60rem}
+.creed p{
+  display:grid; grid-template-columns:auto 1fr; gap:clamp(12px,1.6vw,22px);
+  align-items:baseline; margin:0;
+  font-size:clamp(.98rem,1.4vw,1.15rem); font-weight:500;
+  letter-spacing:-.006em; line-height:1.9; color:var(--dim);
+}
+.creed p b{color:var(--ink); font-weight:700}
+.creed .tick{
+  width:26px; height:1px; background:var(--grad); align-self:center;
+  transform:translateY(-.1em);
+}
+
+.figs{display:grid; gap:1px; background:var(--line); grid-template-columns:repeat(4,1fr);
+      border:1px solid var(--line); border-radius:var(--r); overflow:hidden}
+.fig{background:var(--bg); padding:clamp(18px,2vw,30px)}
+.fig .lbl{display:block; margin-bottom:1.4em}
+.fig .n{
+  display:block; font-family:"Archivo",sans-serif;
+  font-variation-settings:"wdth" 110,"wght" 700; font-variant-numeric:tabular-nums;
+  font-size:clamp(2.1rem,3.6vw,3.2rem); line-height:1.05; letter-spacing:-.035em;
+  background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.fig .bar{display:block; height:2px; margin:16px 0 14px;
+          background:rgba(255,255,255,.07); border-radius:2px; position:relative; overflow:hidden}
+.fig .bar i{position:absolute; inset:0 auto 0 0; width:0; border-radius:2px;
+            background:var(--grad); transition:width calc(var(--beat)*6) var(--ease)}
+.fig.in .bar i{width:var(--w,60%)}
+.fig .l{display:block; color:var(--dim); font-size:.88rem; line-height:1.95}
+
+/* three pages side by side, so the page stays short */
+/* one grid for every group, so a new page is just another cell */
+.workgrid{display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(18px,2vw,32px)}
+.card{
+  display:flex; flex-direction:column; overflow:hidden;
+  border:1px solid var(--line); border-radius:var(--r);
+  background:rgba(255,255,255,.016);
+  transition:border-color var(--half) var(--ease), transform var(--half) var(--ease),
+             background var(--half) var(--ease);
+}
+.card:hover{border-color:var(--line-2); background:rgba(255,255,255,.03); transform:translateY(-3px)}
+.card .shot{
+  display:block; aspect-ratio:1200 / 630; overflow:hidden;
+  background:rgba(255,255,255,.02); border-bottom:1px solid var(--line);
+}
+.card .shot img{
+  width:100%; height:100%; object-fit:cover; object-position:center;
+  transform:scale(1.025); transform-origin:center;
+  transition:transform calc(var(--beat)*2.4) var(--ease);
+}
+.card:hover .shot img{transform:scale(1.06)}
+.card .body{display:flex; flex-direction:column; flex:1; padding:clamp(15px,1.35vw,20px)}
+.card h3{
+  font-size:clamp(.95rem,1.05vw,1.08rem); font-weight:700; line-height:1.6;
+  letter-spacing:-.012em; margin:.9em 0 .55em;
+}
+.card p{color:var(--dim); font-size:.79rem; line-height:1.85; margin:0 0 1.3em}
+.card p b{color:var(--ink); font-weight:700}
+.card .spec{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(68px, 1fr)); gap:9px 8px;
+  margin:auto 0 1.2em; padding-top:1em; border-top:1px solid var(--line);
+}
+.card .spec div{display:grid; gap:3px; min-width:0}
+.card .spec .k{font-size:8px; letter-spacing:.1em; text-transform:uppercase;
+               color:var(--faint); line-height:1.5}
+.card .spec .v{font-size:11.5px; color:var(--ink); font-variant-numeric:tabular-nums;
+               white-space:nowrap}
+.card .pill{align-self:flex-start; padding:7px 13px; font-size:11px}
+.workgrid.two{margin-top:clamp(14px,1.5vw,24px)}
+.card .top{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+/* anything that is not a measurement says so on its face */
+.badge{
+  font-family:"Archivo",sans-serif; font-variation-settings:"wdth" 100,"wght" 600;
+  font-size:9px; letter-spacing:.16em; text-transform:uppercase;
+  padding:3px 8px; border-radius:var(--rp);
+  border:1px solid rgba(139,108,255,.5); color:var(--c3);
+}
+.badge.tool{border-color:rgba(33,212,194,.45); color:var(--c2)}
+.card .note{
+  margin:0 0 1.2em; font-size:10.5px; line-height:1.75; color:var(--faint);
+}
+.subhead{margin:clamp(30px,4vw,54px) 0 clamp(14px,1.8vw,22px)}
+
+.end .h2{max-width:26rem}
+.end p{color:var(--dim); max-width:36rem; margin:1.2em 0 0; font-size:.9rem; line-height:1.95}
+footer{border-top:1px solid var(--line); padding-block:26px}
+footer .wrap{display:flex; flex-wrap:wrap; gap:12px 30px; justify-content:space-between;
+             align-items:center; font-size:11.5px; color:var(--faint)}
+footer a{transition:color var(--half) var(--ease)}
+footer a:hover{color:var(--ink)}
+
+.js .rv{opacity:0; transform:translateY(16px)}
+.js .rv.in{opacity:1; transform:none;
+  transition:opacity calc(var(--beat)*1.6) var(--ease),
+             transform calc(var(--beat)*1.6) var(--ease);
+  transition-delay:calc(var(--i,0) * var(--half) / 1.6)}
+
+/* ===================== motion ===================== */
+@keyframes run{
+  0%  {stroke-dashoffset:1132; opacity:0}
+  10% {opacity:.8}
+  82% {opacity:.8}
+  100%{stroke-dashoffset:0; opacity:0}
+}
+@keyframes caret{0%,48%{opacity:1} 49%,100%{opacity:0}}
+
+@media (prefers-reduced-motion: no-preference){
+  .rn{animation:run var(--dur,7s) linear infinite; animation-delay:var(--dl,0s)}
+  .typed .cur{animation:caret var(--beat) steps(1,end) infinite}
+}
+@media (prefers-reduced-motion: reduce){
+  .track,.ptrack,.tile,.pan{transition:none}
+  .rn{opacity:.5; stroke-dasharray:none; stroke-dashoffset:0}
+  .js .rv{opacity:1; transform:none}
+  .fig .bar i{width:var(--w,60%)}
+  html{scroll-behavior:auto}
+}
+
+/* a short window tightens the opening screen rather than spilling */
+@media (max-height:1020px) and (min-width:1000px){
+  .hero{padding-block:clamp(14px,2.4vh,34px) clamp(16px,3vh,40px)}
+  .wm{font-size:clamp(1.9rem,4.2vw,3.6rem); margin-bottom:clamp(12px,1.8vh,20px)}
+  .jt{font-size:clamp(1.05rem,1.7vw,1.42rem); margin-bottom:8px}
+  .why{margin-bottom:clamp(14px,2.2vh,24px)}
+  .lede{margin-bottom:clamp(16px,2.6vh,30px)}
+  .idx a{padding-block:clamp(8px,1.15vh,14px)}
+  .meas{margin-top:clamp(14px,2vh,22px)}
+  .eyeline{margin-bottom:clamp(8px,1.2vh,14px)}
+  .rail{height:108px}
+  .tile{width:64px; height:64px; border-radius:16px}
+  .tile img{width:45px; height:45px}
+  .track{--gap:44px}
+  .prail{margin-top:2px}
+  .pan p{min-height:4.6em; margin-bottom:1em}
+  .pan h2{margin-bottom:.4em}
+  .pan .lbl{margin-bottom:.7em}
+}
+@media (max-height:800px) and (min-width:1000px){
+  .rail{height:96px}
+  .tile{width:58px; height:58px}
+  .tile img{width:40px; height:40px}
+  .pan h2{font-size:1.12rem; margin-bottom:.35em}
+  .pan .lbl{margin-bottom:.6em}
+  .pan .pill{padding:6px 14px; font-size:11.5px}
+  .meas{margin-top:10px}
+  .lede{margin-bottom:14px}
+  /* the full text is on the card below, so two lines is enough here */
+  .pan p{
+    min-height:0; margin-bottom:.9em;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+}
+@media (max-height:700px) and (min-width:1000px){
+  .wm{font-size:clamp(1.7rem,3.4vw,2.9rem)}
+  .lede .typed{display:none}
+}
+
+/* ===================== responsive ===================== */
+@media (max-width:1100px){
+  .nav .links{display:none}
+  .brand .rom{display:none}
+}
+@media (max-width:999px){
+  .art::after{
+    background:linear-gradient(90deg, rgba(6,7,10,.92) 0%, rgba(6,7,10,.7) 52%, rgba(6,7,10,.34) 100%),
+               linear-gradient(0deg, rgba(6,7,10,.6), transparent 30%);
+  }
+}
+@media (max-width:900px){
+  .figs{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .workgrid,.workgrid.two{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .idx{grid-template-columns:1fr}
+  .idx a:nth-child(2n){border-left:none; padding-left:clamp(2px,1vw,12px)}
+}
+@media (max-width:560px){
+  .idx a{grid-template-columns:1fr auto; gap:4px 12px}
+  .idx .kind{grid-column:1 / -1}
+}
+</style>
+<style>
+/* PIP, CARAKURI's courier, crosses the foot of the hero the way it does on the
+   CARAKURI hub. It loads after the page is up and fades in when ready. */
+#courier{position:absolute;left:0;right:0;bottom:0;height:min(28vh,240px);z-index:1;opacity:0;transition:opacity 1.6s ease;pointer-events:none}
+#courier.ready{opacity:1}
+#courier canvas{display:block;width:100%;height:100%}
+</style>
+<script type="importmap">{"imports":{"three":"https://hfot.github.io/nomad-3d/vendor/three/build/three.module.js","three/addons/":"https://hfot.github.io/nomad-3d/vendor/three/examples/jsm/"}}</script>
+<style>
+/* Stance: the heading keeps the left, and the seven points sit beside it in
+   two compact columns, so the section uses its width without thinning a word. */
+@media (min-width: 1000px){
+  .stance .wrap{display:grid; grid-template-columns:minmax(240px,.7fr) 2fr; column-gap:clamp(28px,4vw,72px); align-items:start}
+  .stance .head{grid-column:1; margin:0; position:sticky; top:96px}
+  .stance .manifesto{grid-column:2; grid-template-columns:1fr 1fr; column-gap:clamp(22px,2.6vw,40px); row-gap:clamp(12px,1.6vw,20px); max-width:none; margin-top:clamp(4px,.8vw,10px)}
+  .stance .manifesto p{font-size:.92em; line-height:1.8}
+  .stance .manifesto p:last-child{grid-column:1/-1; max-width:44em}
+  .stance .exlabel, .stance .creed{grid-column:2}
+  .stance .exlabel{
+    border-top:1px solid var(--line);
+    padding-top:clamp(20px,2.6vw,34px); margin-top:clamp(24px,3vw,44px);
+  }
+  .stance .creed p{font-size:.92em; line-height:1.8}
+}
+</style>
+<style>
+/* Cards: a frame you can actually see, and a height you can survey. Every
+   word stays; the description folds to three lines and opens on hover or
+   focus, the shot is a wide banner, and each card carries its number. */
+.workgrid .card{border-color:rgba(255,255,255,.15); background:rgba(255,255,255,.035);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07), 0 12px 32px rgba(0,0,0,.38)}
+.workgrid .card:hover{border-color:rgba(255,255,255,.34); background:rgba(255,255,255,.05)}
+.workgrid .card .shot{border-bottom-color:rgba(255,255,255,.12)}
+.workgrid .card .body{padding:clamp(13px,1.1vw,17px) clamp(14px,1.2vw,18px)}
+.workgrid .card h3{margin:.55em 0 .4em}
+.workgrid .card p{display:-webkit-box; -webkit-box-orient:vertical; overflow:hidden; margin-bottom:1em; transition:none}
+.workgrid .card p:not(.note){-webkit-line-clamp:3}
+.workgrid .card p.note{-webkit-line-clamp:2}
+.workgrid .card:hover p, .workgrid .card:focus-within p{-webkit-line-clamp:unset}
+.workgrid .card .spec{margin-bottom:.9em; padding-top:.8em}
+.workgrid{counter-reset:card}
+.workgrid .card{counter-increment:card; position:relative}
+.workgrid .card .body::before{content:counter(card,decimal-leading-zero); align-self:flex-start; margin-bottom:9px;
+  font-size:10px; letter-spacing:.12em; color:rgba(255,255,255,.55); background:rgba(0,0,0,.55);
+  border:1px solid rgba(255,255,255,.18); border-radius:999px; padding:3px 7px; line-height:1}
+
+/* ===== lab: plain entrance ===== */
+.one{margin:clamp(14px,2vh,22px) auto clamp(26px,3.6vh,44px); max-width:40em;
+  font-size:clamp(1rem,1.25vw,1.2rem); line-height:1.9; color:var(--dim)}
+.one b{color:var(--ink); font-weight:700}
+.ask{max-width:1100px; margin:0 auto; text-align:left}
+.ask > .lbl{display:block; margin-bottom:14px; text-align:center}
+.askgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+.askgrid a{display:flex; flex-direction:column; gap:10px; padding:16px 18px 14px; text-decoration:none;
+  border:1px solid var(--line-2); border-radius:14px; background:var(--surface); backdrop-filter:blur(8px);
+  transition:border-color var(--half) var(--ease), background var(--half) var(--ease), transform var(--half) var(--ease)}
+.askgrid a:hover{border-color:rgba(61,123,255,.65); background:rgba(61,123,255,.10); transform:translateY(-2px)}
+.askgrid .q{font-size:clamp(.98rem,1.1vw,1.08rem); font-weight:700; color:var(--ink); line-height:1.5}
+.askgrid .to{font-size:11.5px; letter-spacing:.06em; color:var(--c1); display:flex; align-items:center; gap:.4em}
+.askgrid a:hover .arw{transform:translateX(4px)}
+.askgrid .arw{transition:transform var(--half) var(--ease)}
+@media (max-width:900px){.askgrid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.askgrid{grid-template-columns:1fr}}
+.gnote{margin:-.2em 0 1.4em; max-width:46em; font-size:.86rem; line-height:1.85; color:var(--dim)}
+
+/* ===== lab: card = poster + one use line + one open bar ===== */
+.workgrid .card .body::before{display:none}
+.workgrid .card .body .top .badge, .workgrid .card .body > .badge{order:0}
+.workgrid .card p:not(.use){display:none}
+.card .use{display:block !important; margin:.2em 0 1.1em; padding:.9em 1em; border-radius:10px;
+  background:rgba(61,123,255,.07); border:1px solid rgba(61,123,255,.22); color:var(--ink);
+  font-size:.86rem; line-height:1.8; -webkit-line-clamp:unset !important}
+.card .use .uk{display:block; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--c1); margin-bottom:.2em}
+.workgrid .card .spec{display:block; padding-top:0; margin:auto 0 0}
+.workgrid .card .spec > div{display:none}
+.workgrid .card .pill{display:flex; width:100%; justify-content:space-between; padding:13px 16px; border-radius:12px;
+  font-size:13px; border-color:rgba(61,123,255,.45); background:rgba(61,123,255,.10)}
+.workgrid .card .pill .go{font-weight:700}
+.workgrid .card .pill .addr{flex:1; margin:0 1em; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11.5px; color:var(--dim);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:left}
+.workgrid .card .pill:hover{background:rgba(61,123,255,.2); border-color:rgba(61,123,255,.8)}
+.workgrid .card .pill::after{content:""; position:absolute; inset:0; border-radius:inherit}
+.workgrid .card{position:relative}
+.workgrid .card.hit{border-color:rgba(61,123,255,.85); box-shadow:0 0 0 3px rgba(61,123,255,.28), 0 12px 32px rgba(0,0,0,.38)}
+</style>
+<style>
+/* Phones: the WebGL flow never starts under 1000px, so the SVG filament art
+   was carrying the hero alone — dense lines behind small type. Below that
+   width the filaments go away and the hero rests on a quiet glow instead. */
+@media (max-width:999px){
+  .fil{display:none}
+  .art{background:
+    radial-gradient(70% 45% at 50% 18%, rgba(61,123,255,.16), transparent 70%),
+    radial-gradient(60% 40% at 82% 70%, rgba(168,85,247,.10), transparent 70%),
+    radial-gradient(50% 35% at 12% 62%, rgba(34,211,238,.08), transparent 70%),
+    var(--bg)}
+  .art::after{background:linear-gradient(0deg, rgba(6,7,10,.55), transparent 40%)}
+}
+</style>
+<style>
+/* Cards, tighter still: the description folds to two lines and the note to
+   one (both open on hover or focus), the spec row stays a single row with
+   the open button riding its right end, and the title sits closer. */
+.workgrid .card h3{font-size:clamp(.9rem,.95vw,1rem); line-height:1.45; margin:.45em 0 .35em}
+.workgrid .card p{font-size:.76rem; line-height:1.7; margin-bottom:.7em}
+.workgrid .card p:not(.note){-webkit-line-clamp:2}
+.workgrid .card p.note{-webkit-line-clamp:1}
+.workgrid .card .body{padding-bottom:12px}
+.workgrid .card .spec{display:flex; flex-wrap:nowrap; gap:0 12px; margin:auto 0 0; padding:.7em 0 0; align-items:flex-end}
+.workgrid .card .spec div{flex:0 1 auto; min-width:0; gap:2px}
+.workgrid .card .spec .v{font-size:11px}
+.workgrid .card .spec .k{font-size:7.5px}
+.workgrid .card .pill{margin-left:auto; align-self:flex-end; padding:6px 10px; font-size:10.5px; white-space:nowrap}
+</style>
+</head>
+<body>
+
+<header class="field">
+
+  <div class="art">
+    <div class="fil" aria-hidden="true">
+      <svg viewBox="0 0 900 1000" preserveAspectRatio="xMidYMid slice">
+        <g class="fan">
+          <path d="M878 500 C 648 558, 378 1246, 878 1666" stroke="var(--c3)" stroke-width="0.4" opacity="0.082"/>
+        <path d="M878 500 C 645 561, 378 1250, 852 1665" stroke="var(--c3)" stroke-width="0.42" opacity="0.086"/>
+        <path d="M878 500 C 641 564, 378 1253, 826 1665" stroke="var(--c1)" stroke-width="0.44" opacity="0.09"/>
+        <path d="M878 500 C 638 566, 377 1256, 800 1663" stroke="var(--c3)" stroke-width="0.46" opacity="0.094"/>
+        <path d="M878 500 C 634 569, 377 1259, 774 1661" stroke="var(--c3)" stroke-width="0.48" opacity="0.097"/>
+        <path d="M878 500 C 631 571, 376 1261, 748 1659" stroke="var(--c1)" stroke-width="0.5" opacity="0.101"/>
+        <path d="M878 500 C 628 574, 375 1263, 722 1656" stroke="var(--c3)" stroke-width="0.52" opacity="0.105"/>
+        <path d="M878 500 C 624 576, 373 1264, 696 1653" stroke="var(--c1)" stroke-width="0.54" opacity="0.109"/>
+        <path d="M878 500 C 621 578, 372 1265, 670 1649" stroke="var(--c2)" stroke-width="0.56" opacity="0.112"/>
+        <path d="M878 500 C 618 579, 370 1266, 644 1645" stroke="var(--c3)" stroke-width="0.58" opacity="0.116"/>
+        <path d="M878 500 C 615 581, 369 1266, 618 1640" stroke="var(--c1)" stroke-width="0.6" opacity="0.12"/>
+        <path d="M878 500 C 612 582, 367 1266, 593 1634" stroke="var(--c3)" stroke-width="0.62" opacity="0.123"/>
+        <path d="M878 500 C 609 583, 365 1265, 568 1628" stroke="var(--c3)" stroke-width="0.64" opacity="0.127"/>
+        <path d="M878 500 C 606 583, 362 1263, 542 1622" stroke="var(--c1)" stroke-width="0.66" opacity="0.131"/>
+        <path d="M878 500 C 604 583, 360 1262, 517 1615" stroke="var(--c3)" stroke-width="0.68" opacity="0.135"/>
+        <path d="M878 500 C 601 583, 357 1259, 492 1608" stroke="var(--c3)" stroke-width="0.7" opacity="0.138"/>
+        <path d="M878 500 C 599 583, 355 1256, 468 1600" stroke="var(--c2)" stroke-width="0.72" opacity="0.142"/>
+        <path d="M878 500 C 596 582, 352 1253, 443 1592" stroke="var(--c3)" stroke-width="0.74" opacity="0.146"/>
+        <path d="M878 500 C 594 581, 349 1249, 419 1583" stroke="var(--c1)" stroke-width="0.76" opacity="0.15"/>
+        <path d="M878 500 C 592 580, 345 1245, 394 1573" stroke="var(--c3)" stroke-width="0.78" opacity="0.153"/>
+        <path d="M878 500 C 590 578, 342 1240, 370 1563" stroke="var(--c3)" stroke-width="0.8" opacity="0.157"/>
+        <path d="M878 500 C 588 577, 338 1234, 347 1553" stroke="var(--c1)" stroke-width="0.81" opacity="0.161"/>
+        <path d="M878 500 C 586 575, 335 1228, 323 1542" stroke="var(--c3)" stroke-width="0.83" opacity="0.164"/>
+        <path d="M878 500 C 585 572, 331 1222, 300 1531" stroke="var(--c3)" stroke-width="0.85" opacity="0.168"/>
+        <path d="M878 500 C 583 570, 327 1214, 277 1520" stroke="var(--c2)" stroke-width="0.87" opacity="0.172"/>
+        <path d="M878 500 C 582 567, 323 1207, 254 1507" stroke="var(--c3)" stroke-width="0.89" opacity="0.176"/>
+        <path d="M878 500 C 581 564, 319 1199, 232 1495" stroke="var(--c1)" stroke-width="0.9" opacity="0.179"/>
+        <path d="M878 500 C 580 561, 314 1190, 210 1482" stroke="var(--c2)" stroke-width="0.92" opacity="0.183"/>
+        <path d="M878 500 C 579 557, 310 1181, 188 1468" stroke="var(--c3)" stroke-width="0.94" opacity="0.187"/>
+        <path d="M878 500 C 579 554, 305 1171, 166 1454" stroke="var(--c1)" stroke-width="0.95" opacity="0.191"/>
+        <path d="M878 500 C 578 550, 301 1160, 145 1440" stroke="var(--c3)" stroke-width="0.97" opacity="0.194"/>
+        <path d="M878 500 C 578 547, 296 1150, 124 1425" stroke="var(--c3)" stroke-width="0.98" opacity="0.198"/>
+        <path d="M878 500 C 578 543, 291 1138, 103 1410" stroke="var(--c1)" stroke-width="1.0" opacity="0.202"/>
+        <path d="M878 500 C 578 540, 286 1127, 83 1395" stroke="var(--c3)" stroke-width="1.02" opacity="0.205"/>
+        <path d="M878 500 C 578 536, 281 1114, 63 1379" stroke="var(--c1)" stroke-width="1.03" opacity="0.209"/>
+        <path d="M878 500 C 579 533, 276 1102, 44 1362" stroke="var(--c2)" stroke-width="1.04" opacity="0.213"/>
+        <path d="M878 500 C 579 529, 271 1089, 25 1346" stroke="var(--c3)" stroke-width="1.06" opacity="0.217"/>
+        <path d="M878 500 C 580 526, 266 1075, 6 1329" stroke="var(--c1)" stroke-width="1.07" opacity="0.22"/>
+        <path d="M878 500 C 581 523, 261 1061, -13 1311" stroke="var(--c3)" stroke-width="1.09" opacity="0.224"/>
+        <path d="M878 500 C 582 520, 255 1047, -31 1293" stroke="var(--c3)" stroke-width="1.1" opacity="0.228"/>
+        <path d="M878 500 C 583 517, 250 1032, -48 1275" stroke="var(--c1)" stroke-width="1.11" opacity="0.231"/>
+        <path d="M878 500 C 585 514, 245 1017, -65 1257" stroke="var(--c3)" stroke-width="1.12" opacity="0.235"/>
+        <path d="M878 500 C 586 512, 239 1001, -82 1238" stroke="var(--c3)" stroke-width="1.14" opacity="0.239"/>
+        <path d="M878 500 C 588 510, 234 986, -98 1218" stroke="var(--c2)" stroke-width="1.15" opacity="0.243"/>
+        <path d="M878 500 C 590 508, 228 970, -114 1199" stroke="var(--c3)" stroke-width="1.16" opacity="0.246"/>
+        <path d="M878 500 C 592 506, 223 953, -130 1179" stroke="var(--c1)" stroke-width="1.17" opacity="0.25"/>
+        <path d="M878 500 C 594 505, 217 936, -145 1159" stroke="var(--c3)" stroke-width="1.18" opacity="0.254"/>
+        <path d="M878 500 C 596 504, 212 920, -159 1139" stroke="var(--c3)" stroke-width="1.19" opacity="0.258"/>
+        <path d="M878 500 C 598 503, 206 902, -173 1118" stroke="var(--c1)" stroke-width="1.2" opacity="0.261"/>
+        <path d="M878 500 C 601 503, 201 885, -187 1097" stroke="var(--c3)" stroke-width="1.21" opacity="0.265"/>
+        <path d="M878 500 C 603 502, 196 868, -200 1076" stroke="var(--c3)" stroke-width="1.22" opacity="0.269"/>
+        <path d="M878 500 C 606 502, 190 850, -213 1054" stroke="var(--c2)" stroke-width="1.23" opacity="0.272"/>
+        <path d="M878 500 C 609 502, 185 832, -225 1032" stroke="var(--c3)" stroke-width="1.23" opacity="0.276"/>
+        <path d="M878 500 C 612 503, 179 814, -237 1010" stroke="var(--c1)" stroke-width="1.24" opacity="0.28"/>
+        <path d="M878 500 C 615 503, 174 796, -248 988" stroke="var(--c2)" stroke-width="1.25" opacity="0.284"/>
+        <path d="M878 500 C 618 504, 169 778, -259 966" stroke="var(--c3)" stroke-width="1.26" opacity="0.287"/>
+        <path d="M878 500 C 621 505, 164 760, -269 943" stroke="var(--c1)" stroke-width="1.26" opacity="0.291"/>
+        <path d="M878 500 C 624 507, 159 742, -279 920" stroke="var(--c3)" stroke-width="1.27" opacity="0.295"/>
+        <path d="M878 500 C 627 508, 154 724, -288 897" stroke="var(--c3)" stroke-width="1.27" opacity="0.299"/>
+        <path d="M878 500 C 631 509, 149 705, -296 874" stroke="var(--c1)" stroke-width="1.28" opacity="0.302"/>
+        <path d="M878 500 C 634 511, 144 687, -304 851" stroke="var(--c3)" stroke-width="1.28" opacity="0.306"/>
+        <path d="M878 500 C 637 512, 139 669, -312 827" stroke="var(--c3)" stroke-width="1.29" opacity="0.31"/>
+        <path d="M878 500 C 641 514, 134 651, -319 804" stroke="var(--c2)" stroke-width="1.29" opacity="0.313"/>
+        <path d="M878 500 C 644 516, 130 633, -326 780" stroke="var(--c3)" stroke-width="1.29" opacity="0.317"/>
+        <path d="M878 500 C 648 517, 125 615, -332 756" stroke="var(--c1)" stroke-width="1.29" opacity="0.321"/>
+        <path d="M878 500 C 651 519, 121 598, -337 732" stroke="var(--c3)" stroke-width="1.3" opacity="0.325"/>
+        <path d="M878 500 C 654 520, 116 580, -342 708" stroke="var(--c3)" stroke-width="1.3" opacity="0.328"/>
+        <path d="M878 500 C 658 522, 112 563, -347 684" stroke="var(--c1)" stroke-width="1.3" opacity="0.332"/>
+        <path d="M878 500 C 661 523, 108 545, -350 659" stroke="var(--c3)" stroke-width="1.3" opacity="0.336"/>
+        <path d="M878 500 C 665 524, 104 528, -354 635" stroke="var(--c3)" stroke-width="1.3" opacity="0.34"/>
+        <path d="M878 500 C 668 525, 100 511, -356 610" stroke="var(--c2)" stroke-width="1.3" opacity="0.343"/>
+        <path d="M878 500 C 671 526, 97 495, -359 586" stroke="var(--c3)" stroke-width="1.3" opacity="0.347"/>
+        <path d="M878 500 C 674 526, 93 478, -360 561" stroke="var(--c1)" stroke-width="1.3" opacity="0.351"/>
+        <path d="M878 500 C 677 526, 90 462, -361 537" stroke="var(--c3)" stroke-width="1.3" opacity="0.354"/>
+        <path d="M878 500 C 681 526, 87 446, -362 512" stroke="var(--c3)" stroke-width="1.29" opacity="0.358"/>
+        <path d="M878 500 C 684 526, 84 430, -362 488" stroke="var(--c1)" stroke-width="1.29" opacity="0.358"/>
+        <path d="M878 500 C 686 526, 81 415, -361 463" stroke="var(--c3)" stroke-width="1.29" opacity="0.354"/>
+        <path d="M878 500 C 689 525, 78 399, -360 439" stroke="var(--c3)" stroke-width="1.28" opacity="0.351"/>
+        <path d="M878 500 C 692 524, 75 384, -359 414" stroke="var(--c1)" stroke-width="1.28" opacity="0.347"/>
+        <path d="M878 500 C 695 522, 73 370, -356 390" stroke="var(--c3)" stroke-width="1.28" opacity="0.343"/>
+        <path d="M878 500 C 697 521, 71 355, -354 365" stroke="var(--c1)" stroke-width="1.27" opacity="0.34"/>
+        <path d="M878 500 C 700 519, 69 341, -350 341" stroke="var(--c2)" stroke-width="1.27" opacity="0.336"/>
+        <path d="M878 500 C 702 517, 67 327, -347 316" stroke="var(--c3)" stroke-width="1.26" opacity="0.332"/>
+        <path d="M878 500 C 704 514, 65 313, -342 292" stroke="var(--c1)" stroke-width="1.25" opacity="0.328"/>
+        <path d="M878 500 C 706 511, 64 300, -337 268" stroke="var(--c3)" stroke-width="1.25" opacity="0.325"/>
+        <path d="M878 500 C 708 509, 62 287, -332 244" stroke="var(--c3)" stroke-width="1.24" opacity="0.321"/>
+        <path d="M878 500 C 709 505, 61 274, -326 220" stroke="var(--c1)" stroke-width="1.23" opacity="0.317"/>
+        <path d="M878 500 C 711 502, 60 261, -319 196" stroke="var(--c3)" stroke-width="1.22" opacity="0.313"/>
+        <path d="M878 500 C 712 499, 59 249, -312 173" stroke="var(--c3)" stroke-width="1.22" opacity="0.31"/>
+        <path d="M878 500 C 714 495, 59 237, -304 149" stroke="var(--c2)" stroke-width="1.21" opacity="0.306"/>
+        <path d="M878 500 C 715 491, 58 225, -296 126" stroke="var(--c3)" stroke-width="1.2" opacity="0.302"/>
+        <path d="M878 500 C 716 487, 58 214, -288 103" stroke="var(--c1)" stroke-width="1.19" opacity="0.299"/>
+        <path d="M878 500 C 717 484, 58 202, -279 80" stroke="var(--c3)" stroke-width="1.18" opacity="0.295"/>
+        <path d="M878 500 C 717 480, 58 191, -269 57" stroke="var(--c3)" stroke-width="1.17" opacity="0.291"/>
+        <path d="M878 500 C 718 476, 58 180, -259 34" stroke="var(--c1)" stroke-width="1.16" opacity="0.287"/>
+        <path d="M878 500 C 718 472, 59 170, -248 12" stroke="var(--c3)" stroke-width="1.14" opacity="0.284"/>
+        <path d="M878 500 C 718 468, 60 159, -237 -10" stroke="var(--c3)" stroke-width="1.13" opacity="0.28"/>
+        <path d="M878 500 C 718 464, 61 149, -225 -32" stroke="var(--c2)" stroke-width="1.12" opacity="0.276"/>
+        <path d="M878 500 C 718 460, 62 139, -213 -54" stroke="var(--c3)" stroke-width="1.11" opacity="0.272"/>
+        <path d="M878 500 C 717 457, 63 129, -200 -76" stroke="var(--c1)" stroke-width="1.1" opacity="0.269"/>
+        <path d="M878 500 C 717 453, 64 120, -187 -97" stroke="var(--c3)" stroke-width="1.08" opacity="0.265"/>
+        <path d="M878 500 C 716 450, 66 110, -173 -118" stroke="var(--c3)" stroke-width="1.07" opacity="0.261"/>
+        <path d="M878 500 C 715 447, 68 101, -159 -139" stroke="var(--c1)" stroke-width="1.05" opacity="0.258"/>
+        <path d="M878 500 C 714 444, 70 91, -145 -159" stroke="var(--c3)" stroke-width="1.04" opacity="0.254"/>
+        <path d="M878 500 C 713 442, 72 82, -130 -179" stroke="var(--c3)" stroke-width="1.03" opacity="0.25"/>
+        <path d="M878 500 C 712 440, 74 73, -114 -199" stroke="var(--c1)" stroke-width="1.01" opacity="0.246"/>
+        <path d="M878 500 C 710 438, 77 65, -98 -218" stroke="var(--c3)" stroke-width="1.0" opacity="0.243"/>
+        <path d="M878 500 C 708 436, 79 56, -82 -238" stroke="var(--c1)" stroke-width="0.98" opacity="0.239"/>
+        <path d="M878 500 C 707 434, 82 47, -65 -257" stroke="var(--c2)" stroke-width="0.96" opacity="0.235"/>
+        <path d="M878 500 C 705 433, 85 39, -48 -275" stroke="var(--c3)" stroke-width="0.95" opacity="0.231"/>
+        <path d="M878 500 C 703 432, 88 30, -31 -293" stroke="var(--c1)" stroke-width="0.93" opacity="0.228"/>
+        <path d="M878 500 C 700 432, 91 22, -13 -311" stroke="var(--c3)" stroke-width="0.91" opacity="0.224"/>
+        <path d="M878 500 C 698 432, 95 13, 6 -329" stroke="var(--c3)" stroke-width="0.9" opacity="0.22"/>
+        <path d="M878 500 C 696 432, 98 5, 25 -346" stroke="var(--c1)" stroke-width="0.88" opacity="0.217"/>
+        <path d="M878 500 C 693 432, 102 -3, 44 -362" stroke="var(--c3)" stroke-width="0.86" opacity="0.213"/>
+        <path d="M878 500 C 690 433, 106 -11, 63 -379" stroke="var(--c3)" stroke-width="0.85" opacity="0.209"/>
+        <path d="M878 500 C 688 434, 110 -19, 83 -395" stroke="var(--c2)" stroke-width="0.83" opacity="0.205"/>
+        <path d="M878 500 C 685 435, 114 -27, 103 -410" stroke="var(--c3)" stroke-width="0.81" opacity="0.202"/>
+        <path d="M878 500 C 682 436, 118 -35, 124 -425" stroke="var(--c1)" stroke-width="0.79" opacity="0.198"/>
+        <path d="M878 500 C 679 437, 123 -43, 145 -440" stroke="var(--c3)" stroke-width="0.77" opacity="0.194"/>
+        <path d="M878 500 C 676 439, 127 -51, 166 -454" stroke="var(--c3)" stroke-width="0.75" opacity="0.191"/>
+        <path d="M878 500 C 672 441, 132 -59, 188 -468" stroke="var(--c1)" stroke-width="0.73" opacity="0.187"/>
+        <path d="M878 500 C 669 443, 136 -67, 210 -482" stroke="var(--c3)" stroke-width="0.72" opacity="0.183"/>
+        <path d="M878 500 C 666 445, 141 -75, 232 -495" stroke="var(--c3)" stroke-width="0.7" opacity="0.179"/>
+        <path d="M878 500 C 662 447, 146 -83, 254 -507" stroke="var(--c2)" stroke-width="0.68" opacity="0.176"/>
+        <path d="M878 500 C 659 450, 151 -91, 277 -520" stroke="var(--c3)" stroke-width="0.66" opacity="0.172"/>
+        <path d="M878 500 C 656 452, 156 -98, 300 -531" stroke="var(--c1)" stroke-width="0.64" opacity="0.168"/>
+        <path d="M878 500 C 652 454, 161 -106, 323 -542" stroke="var(--c2)" stroke-width="0.62" opacity="0.164"/>
+        <path d="M878 500 C 649 456, 166 -114, 347 -553" stroke="var(--c3)" stroke-width="0.6" opacity="0.161"/>
+        <path d="M878 500 C 645 458, 171 -121, 370 -563" stroke="var(--c1)" stroke-width="0.58" opacity="0.157"/>
+        <path d="M878 500 C 642 460, 176 -129, 394 -573" stroke="var(--c3)" stroke-width="0.56" opacity="0.153"/>
+        <path d="M878 500 C 639 462, 182 -136, 419 -583" stroke="var(--c3)" stroke-width="0.54" opacity="0.15"/>
+        <path d="M878 500 C 635 464, 187 -143, 443 -592" stroke="var(--c1)" stroke-width="0.52" opacity="0.146"/>
+        <path d="M878 500 C 632 466, 193 -151, 468 -600" stroke="var(--c3)" stroke-width="0.5" opacity="0.142"/>
+        <path d="M878 500 C 629 467, 198 -158, 492 -608" stroke="var(--c1)" stroke-width="0.48" opacity="0.138"/>
+        <path d="M878 500 C 625 468, 203 -165, 517 -615" stroke="var(--c2)" stroke-width="0.45" opacity="0.135"/>
+        <path d="M878 500 C 622 469, 209 -172, 542 -622" stroke="var(--c3)" stroke-width="0.43" opacity="0.131"/>
+        <path d="M878 500 C 619 470, 214 -179, 568 -628" stroke="var(--c1)" stroke-width="0.41" opacity="0.127"/>
+        <path d="M878 500 C 616 470, 220 -185, 593 -634" stroke="var(--c3)" stroke-width="0.41" opacity="0.123"/>
+        <path d="M878 500 C 613 471, 225 -192, 618 -640" stroke="var(--c3)" stroke-width="0.43" opacity="0.12"/>
+        <path d="M878 500 C 610 471, 231 -198, 644 -645" stroke="var(--c1)" stroke-width="0.45" opacity="0.116"/>
+        <path d="M878 500 C 607 471, 236 -204, 670 -649" stroke="var(--c3)" stroke-width="0.47" opacity="0.112"/>
+        <path d="M878 500 C 604 470, 242 -210, 696 -653" stroke="var(--c3)" stroke-width="0.49" opacity="0.109"/>
+        <path d="M878 500 C 602 469, 247 -216, 722 -656" stroke="var(--c2)" stroke-width="0.51" opacity="0.105"/>
+        <path d="M878 500 C 599 468, 252 -221, 748 -659" stroke="var(--c3)" stroke-width="0.53" opacity="0.101"/>
+        <path d="M878 500 C 597 467, 258 -226, 774 -661" stroke="var(--c1)" stroke-width="0.55" opacity="0.097"/>
+        <path d="M878 500 C 595 466, 263 -231, 800 -663" stroke="var(--c3)" stroke-width="0.57" opacity="0.094"/>
+        <path d="M878 500 C 592 464, 268 -236, 826 -665" stroke="var(--c3)" stroke-width="0.59" opacity="0.09"/>
+        <path d="M878 500 C 590 462, 273 -240, 852 -665" stroke="var(--c1)" stroke-width="0.61" opacity="0.086"/>
+        <path d="M878 500 C 588 460, 278 -244, 878 -666" stroke="var(--c3)" stroke-width="0.63" opacity="0.082"/>
+        <path class="rn" d="M878 500 C 641 564, 378 1253, 826 1665" stroke="var(--c1)" pathLength="1000" style="--dur:5.4s;--dl:0.0s"/>
+        <path class="rn" d="M878 500 C 624 576, 373 1264, 696 1653" stroke="var(--c1)" pathLength="1000" style="--dur:6.75s;--dl:8.37s"/>
+        <path class="rn" d="M878 500 C 609 583, 365 1265, 568 1628" stroke="var(--c3)" pathLength="1000" style="--dur:8.1s;--dl:7.74s"/>
+        <path class="rn" d="M878 500 C 596 582, 352 1253, 443 1592" stroke="var(--c3)" pathLength="1000" style="--dur:9.45s;--dl:7.11s"/>
+        <path class="rn" d="M878 500 C 586 575, 335 1228, 323 1542" stroke="var(--c3)" pathLength="1000" style="--dur:10.8s;--dl:6.48s"/>
+        <path class="rn" d="M878 500 C 580 561, 314 1190, 210 1482" stroke="var(--c2)" pathLength="1000" style="--dur:12.15s;--dl:5.85s"/>
+        <path class="rn" d="M878 500 C 578 543, 291 1138, 103 1410" stroke="var(--c1)" pathLength="1000" style="--dur:13.5s;--dl:5.22s"/>
+        <path class="rn" d="M878 500 C 580 526, 266 1075, 6 1329" stroke="var(--c1)" pathLength="1000" style="--dur:5.4s;--dl:4.59s"/>
+        <path class="rn" d="M878 500 C 586 512, 239 1001, -82 1238" stroke="var(--c3)" pathLength="1000" style="--dur:6.75s;--dl:3.96s"/>
+        <path class="rn" d="M878 500 C 596 504, 212 920, -159 1139" stroke="var(--c3)" pathLength="1000" style="--dur:8.1s;--dl:3.33s"/>
+        <path class="rn" d="M878 500 C 609 502, 185 832, -225 1032" stroke="var(--c3)" pathLength="1000" style="--dur:9.45s;--dl:2.7s"/>
+        <path class="rn" d="M878 500 C 624 507, 159 742, -279 920" stroke="var(--c3)" pathLength="1000" style="--dur:10.8s;--dl:2.07s"/>
+        <path class="rn" d="M878 500 C 641 514, 134 651, -319 804" stroke="var(--c2)" pathLength="1000" style="--dur:12.15s;--dl:1.44s"/>
+        <path class="rn" d="M878 500 C 658 522, 112 563, -347 684" stroke="var(--c1)" pathLength="1000" style="--dur:13.5s;--dl:0.81s"/>
+        <path class="rn" d="M878 500 C 674 526, 93 478, -360 561" stroke="var(--c1)" pathLength="1000" style="--dur:5.4s;--dl:0.18s"/>
+        <path class="rn" d="M878 500 C 689 525, 78 399, -360 439" stroke="var(--c3)" pathLength="1000" style="--dur:6.75s;--dl:8.55s"/>
+        <path class="rn" d="M878 500 C 702 517, 67 327, -347 316" stroke="var(--c3)" pathLength="1000" style="--dur:8.1s;--dl:7.92s"/>
+        <path class="rn" d="M878 500 C 711 502, 60 261, -319 196" stroke="var(--c3)" pathLength="1000" style="--dur:9.45s;--dl:7.29s"/>
+        <path class="rn" d="M878 500 C 717 484, 58 202, -279 80" stroke="var(--c3)" pathLength="1000" style="--dur:10.8s;--dl:6.66s"/>
+        <path class="rn" d="M878 500 C 718 464, 61 149, -225 -32" stroke="var(--c2)" pathLength="1000" style="--dur:12.15s;--dl:6.03s"/>
+        <path class="rn" d="M878 500 C 715 447, 68 101, -159 -139" stroke="var(--c1)" pathLength="1000" style="--dur:13.5s;--dl:5.4s"/>
+        <path class="rn" d="M878 500 C 708 436, 79 56, -82 -238" stroke="var(--c1)" pathLength="1000" style="--dur:5.4s;--dl:4.77s"/>
+        <path class="rn" d="M878 500 C 698 432, 95 13, 6 -329" stroke="var(--c3)" pathLength="1000" style="--dur:6.75s;--dl:4.14s"/>
+        <path class="rn" d="M878 500 C 685 435, 114 -27, 103 -410" stroke="var(--c3)" pathLength="1000" style="--dur:8.1s;--dl:3.51s"/>
+        <path class="rn" d="M878 500 C 669 443, 136 -67, 210 -482" stroke="var(--c3)" pathLength="1000" style="--dur:9.45s;--dl:2.88s"/>
+        <path class="rn" d="M878 500 C 652 454, 161 -106, 323 -542" stroke="var(--c2)" pathLength="1000" style="--dur:10.8s;--dl:2.25s"/>
+        <path class="rn" d="M878 500 C 635 464, 187 -143, 443 -592" stroke="var(--c1)" pathLength="1000" style="--dur:12.15s;--dl:1.62s"/>
+        <path class="rn" d="M878 500 C 619 470, 214 -179, 568 -628" stroke="var(--c1)" pathLength="1000" style="--dur:13.5s;--dl:0.99s"/>
+        <path class="rn" d="M878 500 C 604 470, 242 -210, 696 -653" stroke="var(--c3)" pathLength="1000" style="--dur:5.4s;--dl:0.36s"/>
+        <path class="rn" d="M878 500 C 592 464, 268 -236, 826 -665" stroke="var(--c3)" pathLength="1000" style="--dur:6.75s;--dl:8.73s"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <span class="brand">
+      <span class="ja">研ぎ澄ませるための情報</span>
+      <span class="en lat" style="font-size:12.5px">Holders&#39; Governance Skill</span>
+      <span class="rom ja">Holders&#39; Governance Skill</span>
+    </span>
+    <span class="links">
+      <a href="#drep">DRep</a>
+      <a href="#catalyst">Catalyst</a>
+      <a href="#relay">Relay</a>
+      <a href="#deleg">Delegation</a>
+      <a href="#translate">Translate</a>
+      <a href="#spiral">Spiral</a>
+    </span>
+    <button class="lang" id="lang" type="button">
+      <span class="ja">EN</span><span class="en">日本語</span>
+    </button>
+    <a class="pill" href="#drep">
+      <span class="ja">はじめる</span><span class="en">Start</span>
+      <span class="arw lat">&rarr;</span>
+    </a>
+  </nav>
+
+  <div class="hero">
+    <div id="courier" aria-hidden="true"></div>
+    <div class="hero-in">
+      <span class="lbl eyeline">Cardano / public data only</span>
+
+      <h1 class="wm lat">Holders&#39; Governance <span class="l2">Skill</span></h1>
+
+      <p class="one">
+        <span class="ja">Cardano の公開データを、読める形にした <b>15 のページ</b>の入口。結論は書かない。</span>
+        <span class="en">The way in to <b>15 pages</b> that make Cardano's public data readable. No conclusions.</span>
+      </p>
+
+      <div class="ask" role="navigation" aria-label="what do you want to do">
+        <span class="lbl on"><span class="ja">何をしたい？</span><span class="en">What do you want to do?</span></span>
+        <div class="askgrid">
+          <a href="#qa" data-hit="qa">
+            <span class="q"><span class="ja">はじめての疑問に答えてほしい</span><span class="en">Answer my first questions</span></span>
+            <span class="to">What's Cardano? <span class="arw lat">&rarr;</span></span>
+          </a>
+          <a href="#relay" data-hit="relay alive">
+            <span class="q"><span class="ja">ステークプールを選びたい</span><span class="en">Choose a stake pool</span></span>
+            <span class="to">Relay Health Ranking <span class="arw lat">&rarr;</span></span>
+          </a>
+          <a href="#drep" data-hit="drep deleg">
+            <span class="q"><span class="ja">DRep を選びたい</span><span class="en">Choose a DRep</span></span>
+            <span class="to">DRep Governance Terminal <span class="arw lat">&rarr;</span></span>
+          </a>
+          <a href="#catalyst" data-hit="catalyst cmap core">
+            <span class="q"><span class="ja">Catalyst の提案を追いたい</span><span class="en">Follow Catalyst proposals</span></span>
+            <span class="to">Catalyst Japan / Map / CORE <span class="arw lat">&rarr;</span></span>
+          </a>
+          <a href="#carakuri" data-hit="carakuri humanism dvm spiral">
+            <span class="q"><span class="ja">仕組みを体験で覚えたい</span><span class="en">Learn the machinery by moving it</span></span>
+            <span class="to">CARAKURI / Humanism / DVM <span class="arw lat">&rarr;</span></span>
+          </a>
+          <a href="#translate" data-hit="translate signal poc">
+            <span class="q"><span class="ja">英語の音声や投稿を扱いたい</span><span class="en">Work with speech and posts</span></span>
+            <span class="to">Space Translate / SIGNAL <span class="arw lat">&rarr;</span></span>
+          </a>
+        </div>
+      </div>
+
+      <p class="meas">
+        <span class="lbl">Measured</span>
+        <span><b data-count="370">0</b>DReps</span>
+        <span><b data-count="130">0</b>proposals</span>
+        <span><b data-count="1282">0</b>pools</span>
+        <span><b>21.6M &#8371;</b>funded</span>
+        <span><b data-count="6">0</b>axes</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="fx" id="fx" role="group" aria-label="background"></div>
+</header>
+
+
+<section class="sec">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="lbl on">Measured</span>
+      <h2 class="h2">
+        <span class="ja">どれも、公開データだけで組み立てた。</span>
+        <span class="en">Every one of them built from public data alone.</span>
+      </h2>
+    </div>
+    <div class="figs rv" style="--i:1">
+      <div class="fig" style="--w:78%">
+        <span class="lbl">Catalyst</span>
+        <span class="n lat">130</span>
+        <span class="bar"><i></i></span>
+        <span class="l">
+          <span class="ja">Catalyst に出た日本の提案。F2 から F14 まで、採択額 21.6M &#8371; 分。</span>
+          <span class="en">Japanese proposals in Catalyst. F2 through F14, 21.6M &#8371; funded.</span>
+        </span>
+      </div>
+      <div class="fig" style="--w:62%">
+        <span class="lbl">Relay</span>
+        <span class="n lat">1,282</span>
+        <span class="bar"><i></i></span>
+        <span class="l">
+          <span class="ja">直近30エポックでブロックを作り、実際に応答したステークプール。</span>
+          <span class="en">Stake pools that minted in the last 30 epochs and actually answered.</span>
+        </span>
+      </div>
+      <div class="fig" style="--w:44%">
+        <span class="lbl">Delegation</span>
+        <span class="n lat">2</span>
+        <span class="bar"><i></i></span>
+        <span class="l">
+          <span class="ja">1つのウォレットが同時に持つ委任。混同されたまま投票が進んでいる。</span>
+          <span class="en">Delegations one wallet holds at once. Voting proceeds with them confused.</span>
+        </span>
+      </div>
+      <div class="fig" style="--w:70%">
+        <span class="lbl">DRep</span>
+        <span class="n lat">370</span>
+        <span class="bar"><i></i></span>
+        <span class="l">
+          <span class="ja">公開データから追えるアクティブ DRep。投票力・集中度・委任者構成を毎日更新する。</span>
+          <span class="en">Active DReps traceable through public data. Voting power, concentration and delegator mix, updated daily.</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec works">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="lbl on">Pages</span>
+      <h2 class="h2">
+        <span class="ja">読める形にして、置いてある。</span>
+        <span class="en">Made readable, and left here.</span>
+      </h2>
+    </div>
+    <span class="lbl subhead" style="margin-top:0">
+      <span class="ja">実測 &mdash; 公開データを測った結果</span>
+      <span class="en">Measured &mdash; results of measuring public data</span>
+    </span>
+    <p class="gnote">
+      <span class="ja">ここにある数字は、チェーンや GitHub や Catalyst の公開記録を自分で測ったもの。そのまま根拠に使える。</span>
+      <span class="en">Every figure here was measured first-hand from public records on chain, on GitHub, in Catalyst. It can be cited as is.</span>
+    </p>
+    <div class="workgrid two">
+
+      <article class="card rv" id="qa">
+        <a class="shot" href="https://hfot.github.io/cardano-qa-bot/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="og/qa.png" data-shot-ja="og/qa.png" data-shot-en="og/qa-en.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="lbl on">What's Cardano?</span>
+          <h3>
+            <span class="ja">ホルダーのQ＆Aに、会話で答える。</span>
+            <span class="en">First questions, answered in conversation.</span>
+          </h3>
+          <p>
+            <span class="ja">ウォレット、取引所の入出庫、プール選び、DRep選び、詐欺の手口、ADAの価値、Midnight。8つのテーマをボタンで辿れるQ&amp;Aボット。リレー健全性ランキングとTarget 15の思想から集中を避けたおすすめを出し、送金前のリスク度チェックも備える。</span>
+            <span class="en">A tap-through Q&amp;A bot across eight topics — wallets, exchange deposits and withdrawals, pool and DRep choice, scam patterns, ADA's value, Midnight. Recommendations are drawn from the relay-health ranking and the Target 15 principle, and a pre-transfer risk check is built in.</span>
+          </p>
+          <p class="use"><span class="uk"><span class="ja">こんな時に</span><span class="en">Use it when</span></span><span class="ja">「Cardano って何？」と聞かれた時、最初に渡すページ。</span><span class="en">The page to hand someone who just asked what Cardano is.</span></p>
+          <div class="spec">
+            <div><span class="k">Topics</span><span class="v">8</span></div>
+            <div><span class="k">Answers</span><span class="v">129</span></div>
+            <div><span class="k">AI API</span><span class="v">0</span></div>
+          <a class="pill" href="https://hfot.github.io/cardano-qa-bot/" target="_blank" rel="noopener"><span class="go"><span class="ja">開く</span><span class="en">Open</span></span><span class="addr">hfot.github.io/cardano-qa-bot</span><span class="arw lat">&nearr;</span>
+          </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card rv" id="drep" style="--i:1">
+        <a class="shot" href="https://hfot.github.io/drep-terminal-v6/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="og/drep.png" data-shot-ja="og/drep.png" data-shot-en="og/drep-en.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="lbl on">DRep Governance Terminal</span>
+          <h3>
+            <span class="ja">DRep の委任を、チャートで見る。</span>
+            <span class="en">Read the balance of DRep power in numbers.</span>
+          </h3>
+          <p>
+            <span class="ja">投票力、委任者構成、資金流入出、集中度を一つの端末に集約。公開オンチェーンデータから、DRep 全体と個別の動きを毎日追う。</span>
+            <span class="en">Voting power, delegator mix, flows and concentration in one terminal. Follow the DRep landscape and individual movements daily from public on-chain data.</span>
+          </p>
+          <p class="use"><span class="uk"><span class="ja">こんな時に</span><span class="en">Use it when</span></span><span class="ja">委任先の DRep を決める前に、力の偏りを一目見る。</span><span class="en">Before choosing a DRep, see where the power sits.</span></p>
+          <div class="spec">
+            <div><span class="k">Active DReps</span><span class="v">370</span></div>
+            <div><span class="k">Voting power</span><span class="v">4.96B &#8371;</span></div>
+            <div><span class="k">Nakamoto</span><span class="v">10</span></div>
+          <a class="pill" href="https://hfot.github.io/drep-terminal-v6/" target="_blank" rel="noopener"><span class="go"><span class="ja">開く</span><span class="en">Open</span></span><span class="addr">hfot.github.io/drep-terminal-v6</span><span class="arw lat">&nearr;</span>
+          </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card rv" id="catalyst" style="--i:1">
+        <a class="shot" href="https://hfot.github.io/Catalyst-Japan/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="og/catalyst.png" data-shot-ja="og/catalyst.png" data-shot-en="og/catalyst-en.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="lbl on">Catalyst Japan</span>
+          <h3>
+            <span class="ja">Catalyst の日本提案まとめ。</span>
+            <span class="en">See every proposal at once.</span>
+          </h3>
+          <p>
+            <span class="ja">130件を金額・分野・進捗で並べ替える。完了報告と動画まで一枚に載せた、F2 から F14 の全記録。</span>
+            <span class="en">130 proposals sorted by amount, sector and status. Completion reports and videos on one page, F2 through F14.</span>
+          </p>
+          <p class="use"><span class="uk"><span class="ja">こんな時に</span><span class="en">Use it when</span></span><span class="ja">日本の提案に投票する前に、金額と進捗を並べて見る。</span><span class="en">Before voting on Japanese proposals, line up amounts and progress.</span></p>
+          <div class="spec">
+            <div><span class="k">Proposals</span><span class="v">130</span></div>
+            <div><span class="k">Funded</span><span class="v">21.6M &#8371;</span></div>
+            <div><span class="k">Rounds</span><span class="v">F2 &ndash; F14</span></div>
+          <a class="pill" href="https://hfot.github.io/Catalyst-Japan/" target="_blank" rel="noopener"><span class="go"><span class="ja">開く</span><span class="en">Open</span></span><span class="addr">hfot.github.io/Catalyst-Japan</span><span class="arw lat">&nearr;</span>
+          </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card rv" id="cmap" style="--i:2">
+        <a class="shot" href="https://hfot.github.io/holders-core/catalyst-map/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="og/cmap.png" data-shot-ja="og/cmap.png" data-shot-en="og/cmap-en.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="lbl on">Catalyst Detailed Map</span>
+          <h3>
+            <span class="ja">Catalyst 提案の世界 MAP。</span>
+            <span class="en">What happened to the proposals you voted for?</span>
+          </h3>
+          <p>
+            <span class="ja">6年で 2,221件が採択され、1,722件が完了した。完了報告は 1,716件ぶん存在する。誰も並べていなかっただけだ。国・人物・一件まで地図から辿り、提案と完了報告を原文のまま左右に並べる。達成・未達の判断はしない。</span>
+            <span class="en">Over six years 2,221 proposals were funded and 1,722 completed. Completion reports exist for 1,716 of them &mdash; nobody had simply put them side by side. Follow the money from country to person to a single project, and read the promise and the report in the original, next to each other. No verdict is given on whether either was met.</span>
+          </p>
+          <p class="use"><span class="uk"><span class="ja">こんな時に</span><span class="en">Use it when</span></span><span class="ja">投票した提案がその後どうなったか、完了報告まで辿る。</span><span class="en">Follow a proposal you voted for all the way to its completion report.</span></p>
+          <div class="spec">
+            <div><span class="k">Funded</span><span class="v">2,221</span></div>
+            <div><span class="k">Reports</span><span class="v">1,716</span></div>
+            <div><span class="k">Countries</span><span class="v">96</span></div>
+          <a class="pill" href="https://hfot.github.io/holders-core/catalyst-map/" target="_blank" rel="noopener"><span class="go"><span class="ja">開く</span><span class="en">Open</span></span><span class="addr">hfot.github.io/holders-core/catalyst-map</span><span class="arw lat">&nearr;</span>
+          </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card rv" id="core" style="--i:2">
+        <a class="shot" href="https://hfot.github.io/holders-core/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="og/core.png" data-shot-ja="og/core.png" data-shot-en="og/core-en.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="lbl on">holders CORE</span>
+          <h3>
+            <span class="ja">Cardano の現状を、全件データで分析。</span>
+            <span class="en">See only what happened, across every proposal.</span>
+          </h3>
+          <p>
+            <span class="ja">11,385件を ①提案 →②採択 →③納品 →④使用 で並べ、どこで止まったかを一次情報付きで示す。うち2,347件は「実際に使われたか」が誰にも記録されていない。その欠落も数えて出す。</span>
+            <span class="en">11,385 proposals placed on proposed &rarr; approved &rarr; delivered &rarr; used, each with primary sources, showing where it stopped. For 2,347 of them nobody has recorded whether the thing was actually used &mdash; that gap is counted and shown rather than hidden.</span>
+          </p>
+          <p class="use"><span class="uk"><span class="ja">こんな時に</span><span class="en">Use it when</span></span><span class="ja">「本当に使われたか」まで含めて、Catalyst 全体を数字で見る。</span><span class="en">See all of Catalyst in numbers, including whether things were used.</span></p>
+          <div class="spec">
+            <div><span class="k">Proposals</span><span class="v">11,385</span></div>
+            <div><span class="k">Unrecorded &#9315;</span><span class="v">2,347</span></div>
+            <div><span class="k">Rounds</span><span class="v">F2 &ndash; F15</span></div>
+          <a class="pill" href="https://hfot.github.io/holders-core/" target="_blank" rel="noopener"><span class="go"><span class="ja">開く</span><span class="en">Open</span></span><span class="addr">hfot.github.io/holders-core</span><span class="arw lat">&nearr;</span>
+          </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card rv" id="relay" style="--i:3">
+        <a class="shot" href="https://hfot.github.io/cardano-relay-health/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="og/relay.png" data-shot-ja="og/relay.png" data-shot-en="og/relay-en.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="lbl on">Relay Health Ranking</span>
+          <h3>
+            <span class="ja">ステークプールの健全性ランキング。</span>
+            <span class="en">Score only what answered.</span>
+          </h3>
+          <p>
+            <span class="ja">1,282プールのリレーを6軸で測って並べる。届かないことは停止の証明ではない、と書き添えたうえで。</span>
+            <span class="en">1,282 pools scored on six axes, with the note that unreachable is no proof of offline.</span>
+          </p>
+          <p class="use"><span class="uk"><span class="ja">こんな時に</span><span class="en">Use it when</span></span><span class="ja">ステークプールを選ぶ・見直す時に、健全性の等級を確かめる。</span><span class="en">When choosing or reviewing a stake pool, check its health grade.</span></p>
+          <div class="spec">
+            <div><span class="k">Pools</span><span class="v">1,282</span></div>
+            <div><span class="k">Axes</span><span class="v">6</span></div>
+            <div><span class="k">Grades</span><span class="v">S &ndash; D</span></div>
+          <a class="pill" href="https://hfot.github.io/cardano-relay-health/" target="_blank" rel="noopener"><span class="go"><span class="ja">開く</span><span class="en">Open</span></span><span class="addr">hfot.github.io/cardano-relay-health</span><span class="arw lat">&nearr;</span>
+          </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card rv" id="alive" style="--i:4">
+        <a class="shot" href="https://hfot.github.io/spo-onchain-alive/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="og/alive.png" data-shot-ja="og/alive.png" data-shot-en="og/alive-en.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="lbl on">Cardano Art Explorer</span>
+          <h3>
+            <span class="ja">Cardano のアートエクスプローラー。</span>
+            <span class="en">See the whole, then go into one.</span>
+          </h3>
+          <p>
+            <span class="ja">ランキングにあるすべてのプールが同じ円盤を回っている。距離はステーク、明るさは健全性スコア、大きさは委任者。拡大すると、一つひとつがそのプールだけのアートになる。数字は Relay Health の実測値そのままで、変わるのは描き方だけ。</span>
+            <span class="en">Every ranked pool turns in one disc: distance is stake, brightness is the health score, size is delegators. Go in, and each one becomes an artwork belonging to that pool alone. The figures are the Relay Health measurements unchanged; only the drawing differs.</span>
+          </p>
+          <p class="use"><span class="uk"><span class="ja">こんな時に</span><span class="en">Use it when</span></span><span class="ja">ランキングの数字を、絵として眺めたい時に。</span><span class="en">When you would rather look at the ranking as a picture.</span></p>
+          <div class="spec">
+            <div><span class="k">Axes</span><span class="v">6</span></div>
+            <div><span class="k">Motifs</span><span class="v">5</span></div>
+            <div><span class="k">Source</span><span class="v">Relay Health</span></div>
+          <a class="pill" href="https://hfot.github.io/spo-onchain-alive/" target="_blank" rel="noopener"><span class="go"><span class="ja">開く</span><span class="en">Open</span></span><span class="addr">hfot.github.io/spo-onchain-alive</span><span class="arw lat">&nearr;</span>
+          </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card rv" id="poc" style="--i:4">
+        <a class="shot" href="https://hfot.github.io/proof-of-code/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="og/poc.png" data-shot-ja="og/poc.png" data-shot-en="og/poc-en.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="lbl on">Proof of Code</span>
+          <h3>
+            <span class="ja">GitHub で測る、開発の実態マップ。</span>
+            <span class="en">Living proof of the ecosystem.</span>
+          </h3>
+          <p>
+            <span class="ja">GitHub の 924 リポジトリから、確かに脈打つ 210 を測って棚に並べた。折れ線は52週の鼓動。数字はすべて自前の測定で、借りたのはロゴだけ。</span>
+            <span class="en">Out of 924 repositories on GitHub, the 210 with a true heartbeat, measured and shelved. Each line is 52 weeks of pulse; every figure measured first-hand, only the logos borrowed.</span>
+          </p>
+          <p class="use"><span class="uk"><span class="ja">こんな時に</span><span class="en">Use it when</span></span><span class="ja">「開発は続いているのか」と疑った時に、GitHub の脈を見る。</span><span class="en">When you wonder whether development is alive, read the GitHub pulse.</span></p>
+          <div class="spec">
+            <div><span class="k">Repos</span><span class="v">210</span></div>
+            <div><span class="k">Population</span><span class="v">924</span></div>
+            <div><span class="k">Shelves</span><span class="v">8</span></div>
+          <a class="pill" href="https://hfot.github.io/proof-of-code/" target="_blank" rel="noopener"><span class="go"><span class="ja">開く</span><span class="en">Open</span></span><span class="addr">hfot.github.io/proof-of-code</span><span class="arw lat">&nearr;</span>
+          </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card rv" id="deleg" style="--i:5">
+        <a class="shot" href="https://hfot.github.io/cardano-two-delegations/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="og/deleg.png" data-shot-ja="og/deleg.png" data-shot-en="og/deleg-en.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="lbl on">One Wallet, Two Delegations</span>
+          <h3>
+            <span class="ja">2つの委任を、シミュレーションで試す。</span>
+            <span class="en">Stop reading. Move it and see.</span>
+          </h3>
+          <p>
+            <span class="ja">ステーキング委任と DRep 委任。同じウォレットが持つ2つの力の差を、シミュレーションで確かめる。</span>
+            <span class="en">Staking delegation and DRep delegation. Feel the difference between the two powers one wallet holds.</span>
+          </p>
+          <p class="use"><span class="uk"><span class="ja">こんな時に</span><span class="en">Use it when</span></span><span class="ja">ステーク委任と DRep 委任の違いが腑に落ちない時に、動かして確かめる。</span><span class="en">When the two delegations still blur together, move them and see.</span></p>
+          <div class="spec">
+            <div><span class="k">Simulations</span><span class="v">5</span></div>
+            <div><span class="k">Logic tree</span><span class="v">16</span></div>
+            <div><span class="k">Basis</span><span class="v">CIP-1694</span></div>
+          <a class="pill" href="https://hfot.github.io/cardano-two-delegations/" target="_blank" rel="noopener"><span class="go"><span class="ja">開く</span><span class="en">Open</span></span><span class="addr">hfot.github.io/cardano-two-delegations</span><span class="arw lat">&nearr;</span>
+          </a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <span class="lbl subhead">
+      <span class="ja">道具とモデル &mdash; 実測ではないもの</span>
+      <span class="en">Tool and model &mdash; not measurements</span>
+    </span>
+    <p class="gnote">
+      <span class="ja">手を動かすための道具と、AI が生成した読み物や寓話。考える材料であって、測定値ではない。</span>
+      <span class="en">Tools to work with, and readings or fables generated by AI. Material to think with, not measurements.</span>
+    </p>
+    <div class="workgrid two">
+
+      <article class="card rv" id="translate">
+        <a class="shot" href="https://hfot.github.io/space-translate/app.html" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="og/translate.png" data-shot-ja="og/translate.png" data-shot-en="og/translate-en.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="top">
+            <span class="lbl on">Space Translate</span>
+            <span class="badge tool"><span class="ja">道具</span><span class="en">Tool</span></span>
+          </span>
+          <h3>
+            <span class="ja">音声を、その場で字幕翻訳。</span>
+            <span class="en">Turn what you hear into words you can read.</span>
+          </h3>
+          <p>
+            <span class="ja">分からない言語の音声を、その場で文字にして翻訳する。文字起こしはブラウザの中で完結し、APIキーもインストールも要らない。</span>
+            <span class="en">Speech in a language you do not know, captioned and translated on the spot. Transcription runs inside the browser. No API key, no install.</span>
+          </p>
+          <p class="note">
+            <span class="ja">タブの音声を共有して使う。Chrome / Edge のPC専用。</span>
+            <span class="en">Works by sharing a tab&#39;s audio. Chrome or Edge on desktop only.</span>
+          </p>
+          <p class="use"><span class="uk"><span class="ja">こんな時に</span><span class="en">Use it when</span></span><span class="ja">英語の配信や会議を、その場で字幕にしたい時に。</span><span class="en">When you need live captions for a stream or meeting in another language.</span></p>
+          <div class="spec">
+            <div><span class="k">Engine</span><span class="v">Whisper</span></div>
+            <div><span class="k">Runs</span><span class="v">In browser</span></div>
+            <div><span class="k">Cost</span><span class="v">Free</span></div>
+          <a class="pill" href="https://hfot.github.io/space-translate/app.html" target="_blank" rel="noopener"><span class="go"><span class="ja">開く</span><span class="en">Open</span></span><span class="addr">hfot.github.io/space-translate/app.html</span><span class="arw lat">&nearr;</span>
+          </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card rv" id="spiral" style="--i:1">
+        <a class="shot" href="https://hfot.github.io/cardano-spiral/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="og/spiral.png" data-shot-ja="og/spiral.png" data-shot-en="og/spiral-en.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="top">
+            <span class="lbl on">The Decentralization Spiral</span>
+            <span class="badge"><span class="ja">AI生成モデル</span><span class="en">AI-generated model</span></span>
+          </span>
+          <h3>
+            <span class="ja">分散化の現状を、辛口で分析。</span>
+            <span class="en">A deliberately severe read of where things stand.</span>
+          </h3>
+          <p>
+            <span class="ja">研ぎ澄ませるための材料として、現状のモデルをAIに生成させた一枚もの。<b>実測ではなく解釈</b>であり、意図的に辛口に振ってある。批判はすべて公開された数字か、数字が公表されていないという事実に紐づけてある。</span>
+            <span class="en">A single page where a model of the present state was generated by AI, as material for sharpening. <b>Interpretation, not measurement</b>, and deliberately severe. Every criticism is tied to a public figure, or to the fact that no figure was published.</span>
+          </p>
+          <p class="note">
+            <span class="ja">読み方は三つ。順に読む / 立場から読む / 自分をシミュレートする。</span>
+            <span class="en">Three ways to read it: in order, by position, or by simulating yourself.</span>
+          </p>
+          <p class="use"><span class="uk"><span class="ja">こんな時に</span><span class="en">Use it when</span></span><span class="ja">分散の現状を、あえて厳しく読んだ一枚が欲しい時に。</span><span class="en">When you want one deliberately severe read of decentralisation.</span></p>
+          <div class="spec">
+            <div><span class="k">Chapters</span><span class="v">19</span></div>
+            <div><span class="k">Positions</span><span class="v">9</span></div>
+            <div><span class="k">Readings</span><span class="v">3</span></div>
+          <a class="pill" href="https://hfot.github.io/cardano-spiral/" target="_blank" rel="noopener"><span class="go"><span class="ja">開く</span><span class="en">Open</span></span><span class="addr">hfot.github.io/cardano-spiral</span><span class="arw lat">&nearr;</span>
+          </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card rv" id="signal" style="--i:2">
+        <a class="shot" href="https://hfot.github.io/cignal-radar/cignal-signal-v2.html" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="og/signal.png" data-shot-ja="og/signal.png" data-shot-en="og/signal-en.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="top">
+            <span class="lbl on">CIGNAL Signal</span>
+            <span class="badge tool"><span class="ja">道具</span><span class="en">Tool</span></span>
+          </span>
+          <h3>
+            <span class="ja">投稿の反響を、AIで事前分析。</span>
+            <span class="en">Paste it, and see where a post can go.</span>
+          </h3>
+          <p>
+            <span class="ja">𝕏 や Discord の投稿を貼ると、議論の種・広がる先・トーンをAIが分解する。DRep・SPO・Holder・Devへの届き方まで、投稿する前に見える。</span>
+            <span class="en">Paste a post from X or Discord, and AI breaks down its discussion seeds, reach, and tone &mdash; how it lands with DReps, SPOs, holders and devs, before you post it.</span>
+          </p>
+          <p class="note">
+            <span class="ja">無料APIキーでも動く。または手動モードで、SIGNALが作ったプロンプトをお使いのAIに貼り、返ってきた結果をSIGNALに貼り戻すだけでも動く。</span>
+            <span class="en">Works with a free API key. Or go manual: paste the prompt SIGNAL builds into any AI you use, then paste its answer back into SIGNAL.</span>
+          </p>
+          <p class="use"><span class="uk"><span class="ja">こんな時に</span><span class="en">Use it when</span></span><span class="ja">投稿する前に、どう受け取られるかを試したい時に。</span><span class="en">Before you post, test how it will land.</span></p>
+          <div class="spec">
+            <div><span class="k">Sources</span><span class="v">X &middot; Discord &middot; more</span></div>
+            <div><span class="k">Audiences</span><span class="v">5</span></div>
+            <div><span class="k">Cost</span><span class="v">Free tier</span></div>
+          <a class="pill" href="https://hfot.github.io/cignal-radar/cignal-signal-v2.html" target="_blank" rel="noopener"><span class="go"><span class="ja">開く</span><span class="en">Open</span></span><span class="addr">hfot.github.io/cignal-radar/cignal-signal-v2.html</span><span class="arw lat">&nearr;</span>
+          </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card rv" id="humanism" style="--i:3">
+        <a class="shot" href="https://hfot.github.io/governance-humanism-action/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="og/humanism.png" data-shot-ja="og/humanism.png" data-shot-en="og/humanism-en.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="top">
+            <span class="lbl on">Governance Humanism Action</span>
+            <span class="badge"><span class="ja">AI生成の分析を含む</span><span class="en">Includes AI analysis</span></span>
+          </span>
+          <h3>
+            <span class="ja">権力が集まる条件を、体験で辿る。</span>
+            <span class="en">When the conditions line up, the same faces step forward.</span>
+          </h3>
+          <p>
+            <span class="ja">八つの間で自分の立ち位置を刻み、十の問いを歩き、十四の分岐を読む。時代の帯と天候の帯を並べると、無関係な条件から同じ人物像が現れる。</span>
+            <span class="en">Mark where you stand across eight chambers, walk ten questions, read fourteen forks. Lay the age beside the climate and the same figures appear, out of conditions that have nothing to do with each other.</span>
+          </p>
+          <p class="note">
+            <span class="ja">分析の各項目は良い方向とよくない方向を並べたまま置き、その分岐を決めるものだけを書く。仮説には反証のための観測項目が付く。日本語のみ。</span>
+            <span class="en">Each finding holds the good direction and the poor one open side by side and writes only the hinge between them. Every hypothesis carries what would disprove it. Japanese only.</span>
+          </p>
+          <p class="use"><span class="uk"><span class="ja">こんな時に</span><span class="en">Use it when</span></span><span class="ja">権力が集まる条件を、自分の立ち位置から体験したい時に。</span><span class="en">To experience, from where you stand, how power gathers.</span></p>
+          <div class="spec">
+            <div><span class="k">Chambers</span><span class="v">8</span></div>
+            <div><span class="k">Questions</span><span class="v">10</span></div>
+            <div><span class="k">Forks</span><span class="v">14</span></div>
+          <a class="pill" href="https://hfot.github.io/governance-humanism-action/" target="_blank" rel="noopener"><span class="go"><span class="ja">開く</span><span class="en">Open</span></span><span class="addr">hfot.github.io/governance-humanism-action</span><span class="arw lat">&nearr;</span>
+          </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card rv" id="dvm" style="--i:4">
+        <a class="shot" href="https://hfot.github.io/dialogue-verification-model/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="og/dvm.png" data-shot-ja="og/dvm.png" data-shot-en="og/dvm-en.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="top">
+            <span class="lbl on">Dialogue Verification Model</span>
+            <span class="badge"><span class="ja">仮説・合成会話モデル</span><span class="en">Hypothesis · synthetic conversation</span></span>
+          </span>
+          <h3>
+            <span class="ja">議論が閉じる分岐を、10万回検証。</span>
+            <span class="en">It doesn&#39;t close at the moment of the proposal.</span>
+          </h3>
+          <p>
+            <span class="ja">中心人物のいない場が、なぜ同じ形で閉じていくのか。架空の会話を分岐させ、27通りを全数列挙し、10万回のエージェント・シミュレーションで確かめた。分岐点は「まとめ役を決めよう」という善意の提案そのものではなく、その前の確認要求への応答履歴だった、という仮説。</span>
+            <span class="en">Why do leaderless rooms keep closing the same way? A fictional conversation branches, all 27 outcomes are enumerated, and 100,000 agent simulations test the idea that the hinge is not the well-meant proposal to consolidate, but the response history right before it.</span>
+          </p>
+          <p class="note">
+            <span class="ja">反証条件つき。会話データ・判定コード・シミュレーションのパラメータはすべて公開。日英対応。</span>
+            <span class="en">Comes with its own conditions for refutation. Conversation data, judgment code and simulation parameters are all public. Japanese and English.</span>
+          </p>
+          <p class="use"><span class="uk"><span class="ja">こんな時に</span><span class="en">Use it when</span></span><span class="ja">議論がいつも同じ形で閉じる理由を、モデルで確かめたい時に。</span><span class="en">When you want a model of why discussions keep closing the same way.</span></p>
+          <div class="spec">
+            <div><span class="k">Paths</span><span class="v">27</span></div>
+            <div><span class="k">Simulated</span><span class="v">100k&times;</span></div>
+            <div><span class="k">Cost</span><span class="v">Free</span></div>
+          <a class="pill" href="https://hfot.github.io/dialogue-verification-model/" target="_blank" rel="noopener"><span class="go"><span class="ja">開く</span><span class="en">Open</span></span><span class="addr">hfot.github.io/dialogue-verification-model</span><span class="arw lat">&nearr;</span>
+          </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card rv" id="carakuri" style="--i:5">
+        <a class="shot" href="https://hfot.github.io/nomad-3d/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <img src="og/carakuri.png" data-shot-ja="og/carakuri.png" data-shot-en="og/carakuri-en.png"
+               width="1200" height="630" loading="lazy" decoding="async" alt="">
+        </a>
+        <div class="body">
+          <span class="top">
+            <span class="lbl on">CARAKURI</span>
+            <span class="badge"><span class="ja">実測ではなく、寓話</span><span class="en">Allegory, not measurement</span></span>
+          </span>
+          <h3>
+            <span class="ja">Cardano の仕組みを、3Dからくりで。</span>
+            <span class="en">Turn the hard structure into something you can move.</span>
+          </h3>
+          <p>
+            <span class="ja">Cardanoの仕組みを、8体のからくりと一つの城郭都市として組み上げた。六つの門はリレー健全性の6軸、中央の書庫塔は憲法、議事堂はDRep、大金庫はトレジャリー。すべてブラウザの中で手続き的に生成され、外部アセットもアカウントも要らない。</span>
+            <span class="en">Cardano&#39;s machinery, built as eight automata and one walled city. The six gates are the six axes of relay health, the archive tower at the centre is the constitution, the assembly is the DReps, the vault is the treasury. Everything is generated procedurally in the browser: no assets, no accounts.</span>
+          </p>
+          <p class="note">
+            <span class="ja">標語は「灯りを運ぶ」。トレジャリーの大灯台から炎を分けてもらい、自分の町へ持ち帰る — この寓話がそのまま資金フローの絵になる。8体を1体ずつ動かせる。町を歩ける。PIPを走らせて運ぶこともできる。</span>
+            <span class="en">The motto is carrying the light: take a flame from the treasury&#39;s lighthouse home to your own town, and the allegory is the funding flow itself. Move each automaton on its own, walk the town, or run PIP to carry a transaction.</span>
+          </p>
+          <p class="use"><span class="uk"><span class="ja">こんな時に</span><span class="en">Use it when</span></span><span class="ja">仕組みを文章でなく、動くものとして覚えたい時に。</span><span class="en">When you would rather learn the machinery by moving it than by reading.</span></p>
+          <div class="spec">
+            <div><span class="k">Automata</span><span class="v">8</span></div>
+            <div><span class="k">Buildings</span><span class="v">5</span></div>
+            <div><span class="k">Gates</span><span class="v">6</span></div>
+          <a class="pill" href="https://hfot.github.io/nomad-3d/" target="_blank" rel="noopener"><span class="go"><span class="ja">開く</span><span class="en">Open</span></span><span class="addr">hfot.github.io/nomad-3d</span><span class="arw lat">&nearr;</span>
+          </a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="sec stance">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="lbl on">Stance</span>
+      <h2 class="h2">
+        <span class="ja"><em>思考の流動性</em>と、<br><em>真贋の持続可能性</em>。</span>
+        <span class="en"><em>Fluid thinking</em>, and<br><em>durable discernment</em>.</span>
+      </h2>
+    </div>
+
+    <div class="manifesto">
+      <p class="rv">
+        <span class="ja">最終的に判断するのは、<b>あなた自身の思考</b>だ。構造を理解すれば、なぜそうなっているのかが見えてくる。</span>
+        <span class="en">In the end you judge with <b>your own thinking</b>. Understand the structure and the reasons come into view.</span>
+      </p>
+      <p class="rv" style="--i:1">
+        <span class="ja"><b>誰かを非難するためではない。</b>情報は公開されている。ただ、<b>読めない。どこにあるのかも分からない。</b>そういう情報で溢れている。</span>
+        <span class="en"><b>This is not to blame anyone.</b> The information is public. It just <b>cannot be read, and there is no telling where it is.</b> The world is full of information like that.</span>
+      </p>
+      <p class="rv" style="--i:2">
+        <span class="ja">可視化され、多くの人が確認し、行動できる。<b>そのフローが、将来の価値を左右する。</b></span>
+        <span class="en">Made visible, checked by many, acted on. <b>That flow decides future value.</b></span>
+      </p>
+<p class="rv" style="--i:3">
+        <span class="ja">可視化には、さまざまな負の憶測が伴うことがある。しかし、見る人が個別に抱いた感情が、<b>データそのものを壊すことはない。</b></span>
+        <span class="en">Visualization can invite all kinds of negative speculation. But the feelings held by individual viewers <b>do not break the data itself.</b></span>
+      </p>
+      <p class="rv" style="--i:4">
+        <span class="ja">見るのは個人ではなく、<b>構造だ。</b>投票パワーを持つ者たちの背景を、公開データから見る。Catalyst、Treasury、Stake Pool。同じ母体が複数の領域にまたがることがあっても、それらを横断する総合的な評価軸は、まだ十分に整っていない。</span>
+        <span class="en">The subject is not the individual, but <b>the structure.</b> Public data reveals the context behind those who hold voting power. Catalyst, Treasury, Stake Pools: even when the same entities span multiple domains, a comprehensive framework for evaluating them across those domains is still missing.</span>
+      </p>
+      <p class="rv" style="--i:5">
+        <span class="ja">総合的なシステムが動かない限り、公開された情報をもとに一つずつ判断するしかない。<b>そこに圧倒的な矛盾がある。</b>健全なChainには、構造を総合的に見る仕組みが求められている。</span>
+        <span class="en">Until a comprehensive system exists, each holder is left to judge from fragmented public information. <b>That is the fundamental contradiction.</b> A healthy chain needs a way to see its structure as a whole.</span>
+      </p>
+      <p class="rv" style="--i:6">
+        <span class="ja">目的は単純だ。視覚化によって、<b>ホルダーの選択肢に「鋭い視点」というスキルを拡張する。</b></span>
+        <span class="en">The purpose is simple: through visualization, <b>extend every holder's choices with the skill of a sharper perspective.</b></span>
+      </p>
+    </div>
+
+    <span class="lbl exlabel rv"><span class="ja">たとえば</span><span class="en">For example</span></span>
+    <div class="creed">
+      <p class="rv"><span class="tick"></span><span>
+        <span class="ja">登録されていることと、<b>持っていること</b>は別だ。</span>
+        <span class="en">Being registered and <b>owning</b> are not the same thing.</span>
+      </span></p>
+      <p class="rv" style="--i:1"><span class="tick"></span><span>
+        <span class="ja">届かないことは、<b>止まっている証明</b>ではない。</span>
+        <span class="en">Not answering is <b>no proof of being down</b>.</span>
+      </span></p>
+      <p class="rv" style="--i:2"><span class="tick"></span><span>
+        <span class="ja">混同されたまま、<b>投票は進んでいる</b>。</span>
+        <span class="en">The confusion stands, and <b>the voting goes on</b>.</span>
+      </span></p>
+    </div>
+  </div>
+</section>
+
+<section class="sec end">
+  <div class="wrap">
+    <div class="head rv" style="margin-bottom:0">
+      <span class="lbl on">Status</span>
+      <h2 class="h2">
+        <span class="ja">完成はしない。数字が動く限り、書き足す。</span>
+        <span class="en">Never finished. As long as the figures move, this keeps being written.</span>
+      </h2>
+      <p>
+        <span class="ja">数字は取得した時点のもので、エポックごとに動く。訂正はいつでも歓迎します。</span>
+        <span class="en">Figures are from the moment they were taken and move each epoch. Corrections are always welcome.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Holders&#39; Governance Skill &nbsp;/&nbsp; HFOT&reg; &nbsp;/&nbsp; 2026</span>
+    <span>Built from public data</span>
+    <a href="https://github.com/HFOT" target="_blank" rel="noopener">github.com/HFOT &nearr;</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root   = document.documentElement;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasIO  = 'IntersectionObserver' in window;
+  var BEAT   = 469;
+
+  /* ---------- language ---------- */
+  function isEN(){ return root.getAttribute('data-lang') === 'en'; }
+  function setLang(en){
+    if (en){ root.setAttribute('data-lang','en'); root.lang = 'en'; }
+    else   { root.removeAttribute('data-lang');   root.lang = 'ja'; }
+    try { localStorage.setItem('hgs-lang', en ? 'en' : 'ja'); } catch (e) {}
+    document.querySelectorAll('[data-shot-en]').forEach(function(img){
+      var next = en ? img.dataset.shotEn : img.dataset.shotJa;
+      if (next && img.getAttribute('src') !== next) img.setAttribute('src', next);
+    });
+    if (typeof relayoutDock === 'function') relayoutDock();
+    resetTyped();
+  }
+  try { if (localStorage.getItem('hgs-lang') === 'en') setLang(true); } catch (e) {}
+  var langBtn = document.getElementById('lang');
+  if (langBtn) langBtn.addEventListener('click', function(){ setLang(!isEN()); });
+
+
+  /* ---------- lab: what do you want to do ---------- */
+  document.querySelectorAll('.askgrid a[data-hit]').forEach(function(a){
+    a.addEventListener('click', function(){
+      var ids = a.dataset.hit.split(' ');
+      document.querySelectorAll('.card.hit').forEach(function(c){ c.classList.remove('hit'); });
+      ids.forEach(function(id){ var c = document.getElementById(id); if (c){ c.classList.add('hit'); c.classList.add('in'); } });
+      setTimeout(function(){ ids.forEach(function(id){ var c = document.getElementById(id); if (c) c.classList.remove('hit'); }); }, 4000);
+    });
+  });
+
+  /* ---------- reveal ---------- */
+  if (!reduce && hasIO) root.classList.add('js');
+
+  /* ---------- dock ----------
+     Panels are real elements holding both languages, so the existing
+     [data-lang] rules translate them and no repaint is needed. The
+     list in the markup is the no-script path. */
+  var PAGES = [
+    { id:'qa', icon:'icons/qa.svg', kind:"What's Cardano?",
+      href:'https://hfot.github.io/cardano-qa-bot/',
+      ja:['ホルダーのQ＆Aに、会話で答える。',
+          'ウォレット、取引所の入出庫、プール選び、DRep選び、詐欺の手口、ADAの価値、Midnight。8つのテーマをボタンで辿れるQ&Aボット。リレー健全性ランキングとTarget 15の思想から集中を避けたおすすめを出し、送金前のリスク度チェックも備える。'],
+      en:['First questions, answered in conversation.',
+          'A tap-through Q&A bot across eight topics — wallets, exchange deposits and withdrawals, pool and DRep choice, scam patterns, ADA\'s value, Midnight. Recommendations are drawn from the relay-health ranking and the Target 15 principle, and a pre-transfer risk check is built in.'] },
+    { id:'drep', icon:'icons/drep.svg', kind:'DRep Governance Terminal',
+      href:'https://hfot.github.io/drep-terminal-v6/',
+      ja:['DRep の委任を、チャートで見る。',
+          '投票力、委任者構成、資金流入出、集中度を一つの端末に集約。公開オンチェーンデータから、DRep 全体と個別の動きを毎日追う。'],
+      en:['Read the balance of DRep power in numbers.',
+          'Voting power, delegator mix, flows and concentration in one terminal. Follow the DRep landscape and individual movements daily from public on-chain data.'] },
+    { id:'catalyst', icon:'icons/catalyst.svg', kind:'Catalyst Japan',
+      href:'https://hfot.github.io/Catalyst-Japan/',
+      ja:['Catalyst の日本提案まとめ。',
+          '130件を金額・分野・進捗で並べ替える。完了報告と動画まで一枚に載せた、F2 から F14 の全記録。'],
+      en:['See every proposal at once.',
+          '130 proposals sorted by amount, sector and status. Completion reports and videos on one page, F2 through F14.'] },
+    { id:'cmap', icon:'icons/cmap.svg', kind:'Catalyst Detailed Map',
+      href:'https://hfot.github.io/holders-core/catalyst-map/',
+      ja:['Catalyst 提案の世界 MAP。',
+          '6年で 2,221件が採択され、1,722件が完了した。完了報告は 1,716件ぶん存在する。誰も並べていなかっただけだ。国・人物・一件まで地図から辿り、提案と完了報告を原文のまま並べる。'],
+      en:['What happened to the proposals you voted for?',
+          'Over six years 2,221 proposals were funded and 1,722 completed. Completion reports exist for 1,716 of them — nobody had simply put them side by side. Follow the money from country to person to a single project.'] },
+    { id:'core', icon:'icons/core.svg', kind:'holders CORE',
+      href:'https://hfot.github.io/holders-core/',
+      ja:['Cardano の現状を、全件データで分析。',
+          '11,385件を ①提案 →②採択 →③納品 →④使用 で並べ、どこで止まったかを一次情報付きで示す。うち2,347件は「実際に使われたか」が誰にも記録されていない。その欠落も数えて出す。'],
+      en:['See only what happened, across every proposal.',
+          '11,385 proposals placed on proposed → approved → delivered → used, each with primary sources, showing where it stopped. For 2,347 of them nobody has recorded whether the thing was actually used — that gap is counted and shown rather than hidden.'] },
+    { id:'relay', icon:'icons/relay.svg', kind:'Relay Health Ranking',
+      href:'https://hfot.github.io/cardano-relay-health/',
+      ja:['ステークプールの健全性ランキング。',
+          '1,282プールのリレーを6軸で測って並べる。届かないことは停止の証明ではない、と書き添えたうえで。'],
+      en:['Score only what answered.',
+          '1,282 pools scored on six axes, with the note that unreachable is no proof of offline.'] },
+    { id:'alive', icon:'icons/alive.svg', kind:'Cardano Art Explorer',
+      href:'https://hfot.github.io/spo-onchain-alive/',
+      ja:['Cardano のアートエクスプローラー。',
+          'ランキングにあるすべてのプールが同じ円盤を回る。距離はステーク、明るさは健全性スコア、大きさは委任者。拡大すると、一つひとつがそのプールだけのアートになる。'],
+      en:['See the whole, then go into one.',
+          'Every ranked pool turns in one disc: distance is stake, brightness is the health score, size is delegators. Go in, and each one becomes an artwork belonging to that pool alone.'] },
+    { id:'deleg', icon:'icons/deleg.svg', kind:'One Wallet, Two Delegations',
+      href:'https://hfot.github.io/cardano-two-delegations/',
+      ja:['2つの委任を、シミュレーションで試す。',
+          'ステーキング委任と DRep 委任。同じウォレットが持つ2つの力の差を、シミュレーションで確かめる。'],
+      en:['Stop reading. Move it and see.',
+          'Staking delegation and DRep delegation. Feel the difference between the two powers one wallet holds.'] },
+    { id:'translate', icon:'icons/translate.svg', kind:'Space Translate',
+      href:'https://hfot.github.io/space-translate/app.html',
+      ja:['音声を、その場で字幕翻訳。',
+          '分からない言語の音声を、その場で文字にして翻訳する。文字起こしはブラウザの中で完結し、APIキーもインストールも要らない。'],
+      en:['Turn what you hear into words you can read.',
+          'Speech in a language you do not know, captioned and translated on the spot. Transcription runs inside the browser, with no API key and no install.'] },
+    { id:'signal', icon:'icons/signal.svg', kind:'CIGNAL Signal',
+      href:'https://hfot.github.io/cignal-radar/cignal-signal-v2.html',
+      ja:['投稿の反響を、AIで事前分析。',
+          '𝕏 や Discord の投稿を貼ると、議論の種・広がる先・トーンをAIが分解する。DRep・SPO・Holder・Devへの届き方まで、投稿する前に見える。'],
+      en:['Paste it, and see where a post can go.',
+          'Paste a post from X or Discord and AI breaks down its discussion seeds, reach and tone, and how it lands with DReps, SPOs, holders and devs, before you post.'] },
+    { id:'spiral', icon:'icons/spiral.svg', kind:'The Decentralization Spiral',
+      href:'https://hfot.github.io/cardano-spiral/',
+      ja:['分散化の現状を、辛口で分析。',
+          '研ぎ澄ませるための材料として、現状のモデルをAIに生成させた一枚もの。実測ではなく解釈であり、意図的に辛口に振ってある。'],
+      en:['A deliberately severe read of where things stand.',
+          'A model of the present state generated by AI, as material for sharpening. Interpretation, not measurement, and deliberately severe.'] },
+    { id:'humanism', icon:'icons/humanism.svg', kind:'Governance Humanism Action',
+      href:'https://hfot.github.io/governance-humanism-action/',
+      ja:['権力が集まる条件を、体験で辿る。',
+          '八つの間で立ち位置を刻み、十の問いを歩き、十四の分岐を読む。良い方向とよくない方向を並べたまま置き、その分岐を決めるものだけを書いた。'],
+      en:['When the conditions line up, the same faces step forward.',
+          'Mark where you stand across eight chambers, walk ten questions, read fourteen forks. Both directions are held open, and only the hinge between them is written.'] },
+    { id:'dvm', icon:'icons/dvm.svg', kind:'Dialogue Verification Model',
+      href:'https://hfot.github.io/dialogue-verification-model/',
+      ja:['議論が閉じる分岐を、10万回検証。',
+          '架空の会話を分岐させ、27通りを全数列挙、10万回のシミュレーションで確かめた仮説。分岐点は善意の提案そのものではなく、その前の応答履歴だった。'],
+      en:["It doesn't close at the moment of the proposal.",
+          'A fictional conversation branches into 27 enumerated outcomes and 100,000 simulations, testing the idea that the hinge is the response history before the proposal, not the proposal itself.'] },
+    { id:'carakuri', icon:'icons/carakuri.svg', kind:'CARAKURI',
+      href:'https://hfot.github.io/nomad-3d/',
+      ja:['Cardano の仕組みを、3Dからくりで。',
+          'Cardanoの仕組みを、8体のからくりと一つの城郭都市として組み上げた。六つの門はリレー健全性の6軸、中央の書庫塔は憲法。すべてブラウザの中で生成される、実測ではなく寓話。'],
+      en:['Turn the hard structure into something you can move.',
+          "Cardano's machinery as eight automata and one walled city. Six gates for the six axes of relay health, the archive tower at the centre for the constitution. Generated in the browser: allegory, not measurement."] }
+  ];
+
+  var dock = document.getElementById('dock');
+  var track = document.getElementById('track');
+  var ptrack = document.getElementById('ptrack');
+  var active = 0, touched = false, autoT = null, relayoutDock = null;
+
+  function esc(t){ return t.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+
+  /* Slots are fixed. The pages rotate through them, so the one at the
+     far left reappears at the far right rather than the rail running
+     out of items at either end. */
+  var TSC = [1.34, .88, .80, .74];
+  var TOP = [1, .55, .30, .13];
+  var POP = [1, .26, .07, 0];
+
+  function wrapOff(i){
+    var n = PAGES.length, h = Math.floor(n / 2);
+    return ((i - active + n + h) % n) - h;
+  }
+
+  function place(el, off, sc, op){
+    var was = el._off;
+    if (was !== undefined && Math.abs(off - was) > 1){
+      el.classList.add('jump');
+      el.style.setProperty('--o', off);
+      /* let the jump land, then hand the element back to the transition */
+      void el.offsetWidth;
+      el.classList.remove('jump');
+    } else {
+      el.style.setProperty('--o', off);
+    }
+    el._off = off;
+    if (sc !== null) el.style.setProperty('--sc', sc);
+    el.style.setProperty('--op', op);
+  }
+
+  function measure(){
+    var t0 = track.children[0], p0 = ptrack.children[0];
+    function gap(el){ return parseFloat(getComputedStyle(el).getPropertyValue('--gap')) || 0; }
+    if (t0) track.style.setProperty('--step', (t0.offsetWidth + gap(track)) + 'px');
+    if (p0){
+      ptrack.style.setProperty('--step', (p0.offsetWidth + gap(ptrack)) + 'px');
+      var h = 0;
+      [].forEach.call(ptrack.children, function(pn){ h = Math.max(h, pn.offsetHeight); });
+      ptrack.parentNode.style.height = h + 'px';
+    }
+  }
+
+  function select(i, focus){
+    active = (i + PAGES.length) % PAGES.length;
+    [].forEach.call(track.children, function(b, n){
+      var on = n === active, d = Math.min(Math.abs(wrapOff(n)), 3);
+      b.setAttribute('aria-selected', String(on));
+      b.tabIndex = on ? 0 : -1;
+      place(b, wrapOff(n), on ? TSC[0] : TSC[d], TOP[d]);
+      if (on && focus) b.focus();
+    });
+    [].forEach.call(ptrack.children, function(pn, n){
+      var on = n === active, d = Math.min(Math.abs(wrapOff(n)), 3);
+      pn.className = 'pan' + (on ? ' is-on' : '');
+      pn.setAttribute('aria-hidden', String(!on));
+      place(pn, wrapOff(n), null, POP[d]);
+      var a = pn.querySelector('a');
+      if (a) a.tabIndex = on ? 0 : -1;
+    });
+  }
+
+  function stopAuto(){ touched = true; clearInterval(autoT); }
+
+  if (dock && track && ptrack){
+    PAGES.forEach(function(p, i){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'tile'; b.id = 'tile-' + p.id;
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', 'false');
+      b.setAttribute('aria-controls', 'pan-' + p.id);
+      b.tabIndex = -1;
+      b.setAttribute('aria-label', p.kind);
+      b.innerHTML = '<img src="' + p.icon + '" alt="" width="54" height="54" decoding="async">';
+      b.addEventListener('click', function(){ stopAuto(); select(i); });
+      track.appendChild(b);
+
+      var pn = document.createElement('article');
+      pn.className = 'pan'; pn.id = 'pan-' + p.id;
+      pn.setAttribute('role', 'tabpanel');
+      pn.setAttribute('aria-labelledby', 'tile-' + p.id);
+      pn.innerHTML =
+        '<span class="lbl on">' + esc(p.kind) + '</span>' +
+        '<h2><span class="ja">' + esc(p.ja[0]) + '</span>' +
+            '<span class="en">' + esc(p.en[0]) + '</span></h2>' +
+        '<p><span class="ja">' + esc(p.ja[1]) + '</span>' +
+           '<span class="en">' + esc(p.en[1]) + '</span></p>' +
+        '<a class="pill" href="' + p.href + '" target="_blank" rel="noopener" tabindex="-1">' +
+          '<span class="ja">開く</span><span class="en">Open</span> ' +
+          '<span class="arw lat">&nearr;</span></a>';
+      ptrack.appendChild(pn);
+    });
+
+    track.addEventListener('keydown', function(e){
+      var k = e.key, n = null;
+      if (k === 'ArrowRight') n = active + 1;
+      else if (k === 'ArrowLeft') n = active - 1;
+      else if (k === 'Home') n = 0;
+      else if (k === 'End') n = PAGES.length - 1;
+      if (n === null) return;
+      e.preventDefault(); stopAuto(); select(n, true);
+    });
+
+    document.documentElement.classList.add('dock-on');
+    measure();
+    select(0);
+    function relayout(){ measure(); select(active); }
+    relayoutDock = relayout;
+    window.addEventListener('load', relayout);
+    window.addEventListener('resize', relayout);
+    if (window.ResizeObserver) new ResizeObserver(measure).observe(ptrack.children[0]);
+
+    /* one unattended pass so the dock shows what it does, then it rests.
+       Any interaction stops it immediately. */
+    if (!reduce){
+      var steps = PAGES.length - 1;
+      autoT = setInterval(function(){
+        if (touched || steps-- <= 0){ clearInterval(autoT); return; }
+        select(active + 1);
+      }, 4200);
+    }
+  }
+
+
+  if (hasIO){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:.2, rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.rv, .fig').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.rv, .fig').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var to = parseInt(el.dataset.count,10);
+    if (reduce){ el.textContent = to.toLocaleString('en-US'); return; }
+    var dur = BEAT*8, t0 = null;
+    requestAnimationFrame(function step(t){
+      if (t0===null) t0 = t;
+      var p = Math.min((t-t0)/dur,1), e = 1-Math.pow(1-p,3);
+      el.textContent = Math.round(to*e).toLocaleString('en-US');
+      if (p<1) requestAnimationFrame(step);
+    });
+  });
+
+  /* ---------- typed line, per language ---------- */
+  var LINES = {
+    ja: ['提案は金額で。リレーは実測で。委任は動かして。',
+         '検証できる数字だけを、そのまま並べている。',
+         '数字は取得時点のもの。エポックごとに動く。'],
+    en: ['Proposals by amount. Relays by measurement. Delegation by doing.',
+         'Only figures you can check, laid out as they are.',
+         'Figures are from the moment they were taken. They move each epoch.']
+  };
+  var tp = document.getElementById('typed'), node = null, cur = null;
+  var li = 0, ci = 0, hold = 0, back = false;
+  function resetTyped(){ li = 0; ci = 0; hold = 0; back = false; if (node) node.nodeValue = ''; }
+
+  if (tp && !reduce){
+    cur = tp.querySelector('.cur');
+    node = document.createTextNode('');
+    tp.insertBefore(node, cur);
+    setInterval(function(){
+      if (hold > 0){ hold--; return; }
+      var set = LINES[isEN() ? 'en' : 'ja'];
+      var line = set[li % set.length];
+      if (!back){
+        node.nodeValue = line.slice(0, ci++);
+        if (ci > line.length){ back = true; hold = 32; }
+      } else {
+        ci -= 2;
+        if (ci <= 0){ ci = 0; back = false; li = (li + 1) % set.length; hold = 2; }
+        node.nodeValue = line.slice(0, ci);
+      }
+    }, BEAT/4);
+  }
+})();
+</script>
+<script src="flow.js" defer></script>
+
+<!-- What's Cardano? floating button -->
+<style>
+#qa-fab{
+  position:fixed; right:clamp(14px,2.4vw,28px); bottom:clamp(14px,2.4vw,28px); z-index:60;
+  display:flex; align-items:center; gap:10px;
+  padding:12px 18px; border-radius:var(--rp);
+  background:rgba(10,12,18,.82); border:1px solid var(--line-2);
+  color:var(--ink); text-decoration:none; font-size:.82rem; font-weight:600; letter-spacing:.01em;
+  backdrop-filter:blur(14px) saturate(1.4); -webkit-backdrop-filter:blur(14px) saturate(1.4);
+  box-shadow:0 6px 24px rgba(0,0,0,.45);
+  transition:transform var(--half) var(--ease), border-color var(--half) var(--ease), box-shadow var(--half) var(--ease);
+}
+#qa-fab:hover{transform:translateY(-2px); border-color:var(--c1); box-shadow:0 10px 30px rgba(61,123,255,.25)}
+#qa-fab .dot{
+  width:9px; height:9px; border-radius:50%; background:var(--grad); flex:none;
+}
+@media (max-width:560px){ #qa-fab span.tail{display:none} }
+</style>
+<a id="qa-fab" href="https://hfot.github.io/cardano-qa-bot/" target="_blank" rel="noopener">
+  <span class="dot" aria-hidden="true"></span>
+  <span>What's Cardano?</span>
+  <span class="tail dim" aria-hidden="true">&nearr;</span>
+</a>
+<script>
+/* background preset switcher, only rendered when the field runs */
+window.addEventListener('load', function(){
+  var api = window.CardanoFlow, host = document.getElementById('fx');
+  if (!api || !host) return;
+  var saved = 0;
+  try { saved = parseInt(localStorage.getItem('cardano-flow') || '0', 10) || 0; } catch (e) {}
+  if (saved > 0) api.set(saved);
+  api.presets.forEach(function(p, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = p.label;
+    b.setAttribute('aria-pressed', String(i === api.current()));
+    b.addEventListener('click', function(){
+      api.set(i);
+      try { localStorage.setItem('cardano-flow', String(i)); } catch (e) {}
+      host.querySelectorAll('button').forEach(function(x, j){
+        x.setAttribute('aria-pressed', String(j === i));
+      });
+    });
+    host.appendChild(b);
+  });
+});
+</script>
+<script>
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var host = document.getElementById('courier'); if (!host) return;
+  window.addEventListener('load', function(){ setTimeout(function(){
+    import('https://hfot.github.io/nomad-3d/courier.js?v=11')
+      .then(function(m){ return m.runCourier(host); })
+      .catch(function(e){ console.warn('courier skipped', e); });
+  }, 900); });
+})();
+</script>
+</body>
+</html>
