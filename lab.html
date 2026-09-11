@@ -627,7 +627,8 @@ footer a:hover{color:var(--ink)}
 
 /* ===== lab: row card = poster left, reading right ===== */
 .workgrid, .workgrid.two{grid-template-columns:1fr; gap:clamp(16px,1.8vw,26px)}
-.workgrid .card{display:grid; grid-template-columns:minmax(0,58fr) minmax(0,42fr); align-items:stretch}
+.workgrid .card{display:grid; grid-template-columns:minmax(0,58fr) minmax(0,42fr); align-items:stretch; min-width:0}
+.workgrid .card .body, .workgrid .card .shot{min-width:0}
 .workgrid .card .shot{aspect-ratio:1200/630; border-bottom:none; border-right:1px solid rgba(var(--fg-rgb),.12); align-self:center}
 .workgrid .card .body{padding:clamp(18px,1.8vw,28px) clamp(20px,2vw,32px)}
 .workgrid .card .body::before{display:inline-block; align-self:flex-start; margin-bottom:12px}
@@ -635,7 +636,7 @@ footer a:hover{color:var(--ink)}
 .workgrid .card p:not(.use){display:block; -webkit-line-clamp:unset; overflow:visible; font-size:.84rem; line-height:1.9; margin:0 0 1em}
 .workgrid .card p.note{color:var(--dim); opacity:.85}
 @media (max-width:900px){
-  .workgrid .card{grid-template-columns:1fr}
+  .workgrid .card{grid-template-columns:minmax(0,1fr)}
   .workgrid .card .shot{border-right:none; border-bottom:1px solid rgba(var(--fg-rgb),.12)}
 }
 /* ===== lab: card = poster + one use line + one open bar ===== */
@@ -646,10 +647,10 @@ footer a:hover{color:var(--ink)}
 .card .use .uk{display:block; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--c1); margin-bottom:.2em}
 .workgrid .card .spec{display:block; padding-top:0; margin:auto 0 0}
 .workgrid .card .spec > div{display:none}
-.workgrid .card .pill{display:flex; width:100%; justify-content:space-between; padding:13px 16px; border-radius:12px;
+.workgrid .card .pill{display:flex; width:100%; min-width:0; box-sizing:border-box; justify-content:space-between; padding:13px 16px; border-radius:12px;
   font-size:13px; border-color:rgba(61,123,255,.45); background:rgba(61,123,255,.10)}
 .workgrid .card .pill .go{font-weight:700}
-.workgrid .card .pill .addr{flex:1; margin:0 1em; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11.5px; color:var(--dim);
+.workgrid .card .pill .addr{flex:1; min-width:0; margin:0 1em; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11.5px; color:var(--dim);
   overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:left}
 .workgrid .card .pill:hover{background:rgba(61,123,255,.2); border-color:rgba(61,123,255,.8)}
 .workgrid .card .pill::after{content:""; position:absolute; inset:0; border-radius:inherit}
