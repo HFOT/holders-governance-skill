@@ -596,8 +596,8 @@ footer a:hover{color:var(--ink)}
 .one b{color:var(--ink); font-weight:700}
 .ask{max-width:1240px; margin:0 auto; text-align:left}
 .ask > .lbl{display:block; margin-bottom:14px; text-align:center}
-.askgrid{display:grid; gap:6px}
-.askrow{display:grid; grid-template-columns:140px 1fr; gap:8px; align-items:center; padding-top:8px; border-top:1px solid var(--line)}
+.askgrid{display:grid; gap:3px}
+.askrow{display:grid; grid-template-columns:140px 1fr; gap:8px; align-items:center; padding-top:4px; border-top:1px solid var(--line)}
 .askrow:first-child{border-top:none; padding-top:0}
 .askrow .gl{display:block; padding:0 0 0 2px; font-family:"Archivo","Noto Sans JP",sans-serif; font-weight:800;
   font-size:clamp(.98rem,1.1vw,1.1rem); letter-spacing:.01em; color:var(--ink); line-height:1.3}
@@ -605,8 +605,15 @@ footer a:hover{color:var(--ink)}
 .askgrid img{width:28px; height:28px; border-radius:7px; display:block; grid-row:1 / span 2}
 .askgrid a.t{border-style:dashed}
 .askgrid a.t .to{color:var(--c2)}
+.badge.wipb{border-color:rgba(251,191,36,.55); color:#f5c451}
+:root[data-theme="light"] .badge.wipb{color:#8a5a00; border-color:rgba(138,90,0,.4)}
+.askgrid .wip{margin-left:.7em; padding:2px 7px; border-radius:999px; font-size:9.5px; letter-spacing:.08em;
+  border:1px solid rgba(251,191,36,.55); color:#f5c451; background:rgba(251,191,36,.08)}
+:root[data-theme="light"] .badge.wipb{border-color:rgba(251,191,36,.55); color:#f5c451}
+:root[data-theme="light"] .badge.wipb{color:#8a5a00; border-color:rgba(138,90,0,.4)}
+.askgrid .wip{color:#8a5a00; border-color:rgba(138,90,0,.4); background:rgba(251,191,36,.14)}
 @media (max-width:1180px){.askrow .cells{grid-template-columns:repeat(3,1fr)}}
-.askgrid a{display:grid; grid-template-columns:28px 1fr; column-gap:12px; align-items:center; padding:10px 14px; text-decoration:none;
+.askgrid a{display:grid; grid-template-columns:28px 1fr; column-gap:12px; align-items:center; padding:8px 13px; text-decoration:none;
   border:1px solid var(--line-2); border-radius:14px; background:var(--surface); backdrop-filter:blur(8px);
   transition:border-color var(--half) var(--ease), background var(--half) var(--ease), transform var(--half) var(--ease)}
 .askgrid a:hover{border-color:rgba(61,123,255,.65); background:rgba(61,123,255,.10); transform:translateY(-2px)}
@@ -956,11 +963,6 @@ footer a:hover{color:var(--ink)}
               <span class="q"><span class="ja">はじめての疑問に答えてほしい</span><span class="en">Answer my first questions</span></span>
               <span class="to">What's Cardano? <span class="arw lat">&rarr;</span></span>
             </a>
-            <a href="#carakuri" data-hit="carakuri" class="t">
-              <img src="icons/carakuri.svg" alt="" width="28" height="28" decoding="async">
-              <span class="q"><span class="ja">仕組みを動かして覚えたい</span><span class="en">Learn the machinery by moving it</span></span>
-              <span class="to">CARAKURI <span class="arw lat">&rarr;</span></span>
-            </a>
             <a href="#deleg" data-hit="deleg" class="m">
               <img src="icons/deleg.svg" alt="" width="28" height="28" decoding="async">
               <span class="q"><span class="ja">2つの委任の違いを知りたい</span><span class="en">Tell the two delegations apart</span></span>
@@ -1055,6 +1057,16 @@ footer a:hover{color:var(--ink)}
               <img src="icons/signal.svg" alt="" width="28" height="28" decoding="async">
               <span class="q"><span class="ja">投稿の反響を先に試したい</span><span class="en">Test a post before posting</span></span>
               <span class="to">SIGNAL <span class="arw lat">&rarr;</span></span>
+            </a>
+            </div>
+          </div>
+          <div class="askrow">
+            <span class="gl"><span class="ja">エンタメ</span><span class="en">Entertainment</span></span>
+            <div class="cells">
+            <a href="#carakuri" data-hit="carakuri" class="t">
+              <img src="icons/carakuri.svg" alt="" width="28" height="28" decoding="async">
+              <span class="q"><span class="ja">仕組みを動かして覚えたい</span><span class="en">Learn the machinery by moving it</span></span>
+              <span class="to">CARAKURI <span class="arw lat">&rarr;</span><span class="wip"><span class="ja">開発中</span><span class="en">In development</span></span></span>
             </a>
             </div>
           </div>
@@ -1565,6 +1577,7 @@ footer a:hover{color:var(--ink)}
           <span class="top">
             <span class="lbl on">CARAKURI</span>
             <span class="badge"><span class="ja">実測ではなく、寓話</span><span class="en">Allegory, not measurement</span></span>
+            <span class="badge wipb"><span class="ja">開発中</span><span class="en">In development</span></span>
           </span>
           <h3>
             <span class="ja">Cardano の仕組みを、3Dからくりで。</span>
